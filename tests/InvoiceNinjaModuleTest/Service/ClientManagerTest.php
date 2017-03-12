@@ -137,7 +137,10 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 self::stringContains(Request::METHOD_PUT),
                 self::isType('string'),
-                self::isType('array')
+                self::logicalAnd(
+                    self::isType('array'),
+                    self::isEmpty()
+                )
             )
             ->willReturn([]);
 
@@ -154,15 +157,17 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
         $this->hydratorMock->expects(self::once())
             ->method('extract')
             ->with(self::isInstanceOf(ClientInterface::class))
-            ->willReturn([]);
+            ->willReturn(['notempty']);
 
         $this->apiServiceMock->expects(self::once())
             ->method('dispatchRequest')
             ->with(
                 self::stringContains(Request::METHOD_PUT),
                 self::isType('string'),
-                self::isType('array')
-            )
+                self::logicalAnd(
+                    self::isType('array'),
+                    self::isEmpty()
+                )            )
             ->willReturn([]);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->restore($clientMock));
