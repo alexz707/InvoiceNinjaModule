@@ -31,7 +31,6 @@ class Contact implements ContactInterface
 
     public function __construct()
     {
-
     }
 
     /**

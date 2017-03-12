@@ -18,7 +18,7 @@ class Bootstrap
     public static function init()
     {
         $zf2ModulePaths = array(dirname(dirname(__DIR__)));
-        if (($path = static::findParentPath('vendor'))) {
+        if ($path = static::findParentPath('vendor')) {
             $zf2ModulePaths[] = $path;
         }
         if (($path = static::findParentPath('module')) !== $zf2ModulePaths[0]) {
@@ -63,7 +63,6 @@ class Bootstrap
         if (file_exists($vendorPath . '/autoload.php')) {
             include $vendorPath . '/autoload.php';
         }
-
     }
 
     protected static function findParentPath($path)

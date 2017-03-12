@@ -61,7 +61,7 @@ class ApiManager implements ApiManagerInterface
      */
     public function dispatchRequest($reqMethod, $reqRoute, array $reqData = [])
     {
-        try{
+        try {
             $request = new Request();
             $request->setAllowCustomMethods(false);
             $request->setMethod($reqMethod);
@@ -72,25 +72,19 @@ class ApiManager implements ApiManagerInterface
             $this->httpClient->setOptions($this->getRequestOptions());
             $this->httpClient->setAdapter(Client\Adapter\Curl::class);
             $response = $this->httpClient->send($request);
-        }
-        catch (InvalidArgumentException $e)
-        {
+        } catch (InvalidArgumentException $e) {
             throw new ApiException($e->getMessage());
-        }
-        catch (RuntimeException $e)
-        {
+        } catch (RuntimeException $e) {
             throw new ApiException($e->getMessage());
         }
 
-        if($response->getStatusCode() !== Response::STATUS_CODE_200)
-        {
+        if ($response->getStatusCode() !== Response::STATUS_CODE_200) {
             throw new ApiException($response->getStatusCode() .' '.$response->getReasonPhrase());
         }
 
         $result = json_decode($response->getBody(), true);
 
-        if(is_array($result))
-        {
+        if (is_array($result)) {
             return $this->checkResponse($result);
         }
 
@@ -105,8 +99,7 @@ class ApiManager implements ApiManagerInterface
      */
     private function checkResponse(array $result)
     {
-        if(!array_key_exists('data', $result) || empty($result['data']))
-        {
+        if (!array_key_exists('data', $result) || empty($result['data'])) {
             throw new EmptyResponseException();
         }
         return $result['data'];

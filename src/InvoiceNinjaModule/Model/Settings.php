@@ -41,20 +41,16 @@ final class Settings implements SettingsInterface
      */
     private function setSettings(array $settings)
     {
-        if( !array_key_exists(Module::TOKEN, $settings) || empty($settings[Module::TOKEN]))
-        {
+        if (!array_key_exists(Module::TOKEN, $settings) || empty($settings[Module::TOKEN])) {
             throw new InvalidParameterException('No or empty token provided!');
         }
-        if( !array_key_exists(Module::TOKEN_TYPE, $settings) || empty($settings[Module::TOKEN_TYPE]))
-        {
+        if (!array_key_exists(Module::TOKEN_TYPE, $settings) || empty($settings[Module::TOKEN_TYPE])) {
             throw new InvalidParameterException('No or empty token type provided!');
         }
-        if( !array_key_exists(Module::API_TIMEOUT, $settings) || $settings[Module::API_TIMEOUT] < 0)
-        {
+        if (!array_key_exists(Module::API_TIMEOUT, $settings) || $settings[Module::API_TIMEOUT] < 0) {
             throw new InvalidParameterException('No or negative timeout provided!');
         }
-        if( !array_key_exists(Module::HOST_URL, $settings) || empty($settings[Module::HOST_URL]))
-        {
+        if (!array_key_exists(Module::HOST_URL, $settings) || empty($settings[Module::HOST_URL])) {
             throw new InvalidParameterException('No or empty host url provided!');
         }
         $this->token = $settings[Module::TOKEN];
