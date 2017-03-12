@@ -10,6 +10,7 @@ before_script:
   - composer update
   - if [ "$DEPENDENCIES" = 'low' ] ; then composer update --prefer-source --prefer-lowest --prefer-stable; fi
   - git clone https://github.com/padraic/humbug.git && cd humbug && composer install && cd ..
+  - chmod +x /build/check-humbug-mutators.php
 
 script:
   - ./vendor/bin/phpunit --disallow-test-output --report-useless-tests --coverage-clover ./clover.xml
