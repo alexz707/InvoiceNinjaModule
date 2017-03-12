@@ -2,7 +2,6 @@
 return [
     'modules' => [
         'Zend\Router',
-        'ApigilityConsumer',
         'InvoiceNinjaModule'
     ],
     'module_listener_options' => [
