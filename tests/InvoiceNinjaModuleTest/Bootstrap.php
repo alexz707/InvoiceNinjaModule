@@ -5,9 +5,6 @@ namespace InvoiceNinjaModuleTest;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 
-error_reporting(E_ALL);
-chdir(__DIR__);
-
 /**
  * Test bootstrap, for setting up autoloading
  */
@@ -17,6 +14,9 @@ class Bootstrap
 
     public static function init()
     {
+        error_reporting(E_ALL);
+        chdir(__DIR__);
+
         $zf2ModulePaths = array(dirname(dirname(__DIR__)));
         if ($path = static::findParentPath('vendor')) {
             $zf2ModulePaths[] = $path;
@@ -79,5 +79,3 @@ class Bootstrap
         return $dir . '/' . $path;
     }
 }
-
-Bootstrap::init();
