@@ -167,7 +167,8 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
                 self::logicalAnd(
                     self::isType('array'),
                     self::isEmpty()
-                )            )
+                )
+            )
             ->willReturn([]);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->restore($clientMock));
