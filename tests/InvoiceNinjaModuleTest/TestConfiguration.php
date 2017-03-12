@@ -1,0 +1,17 @@
+<?php
+return [
+    'modules' => [
+        'Zend\Router',
+        'ApigilityConsumer',
+        'InvoiceNinjaModule'
+    ],
+    'module_listener_options' => [
+        'module_paths' => [
+            '../../../vendor',
+        ],
+        'config_glob_paths' => [
+        ],
+        'config_cache_enabled' => false,
+        'module_map_cache_enabled' => false,
+    ],
+];
