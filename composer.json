@@ -22,7 +22,7 @@
     "zendframework/zend-stdlib":         "^2.7.7 || ^3.0.1",
     "zendframework/zend-hydrator":       "^1.1 || ^2.2.1",
     "zendframework/zend-mvc":            "^2.7.10 || ^3.0.1",
-    "zendframework/zend-filter":         "^2.7.1",
+    "zendframework/zend-filter":         "^2.6 || ^2.7.1",
     "zendframework/zend-servicemanager": "^2.7.6 || ^3.1"
   },
   "require-dev":       {
