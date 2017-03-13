@@ -44,21 +44,67 @@ final class Settings implements SettingsInterface
         if (empty($settings)) {
             throw new InvalidParameterException('No settings provided!');
         }
+        $this->setToken($settings);
+        $this->setTokenType($settings);
+        $this->setTimeout($settings);
+        $this->setHostUrl($settings);
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return void
+     * @throws InvalidParameterException
+     */
+    private function setToken(array $settings)
+    {
         if (!array_key_exists(Module::TOKEN, $settings) || empty($settings[Module::TOKEN])) {
             throw new InvalidParameterException('No or empty token provided!');
         }
+        $this->token = $settings[Module::TOKEN];
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return void
+     * @throws InvalidParameterException
+     */
+    private function setTokenType(array $settings)
+    {
         if (!array_key_exists(Module::TOKEN_TYPE, $settings) || empty($settings[Module::TOKEN_TYPE])) {
             throw new InvalidParameterException('No or empty token type provided!');
         }
-        if (!array_key_exists(Module::API_TIMEOUT, $settings) || !is_int($settings[Module::API_TIMEOUT]) || $settings[Module::API_TIMEOUT] < 0 ) {
+        $this->tokenType = $settings[Module::TOKEN_TYPE];
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return void
+     * @throws InvalidParameterException
+     */
+    private function setTimeout(array $settings)
+    {
+        if (!array_key_exists(Module::API_TIMEOUT, $settings)
+            || !is_int($settings[Module::API_TIMEOUT])
+            || $settings[Module::API_TIMEOUT] < 0) {
             throw new InvalidParameterException('No or negative timeout provided!');
         }
+        $this->timeout = $settings[Module::API_TIMEOUT];
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return void
+     * @throws InvalidParameterException
+     */
+    private function setHostUrl(array $settings)
+    {
         if (!array_key_exists(Module::HOST_URL, $settings) || empty($settings[Module::HOST_URL])) {
             throw new InvalidParameterException('No or empty host url provided!');
         }
-        $this->token = $settings[Module::TOKEN];
-        $this->tokenType = $settings[Module::TOKEN_TYPE];
-        $this->timeout = $settings[Module::API_TIMEOUT];
         $this->hostUrl = $settings[Module::HOST_URL];
     }
 
