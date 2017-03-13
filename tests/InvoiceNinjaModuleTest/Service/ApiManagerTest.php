@@ -3,6 +3,7 @@
 namespace InvoiceNinjaModuleTest\Service;
 
 use InvoiceNinjaModule\Model\Interfaces\SettingsInterface;
+use InvoiceNinjaModule\Model\RequestOptions;
 use InvoiceNinjaModule\Service\ApiManager;
 use InvoiceNinjaModule\Service\Interfaces\ApiManagerInterface;
 use Zend\Http\Client;
@@ -64,7 +65,15 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->httpClientMock->expects(self::once())
             ->method('send')
-            ->with(self::isInstanceOf(RequestInterface::class))
+            ->with(
+                self::logicalAnd(
+                    self::isInstanceOf(RequestInterface::class),
+                    self::callback(function ($request) {
+                        /** @var Request $request*/
+                        return $request->getAllowCustomMethods() === false;
+                    })
+                )
+            )
             ->willReturn($response);
 
         self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute));

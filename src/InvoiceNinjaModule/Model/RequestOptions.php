@@ -43,12 +43,19 @@ final class RequestOptions implements RequestOptionsInterface
 include: A comma-separated list of nested relationships to include.
 updated_at: Timestamp used as a filter to only show recently updated records.
 */
-
+    /**
+     * @param string $name
+     * @param string $value
+     * @return void
+     */
     public function addQueryParameter($name, $value)
     {
         $this->additionalParams[$name] = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getQueryString()
     {
         $result = array_merge(
@@ -58,6 +65,9 @@ updated_at: Timestamp used as a filter to only show recently updated records.
         return http_build_query($result);
     }
 
+    /**
+     * @return array
+     */
     private function buildPageArr()
     {
         $result = [];
@@ -65,9 +75,6 @@ updated_at: Timestamp used as a filter to only show recently updated records.
         $result[$this->paramPageSize] = $this->getPageSize();
         return $result;
     }
-
-
-
 
     /**
      * @return int
