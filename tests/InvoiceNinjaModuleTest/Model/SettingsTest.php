@@ -102,6 +102,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
 
         new Settings($settings);
     }
+
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
@@ -123,7 +124,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     {
         $settings = [
             Module::TOKEN => 'testtoken',
-            Module::TOKEN_TYPE => '',
+            Module::TOKEN_TYPE => 'testtokentype',
             Module::API_TIMEOUT => 100,
             Module::HOST_URL => '',
         ];
@@ -144,4 +145,17 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
 
         new Settings($settings);
     }
+
+    public function testCreate()
+    {
+        $settings = [
+            Module::TOKEN => 'testtoken',
+            Module::TOKEN_TYPE => 'testtokentype',
+            Module::API_TIMEOUT => 0,
+            Module::HOST_URL => 'http://test.dev',
+        ];
+
+        self::assertInstanceOf(Settings::class, new Settings($settings));
+    }
+
 }
