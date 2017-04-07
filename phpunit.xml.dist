@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./tests/InvoiceNinjaModuleTest/Load.php"
+<phpunit bootstrap="./tests/Load.php"
          colors="true"
          verbose="true"
          convertErrorsToExceptions="true"
@@ -11,7 +11,7 @@
          syntaxCheck="true" >
     <testsuites>
         <testsuite name="InvoiceNinjaModule tests">
-            <directory suffix=".php">./tests/InvoiceNinjaModuleTest/</directory>
+            <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
