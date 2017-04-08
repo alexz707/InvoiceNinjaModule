@@ -12,16 +12,33 @@ class RequestOptionsTest extends \PHPUnit_Framework_TestCase
     {
         $options = new RequestOptions();
         self::assertInstanceOf(RequestOptionsInterface::class, $options);
-        self::assertEquals(0, $options->getPage());
-        self::assertEquals(0, $options->getPageSize());
-        self::assertEquals('page=0&per_page=0', $options->getQueryString());
+        self::assertEmpty($options->getPostArray());
+        self::assertEmpty($options->getQueryArray());
     }
 
-    public function testAddQueryParam()
+    public function testAddParams()
     {
         $options = new RequestOptions();
-        self::assertEquals('page=0&per_page=0', $options->getQueryString());
-        $options->addQueryParameter('test', 101);
-        self::assertEquals('page=0&per_page=0&test=101', $options->getQueryString());
+        self::assertEmpty($options->getPostArray());
+        self::assertEmpty($options->getQueryArray());
+        $options->addQueryParameters(['test1' => 101]);
+        $options->setPage(10);
+        $options->setPageSize(99);
+        $options->setClientId(222);
+        $options->setUpdated(222222);
+        $options->setInclude('sss,sss');
+        $options->addPostParameters(['test2' => 102]);
+
+        $expected =  [
+            'test1' => 101,
+            'page' => 10,
+            'per_page' => 99,
+            'client_id' => 222,
+            'updated_at' => 222222,
+            'include' => 'sss,sss'
+        ];
+
+        self::assertEquals($expected, $options->getQueryArray());
+        self::assertEquals(['test2' => 102], $options->getPostArray());
     }
 }

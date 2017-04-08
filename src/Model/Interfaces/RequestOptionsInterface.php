@@ -10,7 +10,22 @@ namespace InvoiceNinjaModule\Model\Interfaces;
 interface RequestOptionsInterface
 {
     /**
-     * @return string
+     * @param array $params
      */
-    public function getQueryString();
+    public function addQueryParameters(array $params);
+
+    /**
+     * @param array $params
+     */
+    public function addPostParameters(array $params);
+
+    /**
+     * @return array
+     */
+    public function getQueryArray();
+
+    /**
+     * @return array
+     */
+    public function getPostArray();
 }

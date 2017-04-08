@@ -11,109 +11,79 @@ use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
  */
 final class RequestOptions implements RequestOptionsInterface
 {
-    /** @var  int */
-    private $pageSize = 0;
     /** @var string  */
     private $paramPageSize = 'per_page';
-
-    /** @var  int */
-    private $page = 0;
     /** @var string  */
     private $paramPage = 'page';
-
-    /** @var  int */
-    private $clientId;
     /** @var string  */
     private $paramClientId='client_id';
-
-    /** @var  int */
-    private $updated;
     /** @var string  */
     private $paramUpdated='updated_at';
-
-    /** @var array */
-    private $include;
     /** @var string  */
     private $paramInclude='include';
     /** @var array  */
-    private $additionalParams = [];
-
+    private $additionalGetParams;
+    /** @var array  */
+    private $additionalPostParams;
 
 /*
 include: A comma-separated list of nested relationships to include.
 updated_at: Timestamp used as a filter to only show recently updated records.
 */
-    /**
-     * @param string $name
-     * @param string $value
-     * @return void
-     */
-    public function addQueryParameter($name, $value)
+    public function __construct()
     {
-        $this->additionalParams[$name] = $value;
+        $this->additionalPostParams = [];
+        $this->additionalGetParams = [];
     }
 
     /**
-     * @return string
+     * @param array $params
      */
-    public function getQueryString()
+    public function addQueryParameters(array $params)
     {
-        $result = array_merge(
-            $this->buildPageArr(),
-            $this->additionalParams
-        );
-        return http_build_query($result);
+        $this->additionalGetParams = \array_merge($params, $this->additionalGetParams);
+    }
+
+    /**
+     * @param array $params
+     */
+    public function addPostParameters(array $params)
+    {
+        $this->additionalPostParams = \array_merge($params, $this->additionalPostParams);
     }
 
     /**
      * @return array
      */
-    private function buildPageArr()
+    public function getQueryArray()
     {
-        $result = [];
-        $result[$this->paramPage] = $this->getPage();
-        $result[$this->paramPageSize] = $this->getPageSize();
-        return $result;
+        return $this->additionalGetParams;
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getPageSize()
+    public function getPostArray()
     {
-        return $this->pageSize;
+        return $this->additionalPostParams;
     }
+
 
     /**
      * @param int $pageSize
      */
     public function setPageSize($pageSize)
     {
-        $this->pageSize = $pageSize;
+        $this->additionalGetParams[$this->paramPageSize] = $pageSize;
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
 
     /**
      * @param int $page
      */
     public function setPage($page)
     {
-        $this->page = $page;
-    }
-
-    /**
-     * @return int
-     */
-    public function getClientId()
-    {
-        return $this->clientId;
+        $this->additionalGetParams[$this->paramPage] = $page;
     }
 
     /**
@@ -121,15 +91,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
      */
     public function setClientId($clientId)
     {
-        $this->clientId = $clientId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
+        $this->additionalGetParams[$this->paramClientId] = $clientId;
     }
 
     /**
@@ -137,15 +99,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
      */
     public function setUpdated($updated)
     {
-        $this->updated = $updated;
-    }
-
-    /**
-     * @return array
-     */
-    public function getInclude()
-    {
-        return $this->include;
+        $this->additionalGetParams[$this->paramUpdated] = $updated;
     }
 
     /**
@@ -153,6 +107,6 @@ updated_at: Timestamp used as a filter to only show recently updated records.
      */
     public function setInclude($include)
     {
-        $this->include = $include;
+        $this->additionalGetParams[$this->paramInclude] = $include;
     }
 }

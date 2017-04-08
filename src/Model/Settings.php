@@ -31,16 +31,6 @@ final class Settings implements SettingsInterface
      */
     public function __construct(array $settings)
     {
-        $this->setSettings($settings);
-    }
-
-    /**
-     * @param array $settings
-     *
-     * @throws InvalidParameterException
-     */
-    private function setSettings(array $settings)
-    {
         if (empty($settings)) {
             throw new InvalidParameterException('No settings provided!');
         }

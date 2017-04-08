@@ -8,6 +8,7 @@ use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Model\Interfaces\SettingsInterface;
 use InvoiceNinjaModule\Service\Interfaces\ApiManagerInterface;
 use Zend\Http\Client;
+use Zend\Http\Client\Adapter\Curl;
 use Zend\Http\Exception\InvalidArgumentException;
 use Zend\Http\Exception\RuntimeException;
 use Zend\Http\Request;
@@ -25,52 +26,44 @@ class ApiManager implements ApiManagerInterface
     private $settings;
     /** @var Client  */
     private $httpClient;
-    /** @var  RequestOptionsInterface */
-    private $requestOptions;
 
     /**
      * ApiManager constructor.
      *
      * @param SettingsInterface $settings
      * @param Client            $client
+     * @throws InvalidArgumentException
      */
     public function __construct(SettingsInterface $settings, Client $client)
     {
         $this->settings = $settings;
         $this->httpClient = $client;
-    }
-
-    /**
-     * @param RequestOptionsInterface $options
-     * @return void
-     */
-    public function setRequestOptions(RequestOptionsInterface $options)
-    {
-        $this->requestOptions = $options;
+        $this->initHttpClient();
     }
 
     /**
      * Sends the request to the server
-     * @param string $reqMethod Http-method
-     * @param string $reqRoute Request route
-     * @param array  $reqData Request data
+     * @param string                  $reqMethod
+     * @param string                  $reqRoute
+     * @param RequestOptionsInterface $requestOptions
      *
      * @return array
      * @throws ApiException
      * @throws EmptyResponseException
      */
-    public function dispatchRequest($reqMethod, $reqRoute, array $reqData = [])
+    public function dispatchRequest($reqMethod, $reqRoute, RequestOptionsInterface $requestOptions)
     {
         try {
             $request = new Request();
             $request->setAllowCustomMethods(false);
             $request->setMethod($reqMethod);
-            $request->setPost(new Parameters($reqData));
+
+            $request->setPost(new Parameters($requestOptions->getPostArray()));
+            $request->setQuery(new Parameters($requestOptions->getQueryArray()));
+
             $request->getHeaders()->addHeaders($this->getRequestHeaderArray());
             $request->setUri($this->settings->getHostUrl().$reqRoute);
 
-            $this->httpClient->setOptions($this->getRequestOptions());
-            $this->httpClient->setAdapter(Client\Adapter\Curl::class);
             $response = $this->httpClient->send($request);
         } catch (InvalidArgumentException $e) {
             throw new ApiException($e->getMessage());
@@ -118,12 +111,14 @@ class ApiManager implements ApiManagerInterface
     }
 
     /**
-     * @return array
+     * @return void
+     * @throws InvalidArgumentException
      */
-    private function getRequestOptions()
+    private function initHttpClient()
     {
-        $result = [];
-        $result['timeout'] = $this->settings->getTimeout();
-        return $result;
+        $options = [];
+        $options['timeout'] = $this->settings->getTimeout();
+        $this->httpClient->setOptions($options);
+        $this->httpClient->setAdapter(Curl::class);
     }
 }

@@ -42,7 +42,10 @@ class ClientManager implements ClientManagerInterface
     {
         $reqRoute = $this->apiRoute;
         $reqMethod = Request::METHOD_POST;
-        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, $this->hydrator->extract($client));
+        $reqOptions = new RequestOptions();
+        $reqOptions->addPostParameters($this->hydrator->extract($client));
+
+        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, $reqOptions);
         return $this->hydrateClient($responseArr, $client);
     }
 
@@ -50,7 +53,7 @@ class ClientManager implements ClientManagerInterface
     {
         $reqRoute = $this->apiRoute.'/'.$client->getId();
         $reqMethod = Request::METHOD_DELETE;
-        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute);
+        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, new RequestOptions());
         return $this->hydrateClient($responseArr, $client);
     }
 
@@ -72,17 +75,16 @@ class ClientManager implements ClientManagerInterface
     private function apiUpdate(ClientInterface $client, $action = null)
     {
         $reqRoute = $this->apiRoute.'/'.$client->getId();
-        $reqOptions = $this->getRequestOptions();
+        $reqOptions = new RequestOptions();
 
-        $data = $this->hydrator->extract($client);
         if ($action !== null) {
-            $reqOptions->addQueryParameter('action', $action);
-            $data = [];
+            $reqOptions->addQueryParameters(['action' => $action]);
+        } else {
+            $reqOptions->addPostParameters($this->hydrator->extract($client));
         }
 
         $reqMethod = Request::METHOD_PUT;
-        $this->apiService->setRequestOptions($reqOptions);
-        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, $data);
+        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, $reqOptions);
         return $this->hydrateClient($responseArr, $client);
     }
 
@@ -92,7 +94,7 @@ class ClientManager implements ClientManagerInterface
         $reqMethod = Request::METHOD_GET;
 
         try {
-            $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute);
+            $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, new RequestOptions());
         } catch (ApiException $e) {
             throw new ClientNotFoundException($id);
         }
@@ -104,9 +106,12 @@ class ClientManager implements ClientManagerInterface
     {
         $reqRoute = $this->apiRoute;
         $reqMethod = Request::METHOD_GET;
+        $reqOptions = new RequestOptions();
+        $reqOptions->setPage($page);
+        $reqOptions->setPageSize($pageSize);
 
-        $this->apiService->setRequestOptions($this->getRequestOptions($page, $pageSize));
-        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute);
+        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, $reqOptions);
+
         $result = [];
         foreach ($responseArr as $clientData) {
             $result[] = $this->hydrateClient($clientData);
@@ -114,21 +119,12 @@ class ClientManager implements ClientManagerInterface
         return $result;
     }
 
-    private function getRequestOptions($page = 1, $pageSize = 0)
+    private function hydrateClient(array $data, ClientInterface $clientObject = null)
     {
-        $reqOptions = new RequestOptions();
-        $reqOptions->setPageSize($pageSize);
-        $reqOptions->setPage($page);
-        return $reqOptions;
-    }
-
-    private function hydrateClient(array $data, $clientObject = null)
-    {
-        $client = $clientObject;
-        if (!$clientObject instanceof ClientInterface) {
-            $client = new Client();
+        if ($clientObject === null) {
+            $clientObject = new Client();
         }
-        $this->hydrator->hydrate($data, $client);
-        return $client;
+        $this->hydrator->hydrate($data, $clientObject);
+        return $clientObject;
     }
 }

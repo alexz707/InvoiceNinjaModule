@@ -4,6 +4,7 @@ namespace InvoiceNinjaModuleTest\Service;
 
 use InvoiceNinjaModule\Exception\ApiException;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
+use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Service\ClientManager;
 use InvoiceNinjaModule\Service\Interfaces\ApiManagerInterface;
 use Zend\Http\Request;
@@ -41,7 +42,7 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 self::stringContains(Request::METHOD_POST),
                 self::isType('string'),
-                self::isType('array')
+                self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn([]);
 
@@ -81,7 +82,7 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 self::stringContains(Request::METHOD_DELETE),
                 self::isType('string'),
-                self::isType('array')
+                self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn([]);
 
@@ -96,7 +97,7 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 self::stringContains(Request::METHOD_GET),
                 self::isType('string'),
-                self::isType('array')
+                self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn([]);
 
@@ -113,7 +114,7 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 self::stringContains(Request::METHOD_GET),
                 self::isType('string'),
-                self::isType('array')
+                self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willThrowException(new ApiException());
 
@@ -137,10 +138,7 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 self::stringContains(Request::METHOD_PUT),
                 self::isType('string'),
-                self::logicalAnd(
-                    self::isType('array'),
-                    self::isEmpty()
-                )
+                self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn([]);
 
@@ -154,20 +152,12 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->method('getId')
             ->willReturn(777);
 
-        $this->hydratorMock->expects(self::once())
-            ->method('extract')
-            ->with(self::isInstanceOf(ClientInterface::class))
-            ->willReturn(['notempty']);
-
         $this->apiServiceMock->expects(self::once())
             ->method('dispatchRequest')
             ->with(
                 self::stringContains(Request::METHOD_PUT),
                 self::isType('string'),
-                self::logicalAnd(
-                    self::isType('array'),
-                    self::isEmpty()
-                )
+                self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn([]);
 
@@ -181,21 +171,30 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->method('getId')
             ->willReturn(777);
 
-        $this->hydratorMock->expects(self::once())
-            ->method('extract')
-            ->with(self::isInstanceOf(ClientInterface::class))
-            ->willReturn([]);
-
         $this->apiServiceMock->expects(self::once())
             ->method('dispatchRequest')
             ->with(
                 self::stringContains(Request::METHOD_PUT),
                 self::isType('string'),
-                self::isType('array')
+                self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn([]);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->archive($clientMock));
+    }
+
+    public function testGetAllClientsEmpty()
+    {
+        $this->apiServiceMock->expects(self::once())
+            ->method('dispatchRequest')
+            ->with(
+                self::stringContains(Request::METHOD_GET),
+                self::isType('string'),
+                self::isInstanceOf(RequestOptionsInterface::class)
+            )
+            ->willReturn([]);
+
+        self::assertInternalType('array', $this->clientManager->getAllClients());
     }
 
     public function testGetAllClients()
@@ -205,9 +204,9 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 self::stringContains(Request::METHOD_GET),
                 self::isType('string'),
-                self::isType('array')
+                self::isInstanceOf(RequestOptionsInterface::class)
             )
-            ->willReturn([]);
+            ->willReturn(['test' => [] ]);
 
         self::assertInternalType('array', $this->clientManager->getAllClients());
     }

@@ -148,13 +148,17 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $settings = [
+        $settingsArr = [
             Module::TOKEN => 'testtoken',
             Module::TOKEN_TYPE => 'testtokentype',
             Module::API_TIMEOUT => 0,
             Module::HOST_URL => 'http://test.dev',
         ];
-
-        self::assertInstanceOf(Settings::class, new Settings($settings));
+        $settings = new Settings($settingsArr);
+        self::assertInstanceOf(Settings::class, $settings);
+        self::assertSame($settingsArr[Module::TOKEN], $settings->getToken());
+        self::assertSame($settingsArr[Module::TOKEN_TYPE], $settings->getTokenType());
+        self::assertSame($settingsArr[Module::API_TIMEOUT], $settings->getTimeout());
+        self::assertSame($settingsArr[Module::HOST_URL], $settings->getHostUrl());
     }
 }

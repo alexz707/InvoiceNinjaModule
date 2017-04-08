@@ -2,8 +2,8 @@
 
 namespace InvoiceNinjaModuleTest\Service;
 
+use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Model\Interfaces\SettingsInterface;
-use InvoiceNinjaModule\Model\RequestOptions;
 use InvoiceNinjaModule\Service\ApiManager;
 use InvoiceNinjaModule\Service\Interfaces\ApiManagerInterface;
 use Zend\Http\Client;
@@ -21,6 +21,8 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
     private $httpClientMock;
     /** @var  string */
     private $reqMethod;
+    /** @var  \PHPUnit_Framework_MockObject_MockObject */
+    private $requestOptions;
 
     protected function setUp()
     {
@@ -28,6 +30,9 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
         $this->settingsMock = $this->createMock(SettingsInterface::class);
         $this->httpClientMock = $this->createMock(Client::class);
         $this->reqMethod = Request::METHOD_GET;
+        $this->requestOptions = $this->createMock(RequestOptionsInterface::class);
+
+
         $this->manager = new ApiManager($this->settingsMock, $this->httpClientMock);
     }
 
@@ -76,8 +81,61 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
             )
             ->willReturn($response);
 
-        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute));
+
+        $this->manager = new ApiManager($this->settingsMock, $this->httpClientMock);
+
+        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions));
     }
+
+    public function testDispatchRequestWithOptions()
+    {
+        $testTokenType = 'testtokentype';
+        $testToken = 'testtoken';
+        $testReqRoute = 'testroute';
+
+        $this->requestOptions->expects(self::once())
+            ->method('getQueryArray')
+            ->willReturn([]);
+
+        $response = $this->createMock(Response::class);
+        $response->expects(self::once())
+            ->method('getStatusCode')
+            ->willReturn(Response::STATUS_CODE_200);
+
+        $response->expects(self::once())
+            ->method('getBody')
+            ->willReturn('{"data": [0]}');
+
+        $this->settingsMock->expects(self::once())
+            ->method('getTimeout')
+            ->willReturn(10);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getTokenType')
+            ->willReturn($testTokenType);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getToken')
+            ->willReturn($testToken);
+
+        $this->httpClientMock->expects(self::once())
+            ->method('send')
+            ->with(
+                self::logicalAnd(
+                    self::isInstanceOf(RequestInterface::class),
+                    self::callback(function ($request) {
+                        /** @var Request $request*/
+                        return $request->getAllowCustomMethods() === false;
+                    })
+                )
+            )
+            ->willReturn($response);
+
+
+        $this->manager = new ApiManager($this->settingsMock, $this->httpClientMock);
+        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions));
+    }
+
 
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\EmptyResponseException
@@ -114,7 +172,8 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
             ->with(self::isInstanceOf(RequestInterface::class))
             ->willReturn($response);
 
-        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute));
+        $this->manager = new ApiManager($this->settingsMock, $this->httpClientMock);
+        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions));
     }
 
     /**
@@ -152,7 +211,8 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
             ->with(self::isInstanceOf(RequestInterface::class))
             ->willReturn($response);
 
-        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute));
+        $this->manager = new ApiManager($this->settingsMock, $this->httpClientMock);
+        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions));
     }
 
     /**
@@ -163,6 +223,7 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
         $testReqRoute = 'testroute';
+        $requestOptions = $this->createMock(RequestOptionsInterface::class);
 
         $response = $this->createMock(Response::class);
         $response->expects(self::exactly(2))
@@ -186,7 +247,8 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
             ->with(self::isInstanceOf(RequestInterface::class))
             ->willReturn($response);
 
-        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute));
+        $this->manager = new ApiManager($this->settingsMock, $this->httpClientMock);
+        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions));
     }
 
     /**
@@ -197,7 +259,7 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
         $this->reqMethod = 'TESTPUT';
         $testReqRoute = 'testroute';
 
-        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute));
+        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions));
     }
 
     /**
@@ -226,7 +288,8 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
             ->with(self::isInstanceOf(RequestInterface::class))
             ->willThrowException(new Client\Exception\RuntimeException());
 
-        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute));
+        $this->manager = new ApiManager($this->settingsMock, $this->httpClientMock);
+        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions));
     }
 
     public function testDispatchRequestEmpty()
@@ -261,6 +324,7 @@ class ApiManagerTest extends \PHPUnit_Framework_TestCase
             ->with(self::isInstanceOf(RequestInterface::class))
             ->willReturn($response);
 
-        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute));
+        $this->manager = new ApiManager($this->settingsMock, $this->httpClientMock);
+        self::assertInternalType('array', $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions));
     }
 }
