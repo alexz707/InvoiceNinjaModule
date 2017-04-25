@@ -35,4 +35,4 @@ tools:
         enabled: true
         filter:
             paths: ["src/*", "tests/*"]
-sensiolabs_security_checker: true
+    sensiolabs_security_checker: true
