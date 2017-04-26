@@ -9,6 +9,7 @@ before_script:
   - if [[ $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then echo 'xdebug.enable = On' >> /etc/hhvm/php.ini; fi
   - git clone https://github.com/padraic/humbug.git && cd humbug && composer install && cd ..
   - chmod +x ./build/check-humbug-mutators.php
+  - pwd
 
 script:
   - ./vendor/bin/phpunit --disallow-test-output --report-useless-tests --coverage-text --coverage-clover=clover.xml --colors
@@ -26,5 +27,6 @@ matrix:
     - php: hhvm
 
 after_script:
+  - pwd
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover clover.xml
