@@ -11,7 +11,7 @@ before_script:
   - chmod +x ./build/check-humbug-mutators.php
 
 script:
-  - ./vendor/bin/phpunit --disallow-test-output --report-useless-tests --coverage-clover ./clover.xml
+  - ./vendor/bin/phpunit --disallow-test-output --report-useless-tests --coverage-text --coverage-clover=clover.xml --colors
   - ./vendor/bin/phpcs
   - ./humbug/bin/humbug
   - ./build/check-humbug-mutators.php
@@ -27,4 +27,4 @@ matrix:
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover ./clover.xml
+  - php ocular.phar code-coverage:upload --format=php-clover clover.xml

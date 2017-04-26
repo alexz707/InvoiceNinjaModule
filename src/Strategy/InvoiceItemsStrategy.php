@@ -12,7 +12,7 @@ use Zend\Hydrator\Strategy\StrategyInterface;
 
 class InvoiceItemsStrategy implements StrategyInterface
 {
-    /** @var ClassMethods  */
+    /** @var HydratorInterface  */
     private $hydrator;
 
     /**

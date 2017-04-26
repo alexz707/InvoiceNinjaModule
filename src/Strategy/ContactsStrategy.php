@@ -16,7 +16,7 @@ use Zend\Hydrator\Strategy\StrategyInterface;
  */
 class ContactsStrategy implements StrategyInterface
 {
-    /** @var ClassMethods  */
+    /** @var HydratorInterface  */
     private $hydrator;
 
     /**
