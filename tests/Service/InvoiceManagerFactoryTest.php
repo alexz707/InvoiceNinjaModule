@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 25.04.17
- * Time: 22:29
- */
 
 namespace InvoiceNinjaModuleTest\Service;
 
@@ -14,7 +8,6 @@ use InvoiceNinjaModule\Service\InvoiceManager;
 use InvoiceNinjaModule\Service\InvoiceManagerFactory;
 use InvoiceNinjaModule\Service\ObjectService;
 use PHPUnit\Framework\TestCase;
-
 
 class InvoiceManagerFactoryTest extends TestCase
 {
