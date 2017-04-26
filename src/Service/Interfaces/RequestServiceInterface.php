@@ -7,11 +7,11 @@ use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 
 /**
- * Interface ApiManagerInterface
+ * Interface RequestServiceInterface
  *
  * @package InvoiceNinjaModule\Service\Interfaces
  */
-interface ApiManagerInterface
+interface RequestServiceInterface
 {
     /**
      * Sends the request to the server
@@ -23,5 +23,5 @@ interface ApiManagerInterface
      * @throws ApiException
      * @throws EmptyResponseException
      */
-    public function dispatchRequest($reqMethod, $reqRoute, RequestOptionsInterface $requestOptions);
+    public function dispatchRequest($reqMethod, $reqRoute, RequestOptionsInterface $requestOptions) :array;
 }

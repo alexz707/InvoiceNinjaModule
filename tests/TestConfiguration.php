@@ -6,7 +6,7 @@ return [
     ],
     'module_listener_options' => [
         'module_paths' => [
-            '../../../vendor',
+            '../../vendor',
         ],
         'config_glob_paths' => [
         ],

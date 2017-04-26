@@ -2,25 +2,21 @@
 
 namespace InvoiceNinjaModule\Strategy;
 
-use InvoiceNinjaModule\Model\Contact;
 use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
+use InvoiceNinjaModule\Model\Interfaces\InvoiceItemInterface;
+use InvoiceNinjaModule\Model\InvoiceItem;
 use Zend\Hydrator\ClassMethods;
 use Zend\Hydrator\Exception\BadMethodCallException;
 use Zend\Hydrator\HydratorInterface;
 use Zend\Hydrator\Strategy\StrategyInterface;
 
-/**
- * Class ContactsStrategy
- *
- * @package InvoiceNinjaModule\Strategy
- */
-class ContactsStrategy implements StrategyInterface
+class InvoiceItemsStrategy implements StrategyInterface
 {
     /** @var ClassMethods  */
     private $hydrator;
 
     /**
-     * ContactsStrategy constructor.
+     * InvoiceItemsStrategy constructor.
      *
      * @param HydratorInterface $hydrator
      */
@@ -40,9 +36,9 @@ class ContactsStrategy implements StrategyInterface
     public function extract($value)
     {
         $result = [];
-        /** @var ContactInterface $contactObj */
-        foreach ($value as $contactObj) {
-            $result[] = $this->hydrator->extract($contactObj);
+        /** @var InvoiceItemInterface $invoiceItem */
+        foreach ($value as $invoiceItem) {
+            $result[] = $this->hydrator->extract($invoiceItem);
         }
         return $result;
     }
@@ -58,10 +54,10 @@ class ContactsStrategy implements StrategyInterface
     {
         $result = [];
         if (is_array($value)) {
-            foreach ($value as $contact) {
-                $contactObj = new Contact();
-                $this->hydrator->hydrate($contact, $contactObj);
-                $result[] = $contactObj;
+            foreach ($value as $invoiceItemArr) {
+                $invoiceItem = new InvoiceItem();
+                $this->hydrator->hydrate($invoiceItemArr, $invoiceItem);
+                $result[] = $invoiceItem;
             }
         }
         return $result;

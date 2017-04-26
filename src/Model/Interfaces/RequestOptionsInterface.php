@@ -12,20 +12,44 @@ interface RequestOptionsInterface
     /**
      * @param array $params
      */
-    public function addQueryParameters(array $params);
+    public function addQueryParameters(array $params) :void;
 
     /**
      * @param array $params
      */
-    public function addPostParameters(array $params);
+    public function addPostParameters(array $params) :void;
+    /**
+     * @return array
+     */
+    public function getQueryArray() :array;
 
     /**
      * @return array
      */
-    public function getQueryArray();
+    public function getPostArray() :array;
 
     /**
-     * @return array
+     * @param int $pageSize
      */
-    public function getPostArray();
+    public function setPageSize(int $pageSize) :void;
+
+    /**
+     * @param int $page
+     */
+    public function setPage(int $page) :void;
+
+    /**
+     * @param int $clientId
+     */
+    public function setClientId(int $clientId) :void;
+
+    /**
+     * @param int $updated
+     */
+    public function setUpdated(int $updated) :void;
+
+    /**
+     * @param string $include
+     */
+    public function setInclude(string $include) :void;
 }

@@ -2,15 +2,12 @@
 
 namespace InvoiceNinjaModule\Service;
 
-use InvoiceNinjaModule\Exception\ApiException;
-use InvoiceNinjaModule\Exception\ClientNotFoundException;
+use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Model\Client;
+use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
-use InvoiceNinjaModule\Model\RequestOptions;
-use InvoiceNinjaModule\Service\Interfaces\ApiManagerInterface;
 use InvoiceNinjaModule\Service\Interfaces\ClientManagerInterface;
-use Zend\Http\Request;
-use Zend\Hydrator\HydratorInterface;
+use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
 
 /**
  * Class ClientManager
@@ -19,112 +16,80 @@ use Zend\Hydrator\HydratorInterface;
  */
 class ClientManager implements ClientManagerInterface
 {
-    /** @var string  */
-    private $apiRoute = '/clients';
-    /** @var  ApiManagerInterface */
-    private $apiService;
-    /** @var  HydratorInterface */
-    private $hydrator;
+    /** @var ObjectServiceInterface  */
+    private $objectManager;
+    /** @var  string */
+    private $reqRoute;
+    /** @var Client  */
+    private $objectType;
 
-    /**
-     * ClientManager constructor.
-     *
-     * @param ApiManagerInterface $apiService
-     * @param HydratorInterface   $hydrator
-     */
-    public function __construct(ApiManagerInterface $apiService, HydratorInterface $hydrator)
+    public function __construct(ObjectServiceInterface $objectManager)
     {
-        $this->apiService = $apiService;
-        $this->hydrator = $hydrator;
+        $this->reqRoute = '/clients';
+        $this->objectManager = $objectManager;
+        $this->objectType  = new Client();
     }
 
-    public function createClient(ClientInterface $client)
+    public function createClient(ClientInterface $client) :ClientInterface
     {
-        $reqRoute = $this->apiRoute;
-        $reqMethod = Request::METHOD_POST;
-        $reqOptions = new RequestOptions();
-        $reqOptions->addPostParameters($this->hydrator->extract($client));
-
-        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, $reqOptions);
-        return $this->hydrateClient($responseArr, $client);
+        return $this->checkResult($this->objectManager->createObject($client, $this->reqRoute));
     }
 
-    public function delete(ClientInterface $client)
+    public function delete(ClientInterface $client) :ClientInterface
     {
-        $reqRoute = $this->apiRoute.'/'.$client->getId();
-        $reqMethod = Request::METHOD_DELETE;
-        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, new RequestOptions());
-        return $this->hydrateClient($responseArr, $client);
+        return $this->checkResult($this->objectManager->deleteObject($client, $this->reqRoute));
     }
 
-    public function update(ClientInterface $client)
+    public function update(ClientInterface $client) :ClientInterface
     {
-        return $this->apiUpdate($client);
+        return $this->checkResult($this->objectManager->updateObject($client, $this->reqRoute));
     }
 
-    public function restore(ClientInterface $client)
+    public function restore(ClientInterface $client) :ClientInterface
     {
-        return $this->apiUpdate($client, 'restore');
+        return $this->checkResult($this->objectManager->restoreObject($client, $this->reqRoute));
     }
 
-    public function archive(ClientInterface $client)
+    public function archive(ClientInterface $client) :ClientInterface
     {
-        return $this->apiUpdate($client, 'archive');
+        return $this->checkResult($this->objectManager->archiveObject($client, $this->reqRoute));
     }
 
-    private function apiUpdate(ClientInterface $client, $action = null)
+    public function getClientById($id) :ClientInterface
     {
-        $reqRoute = $this->apiRoute.'/'.$client->getId();
-        $reqOptions = new RequestOptions();
-
-        if ($action !== null) {
-            $reqOptions->addQueryParameters(['action' => $action]);
-        } else {
-            $reqOptions->addPostParameters($this->hydrator->extract($client));
-        }
-
-        $reqMethod = Request::METHOD_PUT;
-        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, $reqOptions);
-        return $this->hydrateClient($responseArr, $client);
+        return $this->checkResult($this->objectManager->getObjectById($this->objectType, $id, $this->reqRoute));
     }
 
-    public function getClientById($id)
+    public function findClientsByEmail($email) :array
     {
-        $reqRoute = $this->apiRoute.'/'.$id;
-        $reqMethod = Request::METHOD_GET;
-
-        try {
-            $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, new RequestOptions());
-        } catch (ApiException $e) {
-            throw new ClientNotFoundException($id);
-        }
-
-        return $this->hydrateClient($responseArr);
+        return $this->objectManager->findObjectBy($this->objectType, ['email' => $email], $this->reqRoute);
     }
 
-    public function getAllClients($page = 1, $pageSize = 0)
+    public function findClientsByIdNumber($idNumber) :array
     {
-        $reqRoute = $this->apiRoute;
-        $reqMethod = Request::METHOD_GET;
-        $reqOptions = new RequestOptions();
-        $reqOptions->setPage($page);
-        $reqOptions->setPageSize($pageSize);
+        return $this->objectManager->findObjectBy($this->objectType, ['id_number' => $idNumber], $this->reqRoute);
+    }
 
-        $responseArr = $this->apiService->dispatchRequest($reqMethod, $reqRoute, $reqOptions);
-
-        $result = [];
-        foreach ($responseArr as $clientData) {
-            $result[] = $this->hydrateClient($clientData);
+    public function getAllClients($page = 1, $pageSize = 0) :array
+    {
+        $result = $this->objectManager->getAllObjects($this->objectType, $this->reqRoute, $page, $pageSize);
+        foreach ($result as $client) {
+            $this->checkResult($client);
         }
         return $result;
     }
 
-    private function hydrateClient(array $data, ClientInterface $clientObject = null)
+    /**
+     * @param BaseInterface $client
+     *
+     * @return ClientInterface
+     * @throws InvalidResultException
+     */
+    private function checkResult(BaseInterface $client) :ClientInterface
     {
-        if ($clientObject === null) {
-            $clientObject = new Client();
+        if (!$client instanceof ClientInterface) {
+            throw new InvalidResultException();
         }
-        $this->hydrator->hydrate($data, $clientObject);
-        return $clientObject;
+        return $client;
     }
 }

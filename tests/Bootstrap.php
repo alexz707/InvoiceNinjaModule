@@ -17,13 +17,13 @@ class Bootstrap
         error_reporting(E_ALL);
         chdir(__DIR__);
 
-        $zf2ModulePaths = array(dirname(dirname(__DIR__)));
+        /*$zf2ModulePaths = array(dirname(dirname(__DIR__)));
         if ($path = static::findParentPath('vendor')) {
             $zf2ModulePaths[] = $path;
         }
         if (($path = static::findParentPath('module')) !== $zf2ModulePaths[0]) {
             $zf2ModulePaths[] = $path;
-        }
+        }*/
 
         static::initAutoloader();
 

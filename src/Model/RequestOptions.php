@@ -39,7 +39,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
     /**
      * @param array $params
      */
-    public function addQueryParameters(array $params)
+    public function addQueryParameters(array $params) :void
     {
         $this->additionalGetParams = \array_merge($params, $this->additionalGetParams);
     }
@@ -47,7 +47,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
     /**
      * @param array $params
      */
-    public function addPostParameters(array $params)
+    public function addPostParameters(array $params) :void
     {
         $this->additionalPostParams = \array_merge($params, $this->additionalPostParams);
     }
@@ -55,7 +55,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
     /**
      * @return array
      */
-    public function getQueryArray()
+    public function getQueryArray() :array
     {
         return $this->additionalGetParams;
     }
@@ -63,7 +63,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
     /**
      * @return array
      */
-    public function getPostArray()
+    public function getPostArray() :array
     {
         return $this->additionalPostParams;
     }
@@ -72,7 +72,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
     /**
      * @param int $pageSize
      */
-    public function setPageSize($pageSize)
+    public function setPageSize(int $pageSize) :void
     {
         $this->additionalGetParams[$this->paramPageSize] = $pageSize;
     }
@@ -81,7 +81,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
     /**
      * @param int $page
      */
-    public function setPage($page)
+    public function setPage(int $page) :void
     {
         $this->additionalGetParams[$this->paramPage] = $page;
     }
@@ -89,7 +89,7 @@ updated_at: Timestamp used as a filter to only show recently updated records.
     /**
      * @param int $clientId
      */
-    public function setClientId($clientId)
+    public function setClientId(int $clientId) :void
     {
         $this->additionalGetParams[$this->paramClientId] = $clientId;
     }
@@ -97,15 +97,15 @@ updated_at: Timestamp used as a filter to only show recently updated records.
     /**
      * @param int $updated
      */
-    public function setUpdated($updated)
+    public function setUpdated(int $updated) :void
     {
         $this->additionalGetParams[$this->paramUpdated] = $updated;
     }
 
     /**
-     * @param array $include
+     * @param string $include
      */
-    public function setInclude($include)
+    public function setInclude(string $include) :void
     {
         $this->additionalGetParams[$this->paramInclude] = $include;
     }

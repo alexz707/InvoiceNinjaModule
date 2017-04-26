@@ -12,20 +12,18 @@ interface SettingsInterface
     /**
      * @return string
      */
-    public function getToken();
+    public function getToken() :string;
 
     /**
      * @return string
      */
-    public function getTokenType();
-
+    public function getTokenType() :string;
     /**
      * @return int
      */
-    public function getTimeout();
-
+    public function getTimeout() :int;
     /**
      * @return string
      */
-    public function getHostUrl();
+    public function getHostUrl() :string;
 }

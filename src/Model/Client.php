@@ -5,10 +5,8 @@ namespace InvoiceNinjaModule\Model;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
 use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 
-class Client implements ClientInterface
+class Client extends Base implements ClientInterface
 {
-    /** @var  int */
-    private $id;
     /** @var  string */
     private $name;
     /** @var  float */
@@ -17,12 +15,6 @@ class Client implements ClientInterface
     private $paidToDate;
     /** @var  int */
     private $userId;
-    /** @var  string */
-    private $accountKey;
-    /** @var  \DateTime */
-    private $updatedAt;
-    /** @var  \DateTime */
-    private $archivedAt;
     /** @var  string */
     private $address1;
     /** @var  string */
@@ -39,7 +31,7 @@ class Client implements ClientInterface
     private $workPhone;
     /** @var  string */
     private $privateNotes;
-    /** @var  \DateTime */
+    /** @var  int */
     private $lastLogin;
     /** @var  string */
     private $website;
@@ -47,8 +39,6 @@ class Client implements ClientInterface
     private $industryId;
     /** @var  int */
     private $sizeId;
-    /** @var  bool */
-    private $isDeleted;
     /** @var int  */
     private $paymentTerms;
     /** @var  string */
@@ -68,28 +58,13 @@ class Client implements ClientInterface
 
     public function __construct()
     {
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
+        $this->contacts = [];
     }
 
     /**
      * @return float
      */
-    public function getBalance()
+    public function getBalance() :float
     {
         return $this->balance;
     }
@@ -97,7 +72,7 @@ class Client implements ClientInterface
     /**
      * @param float $balance
      */
-    public function setBalance($balance)
+    public function setBalance(float $balance) :void
     {
         $this->balance = $balance;
     }
@@ -105,7 +80,7 @@ class Client implements ClientInterface
     /**
      * @return float
      */
-    public function getPaidToDate()
+    public function getPaidToDate() :float
     {
         return $this->paidToDate;
     }
@@ -113,7 +88,7 @@ class Client implements ClientInterface
     /**
      * @param float $paidToDate
      */
-    public function setPaidToDate($paidToDate)
+    public function setPaidToDate(float $paidToDate) :void
     {
         $this->paidToDate = $paidToDate;
     }
@@ -121,7 +96,7 @@ class Client implements ClientInterface
     /**
      * @return int
      */
-    public function getUserId()
+    public function getUserId() :int
     {
         return $this->userId;
     }
@@ -129,7 +104,7 @@ class Client implements ClientInterface
     /**
      * @param int $userId
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId) :void
     {
         $this->userId = $userId;
     }
@@ -137,55 +112,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getAccountKey()
-    {
-        return $this->accountKey;
-    }
-
-    /**
-     * @param string $accountKey
-     */
-    public function setAccountKey($accountKey)
-    {
-        $this->accountKey = $accountKey;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getArchivedAt()
-    {
-        return $this->archivedAt;
-    }
-
-    /**
-     * @param \DateTime $archivedAt
-     */
-    public function setArchivedAt($archivedAt)
-    {
-        $this->archivedAt = $archivedAt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAddress1()
+    public function getAddress1() :string
     {
         return $this->address1;
     }
@@ -193,7 +120,7 @@ class Client implements ClientInterface
     /**
      * @param string $address1
      */
-    public function setAddress1($address1)
+    public function setAddress1(string $address1) :void
     {
         $this->address1 = $address1;
     }
@@ -201,7 +128,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getAddress2()
+    public function getAddress2() :string
     {
         return $this->address2;
     }
@@ -209,7 +136,7 @@ class Client implements ClientInterface
     /**
      * @param string $address2
      */
-    public function setAddress2($address2)
+    public function setAddress2(string $address2) :void
     {
         $this->address2 = $address2;
     }
@@ -217,7 +144,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getCity()
+    public function getCity() :string
     {
         return $this->city;
     }
@@ -225,7 +152,7 @@ class Client implements ClientInterface
     /**
      * @param string $city
      */
-    public function setCity($city)
+    public function setCity(string $city) :void
     {
         $this->city = $city;
     }
@@ -233,7 +160,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getState()
+    public function getState() :string
     {
         return $this->state;
     }
@@ -241,7 +168,7 @@ class Client implements ClientInterface
     /**
      * @param string $state
      */
-    public function setState($state)
+    public function setState(string $state) :void
     {
         $this->state = $state;
     }
@@ -249,7 +176,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getPostalCode()
+    public function getPostalCode() :string
     {
         return $this->postalCode;
     }
@@ -257,7 +184,7 @@ class Client implements ClientInterface
     /**
      * @param string $postalCode
      */
-    public function setPostalCode($postalCode)
+    public function setPostalCode(string $postalCode) :void
     {
         $this->postalCode = $postalCode;
     }
@@ -265,7 +192,7 @@ class Client implements ClientInterface
     /**
      * @return int
      */
-    public function getCountryId()
+    public function getCountryId() :int
     {
         return $this->countryId;
     }
@@ -273,7 +200,7 @@ class Client implements ClientInterface
     /**
      * @param int $countryId
      */
-    public function setCountryId($countryId)
+    public function setCountryId(int $countryId) :void
     {
         $this->countryId = $countryId;
     }
@@ -281,7 +208,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getWorkPhone()
+    public function getWorkPhone() :string
     {
         return $this->workPhone;
     }
@@ -289,7 +216,7 @@ class Client implements ClientInterface
     /**
      * @param string $workPhone
      */
-    public function setWorkPhone($workPhone)
+    public function setWorkPhone(string $workPhone) :void
     {
         $this->workPhone = $workPhone;
     }
@@ -297,7 +224,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getPrivateNotes()
+    public function getPrivateNotes() :string
     {
         return $this->privateNotes;
     }
@@ -305,31 +232,23 @@ class Client implements ClientInterface
     /**
      * @param string $privateNotes
      */
-    public function setPrivateNotes($privateNotes)
+    public function setPrivateNotes(string $privateNotes) :void
     {
         $this->privateNotes = $privateNotes;
     }
 
     /**
-     * @return \DateTime
+     * @return int
      */
-    public function getLastLogin()
+    public function getLastLogin() :?int
     {
         return $this->lastLogin;
     }
 
     /**
-     * @param \DateTime $lastLogin
-     */
-    public function setLastLogin($lastLogin)
-    {
-        $this->lastLogin = $lastLogin;
-    }
-
-    /**
      * @return string
      */
-    public function getWebsite()
+    public function getWebsite() :string
     {
         return $this->website;
     }
@@ -337,7 +256,7 @@ class Client implements ClientInterface
     /**
      * @param string $website
      */
-    public function setWebsite($website)
+    public function setWebsite(string $website) :void
     {
         $this->website = $website;
     }
@@ -345,7 +264,7 @@ class Client implements ClientInterface
     /**
      * @return int
      */
-    public function getIndustryId()
+    public function getIndustryId() :int
     {
         return $this->industryId;
     }
@@ -353,7 +272,7 @@ class Client implements ClientInterface
     /**
      * @param int $industryId
      */
-    public function setIndustryId($industryId)
+    public function setIndustryId(int $industryId) :void
     {
         $this->industryId = $industryId;
     }
@@ -361,7 +280,7 @@ class Client implements ClientInterface
     /**
      * @return int
      */
-    public function getSizeId()
+    public function getSizeId() :int
     {
         return $this->sizeId;
     }
@@ -369,31 +288,15 @@ class Client implements ClientInterface
     /**
      * @param int $sizeId
      */
-    public function setSizeId($sizeId)
+    public function setSizeId(int $sizeId) :void
     {
         $this->sizeId = $sizeId;
     }
 
     /**
-     * @return bool
-     */
-    public function isIsDeleted()
-    {
-        return $this->isDeleted;
-    }
-
-    /**
-     * @param bool $isDeleted
-     */
-    public function setIsDeleted($isDeleted)
-    {
-        $this->isDeleted = $isDeleted;
-    }
-
-    /**
      * @return int
      */
-    public function getPaymentTerms()
+    public function getPaymentTerms() :int
     {
         return $this->paymentTerms;
     }
@@ -401,7 +304,7 @@ class Client implements ClientInterface
     /**
      * @param int $paymentTerms
      */
-    public function setPaymentTerms($paymentTerms)
+    public function setPaymentTerms(int $paymentTerms) :void
     {
         $this->paymentTerms = $paymentTerms;
     }
@@ -409,7 +312,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getCustomValue1()
+    public function getCustomValue1() :?string
     {
         return $this->customValue1;
     }
@@ -417,7 +320,7 @@ class Client implements ClientInterface
     /**
      * @param string $customValue1
      */
-    public function setCustomValue1($customValue1)
+    public function setCustomValue1(string $customValue1) :void
     {
         $this->customValue1 = $customValue1;
     }
@@ -425,7 +328,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getCustomValue2()
+    public function getCustomValue2() :?string
     {
         return $this->customValue2;
     }
@@ -433,7 +336,7 @@ class Client implements ClientInterface
     /**
      * @param string $customValue2
      */
-    public function setCustomValue2($customValue2)
+    public function setCustomValue2(string $customValue2) :void
     {
         $this->customValue2 = $customValue2;
     }
@@ -441,7 +344,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getVatNumber()
+    public function getVatNumber() :string
     {
         return $this->vatNumber;
     }
@@ -449,7 +352,7 @@ class Client implements ClientInterface
     /**
      * @param string $vatNumber
      */
-    public function setVatNumber($vatNumber)
+    public function setVatNumber(string $vatNumber) :void
     {
         $this->vatNumber = $vatNumber;
     }
@@ -457,7 +360,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getIdNumber()
+    public function getIdNumber() :string
     {
         return $this->idNumber;
     }
@@ -465,7 +368,7 @@ class Client implements ClientInterface
     /**
      * @param string $idNumber
      */
-    public function setIdNumber($idNumber)
+    public function setIdNumber(string $idNumber) :void
     {
         $this->idNumber = $idNumber;
     }
@@ -473,7 +376,7 @@ class Client implements ClientInterface
     /**
      * @return int
      */
-    public function getLanguageId()
+    public function getLanguageId() :int
     {
         return $this->languageId;
     }
@@ -481,7 +384,7 @@ class Client implements ClientInterface
     /**
      * @param int $languageId
      */
-    public function setLanguageId($languageId)
+    public function setLanguageId(int $languageId) :void
     {
         $this->languageId = $languageId;
     }
@@ -489,7 +392,7 @@ class Client implements ClientInterface
     /**
      * @return ContactInterface[]
      */
-    public function getContacts()
+    public function getContacts() :array
     {
         return $this->contacts;
     }
@@ -497,7 +400,7 @@ class Client implements ClientInterface
     /**
      * @param ContactInterface[] $contacts
      */
-    public function setContacts($contacts)
+    public function setContacts(array $contacts) :void
     {
         $this->contacts = $contacts;
     }
@@ -505,7 +408,7 @@ class Client implements ClientInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName() :string
     {
         return $this->name;
     }
@@ -513,7 +416,7 @@ class Client implements ClientInterface
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name) :void
     {
         $this->name = $name;
     }
@@ -521,7 +424,7 @@ class Client implements ClientInterface
     /**
      * @return int
      */
-    public function getCurrencyId()
+    public function getCurrencyId() :int
     {
         return $this->currencyId;
     }
@@ -529,7 +432,7 @@ class Client implements ClientInterface
     /**
      * @param int $currencyId
      */
-    public function setCurrencyId($currencyId)
+    public function setCurrencyId(int $currencyId) :void
     {
         $this->currencyId = $currencyId;
     }

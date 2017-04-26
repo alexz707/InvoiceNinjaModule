@@ -2,30 +2,26 @@
 
 namespace InvoiceNinjaModuleTest\Service;
 
-use InvoiceNinjaModule\Exception\ApiException;
+use InvoiceNinjaModule\Exception\NotFoundException;
+use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
-use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Service\ClientManager;
-use InvoiceNinjaModule\Service\Interfaces\ApiManagerInterface;
-use Zend\Http\Request;
-use Zend\Hydrator\HydratorInterface;
+use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
+use PHPUnit\Framework\TestCase;
 
-class ClientManagerTest extends \PHPUnit_Framework_TestCase
+class ClientManagerTest extends TestCase
 {
     /** @var  ClientManager */
     private $clientManager;
     /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    private $apiServiceMock;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    private $hydratorMock;
+    private $objectManagerMock;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->apiServiceMock = $this->createMock(ApiManagerInterface::class);
-        $this->hydratorMock = $this->createMock(HydratorInterface::class);
-        $this->clientManager = new ClientManager($this->apiServiceMock, $this->hydratorMock);
+        $this->objectManagerMock = $this->createMock(ObjectServiceInterface::class);
+        $this->clientManager = new ClientManager($this->objectManagerMock);
     }
 
     public function testCreate()
@@ -37,54 +33,32 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
+        $this->objectManagerMock->expects(self::once())
+            ->method('createObject')
             ->with(
-                self::stringContains(Request::METHOD_POST),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::stringContains('/clients')
             )
-            ->willReturn([]);
+            ->willReturn($clientMock);
 
-        $this->hydratorMock->expects(self::once())
-            ->method('extract')
-            ->with(self::isInstanceOf(ClientInterface::class))
-            ->willReturn([]);
-
-        $this->hydratorMock->expects(self::once())
-            ->method('hydrate')
-            ->with(
-                self::isType('array'),
-                self::isInstanceOf(ClientInterface::class)
-            );
+        $this->clientManager = new ClientManager($this->objectManagerMock);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->createClient($clientMock));
     }
 
-
-
     public function testDelete()
     {
         $clientMock = $this->createMock(ClientInterface::class);
-        $clientMock->expects(self::once())
-            ->method('getId')
-            ->willReturn(777);
 
-        $this->hydratorMock->expects(self::once())
-            ->method('hydrate')
+        $this->objectManagerMock->expects(self::once())
+            ->method('deleteObject')
             ->with(
-                self::isType('array'),
-                self::isInstanceOf(ClientInterface::class)
-            );
-
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
-            ->with(
-                self::stringContains(Request::METHOD_DELETE),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::stringContains('/clients')
             )
-            ->willReturn([]);
+            ->willReturn($clientMock);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->delete($clientMock));
     }
@@ -92,55 +66,93 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetClientById()
     {
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
+        $clientMock = $this->createMock(ClientInterface::class);
+
+        $this->objectManagerMock->expects(self::once())
+            ->method('getObjectById')
             ->with(
-                self::stringContains(Request::METHOD_GET),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::isType('integer'),
+                self::stringContains('/clients')
             )
-            ->willReturn([]);
+            ->willReturn($clientMock);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->getClientById(777));
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\ClientNotFoundException
+     * @expectedException  \InvoiceNinjaModule\Exception\NotFoundException
      */
     public function testGetClientByIdException()
     {
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
+        $this->objectManagerMock->expects(self::once())
+            ->method('getObjectById')
             ->with(
-                self::stringContains(Request::METHOD_GET),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::isType('integer'),
+                self::stringContains('/clients')
             )
-            ->willThrowException(new ApiException());
+            ->willThrowException(new NotFoundException());
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->getClientById(777));
     }
 
+    public function testFindClientsByEmail()
+    {
+        $clientMock = $this->createMock(ClientInterface::class);
+
+        $this->objectManagerMock->expects(self::once())
+            ->method('findObjectBy')
+            ->with(
+                self::isInstanceOf(ClientInterface::class),
+                self::isType('array'),
+                self::stringContains('/clients')
+            )
+            ->willReturn([$clientMock]);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
+
+        $result = $this->clientManager->findClientsByEmail('test@test.com');
+        self::assertInternalType('array', $result);
+        self::assertNotEmpty($result);
+    }
+
+    public function testFindClientsByIdNumber()
+    {
+        $clientMock = $this->createMock(ClientInterface::class);
+
+        $this->objectManagerMock->expects(self::once())
+            ->method('findObjectBy')
+            ->with(
+                self::isInstanceOf(ClientInterface::class),
+                self::isType('array'),
+                self::stringContains('/clients')
+            )
+            ->willReturn([$clientMock]);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
+
+        $result = $this->clientManager->findClientsByIdNumber('12343');
+        self::assertInternalType('array', $result);
+        self::assertNotEmpty($result);
+    }
+
+
     public function testUpdate()
     {
         $clientMock = $this->createMock(ClientInterface::class);
-        $clientMock->expects(self::once())
-            ->method('getId')
-            ->willReturn(777);
 
-        $this->hydratorMock->expects(self::once())
-            ->method('extract')
-            ->with(self::isInstanceOf(ClientInterface::class))
-            ->willReturn([]);
-
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
+        $this->objectManagerMock->expects(self::once())
+            ->method('updateObject')
             ->with(
-                self::stringContains(Request::METHOD_PUT),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::stringContains('/clients')
             )
-            ->willReturn([]);
+            ->willReturn($clientMock);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->update($clientMock));
     }
@@ -148,18 +160,16 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
     public function testRestore()
     {
         $clientMock = $this->createMock(ClientInterface::class);
-        $clientMock->expects(self::once())
-            ->method('getId')
-            ->willReturn(777);
 
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
+        $this->objectManagerMock->expects(self::once())
+            ->method('restoreObject')
             ->with(
-                self::stringContains(Request::METHOD_PUT),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::stringContains('/clients')
             )
-            ->willReturn([]);
+            ->willReturn($clientMock);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->restore($clientMock));
     }
@@ -167,46 +177,74 @@ class ClientManagerTest extends \PHPUnit_Framework_TestCase
     public function testArchive()
     {
         $clientMock = $this->createMock(ClientInterface::class);
-        $clientMock->expects(self::once())
-            ->method('getId')
-            ->willReturn(777);
 
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
+        $this->objectManagerMock->expects(self::once())
+            ->method('archiveObject')
             ->with(
-                self::stringContains(Request::METHOD_PUT),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::stringContains('/clients')
             )
-            ->willReturn([]);
+            ->willReturn($clientMock);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
 
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->archive($clientMock));
     }
 
     public function testGetAllClientsEmpty()
     {
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
+        $this->objectManagerMock->expects(self::once())
+            ->method('getAllObjects')
             ->with(
-                self::stringContains(Request::METHOD_GET),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::stringContains('/clients'),
+                self::isType('integer'),
+                self::isType('integer')
             )
             ->willReturn([]);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
 
         self::assertInternalType('array', $this->clientManager->getAllClients());
     }
 
     public function testGetAllClients()
     {
-        $this->apiServiceMock->expects(self::once())
-            ->method('dispatchRequest')
+        $clientMock = $this->createMock(ClientInterface::class);
+
+        $this->objectManagerMock->expects(self::once())
+            ->method('getAllObjects')
             ->with(
-                self::stringContains(Request::METHOD_GET),
-                self::isType('string'),
-                self::isInstanceOf(RequestOptionsInterface::class)
+                self::isInstanceOf(ClientInterface::class),
+                self::stringContains('/clients'),
+                self::isType('integer'),
+                self::isType('integer')
             )
-            ->willReturn(['test' => [] ]);
+            ->willReturn([ 'test' => $clientMock ]);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
+
+        self::assertInternalType('array', $this->clientManager->getAllClients());
+    }
+
+    /**
+     * @expectedException \InvoiceNinjaModule\Exception\InvalidResultException
+     */
+    public function testGetAllClientsOtherResult()
+    {
+        $clientMock = $this->createMock(BaseInterface::class);
+
+        $this->objectManagerMock->expects(self::once())
+            ->method('getAllObjects')
+            ->with(
+                self::isInstanceOf(ClientInterface::class),
+                self::stringContains('/clients'),
+                self::isType('integer'),
+                self::isType('integer')
+            )
+            ->willReturn([ 'test' => $clientMock ]);
+
+        $this->clientManager = new ClientManager($this->objectManagerMock);
 
         self::assertInternalType('array', $this->clientManager->getAllClients());
     }

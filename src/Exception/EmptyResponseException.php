@@ -9,5 +9,4 @@ namespace InvoiceNinjaModule\Exception;
  */
 class EmptyResponseException extends \Exception
 {
-
 }

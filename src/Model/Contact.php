@@ -4,103 +4,59 @@ namespace InvoiceNinjaModule\Model;
 
 use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 
-class Contact implements ContactInterface
+class Contact extends Base implements ContactInterface
 {
-    /** @var  bool */
-    private $is_owner;
-    /** @var  int */
-    private $id;
     /** @var  string */
-    private $first_name;
+    private $firstName;
     /** @var  string */
-    private $last_name;
+    private $lastName;
     /** @var  string */
     private $email;
-    /** @var  \DateTime */
-    private $updated_at;
-    /** @var  \DateTime */
-    private $archived_at;
     /** @var bool */
-    private $is_primary;
+    private $isPrimary;
     /** @var  string */
     private $phone;
-    /** @var  \DateTime */
-    private $last_login;
+    /** @var  int */
+    private $lastLogin;
     /** @var  bool */
-    private $send_invoice;
+    private $sendInvoice;
 
-    public function __construct()
+    /**
+     * @return string
+     */
+    public function getFirstName() :string
     {
+        return $this->firstName;
     }
 
     /**
-     * @return bool
+     * @param string $firstName
      */
-    public function isIsOwner()
+    public function setFirstName(string $firstName) :void
     {
-        return $this->is_owner;
-    }
-
-    /**
-     * @param bool $is_owner
-     */
-    public function setIsOwner($is_owner)
-    {
-        $this->is_owner = $is_owner;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
+        $this->firstName = $firstName;
     }
 
     /**
      * @return string
      */
-    public function getFirstName()
+    public function getLastName() :string
     {
-        return $this->first_name;
+        return $this->lastName;
     }
 
     /**
-     * @param string $first_name
+     * @param string $lastName
      */
-    public function setFirstName($first_name)
+    public function setLastName(string $lastName) :void
     {
-        $this->first_name = $first_name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->last_name;
-    }
-
-    /**
-     * @param string $last_name
-     */
-    public function setLastName($last_name)
-    {
-        $this->last_name = $last_name;
+        $this->lastName = $lastName;
     }
 
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail() :string
     {
         return $this->email;
     }
@@ -108,63 +64,31 @@ class Contact implements ContactInterface
     /**
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail(string $email) :void
     {
         $this->email = $email;
     }
 
     /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updated_at;
-    }
-
-    /**
-     * @param \DateTime $updated_at
-     */
-    public function setUpdatedAt($updated_at)
-    {
-        $this->updated_at = $updated_at;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getArchivedAt()
-    {
-        return $this->archived_at;
-    }
-
-    /**
-     * @param \DateTime $archived_at
-     */
-    public function setArchivedAt($archived_at)
-    {
-        $this->archived_at = $archived_at;
-    }
-
-    /**
      * @return bool
      */
-    public function isIsPrimary()
+    public function isPrimary() :bool
     {
-        return $this->is_primary;
+        return $this->isPrimary;
     }
 
     /**
-     * @param bool $is_primary
+     * @param bool $isPrimary
      */
-    public function setIsPrimary($is_primary)
+    public function setPrimary(bool $isPrimary) :void
     {
-        $this->is_primary = $is_primary;
+        $this->isPrimary = $isPrimary;
     }
 
     /**
      * @return string
      */
-    public function getPhone()
+    public function getPhone() :string
     {
         return $this->phone;
     }
@@ -172,40 +96,32 @@ class Contact implements ContactInterface
     /**
      * @param string $phone
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone) :void
     {
         $this->phone = $phone;
     }
 
     /**
-     * @return \DateTime
+     * @return int
      */
-    public function getLastLogin()
+    public function getLastLogin() :?int
     {
-        return $this->last_login;
-    }
-
-    /**
-     * @param \DateTime $last_login
-     */
-    public function setLastLogin($last_login)
-    {
-        $this->last_login = $last_login;
+        return $this->lastLogin;
     }
 
     /**
      * @return bool
      */
-    public function isSendInvoice()
+    public function isSendInvoice() :bool
     {
-        return $this->send_invoice;
+        return $this->sendInvoice;
     }
 
     /**
-     * @param bool $send_invoice
+     * @param bool $sendInvoice
      */
-    public function setSendInvoice($send_invoice)
+    public function setSendInvoice(bool $sendInvoice) :void
     {
-        $this->send_invoice = $send_invoice;
+        $this->sendInvoice = $sendInvoice;
     }
 }

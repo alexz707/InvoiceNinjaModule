@@ -3,17 +3,20 @@
 namespace InvoiceNinjaModule\Service;
 
 use Interop\Container\ContainerInterface;
+use InvoiceNinjaModule\Model\Settings;
+use Zend\Http\Client;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
- * Class ClientManagerFactory
+ * Class RequestServiceFactory
  *
  * @package InvoiceNinjaModule\Service
  */
-class ClientManagerFactory implements FactoryInterface
+class RequestServiceFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new ClientManager($container->get(ObjectService::class));
+        $settingsObj = $container->get(Settings::class);
+        return new RequestService($settingsObj, new Client());
     }
 }
