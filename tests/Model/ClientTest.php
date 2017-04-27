@@ -37,16 +37,5 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         self::assertEmpty($client->getVatNumber());
         self::assertEmpty($client->getIdNumber());
         self::assertEmpty($client->getName());
-
-
-
-
-
-
-
-
-
-
-
     }
 }
