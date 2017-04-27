@@ -1,0 +1,12 @@
+<?php
+declare(strict_types=1);
+
+namespace InvoiceNinjaModule;
+
+return [
+    'invoiceninja' => [
+        Module::API_TIMEOUT => 100,
+        Module::TOKEN       => 'YOURTOKEN',
+        Module::HOST_URL    => 'http://ninja.dev/api/v1'
+    ],
+];
