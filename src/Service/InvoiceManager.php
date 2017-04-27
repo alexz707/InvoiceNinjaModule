@@ -20,7 +20,7 @@ class InvoiceManager implements InvoiceManagerInterface
     private $objectManager;
     /** @var  string */
     private $reqRoute;
-    /** @var Invoice  */
+    /** @var InvoiceInterface  */
     private $objectType;
 
     /**
@@ -126,7 +126,7 @@ class InvoiceManager implements InvoiceManagerInterface
     {
         $result = $this->objectManager->findObjectBy(
             $this->objectType,
-            [Invoice::INVOICE_NR => $invoiceNumber],
+            [InvoiceInterface::INVOICE_NR => $invoiceNumber],
             $this->reqRoute
         );
 
@@ -135,7 +135,7 @@ class InvoiceManager implements InvoiceManagerInterface
         }
 
         if (empty($result)) {
-            throw new NotFoundException(Invoice::INVOICE_NR.' '.$invoiceNumber);
+            throw new NotFoundException(InvoiceInterface::INVOICE_NR.' '.$invoiceNumber);
         }
         throw new InvalidResultException();
     }

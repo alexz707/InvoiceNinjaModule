@@ -7,6 +7,7 @@ use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 
 /**
  * Class Contact
+ * @codeCoverageIgnore
  */
 class Contact extends Base implements ContactInterface
 {

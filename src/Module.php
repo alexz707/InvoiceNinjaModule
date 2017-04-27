@@ -7,6 +7,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 /**
  * Class Module
+ * @codeCoverageIgnore
  */
 class Module implements ConfigProviderInterface
 {

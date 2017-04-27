@@ -5,6 +5,7 @@ namespace InvoiceNinjaModule\Model;
 
 /**
  * Class Product
+ * @codeCoverageIgnore
  */
 class Product extends Base
 {

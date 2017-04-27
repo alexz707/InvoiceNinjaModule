@@ -6,6 +6,7 @@ namespace InvoiceNinjaModuleTest\Service;
 use InvoiceNinjaModule\Exception\ApiException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
+use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
 use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use InvoiceNinjaModule\Service\ObjectService;
@@ -395,6 +396,33 @@ class ObjectManagerTest extends TestCase
                 self::isInstanceOf(BaseInterface::class)
             )
             ->willReturn($this->createMock(BaseInterface::class));
+
+        self::assertInternalType('array', $this->objectManager->getAllObjects($baseMock, $this->testRoute));
+    }
+
+    /**
+     * @expectedException  \InvoiceNinjaModule\Exception\InvalidResultException
+     */
+    public function testGetAllClientsException() :void
+    {
+        $baseMock = $this->createMock(BaseInterface::class);
+
+        $this->requestServiceMock->expects(self::once())
+            ->method('dispatchRequest')
+            ->with(
+                self::stringContains(Request::METHOD_GET),
+                self::stringContains($this->testRoute),
+                self::isInstanceOf(RequestOptionsInterface::class)
+            )
+            ->willReturn(['test' => ['id' => 1] ]);
+
+        $this->hydratorMock->expects(self::once())
+            ->method('hydrate')
+            ->with(
+                self::isType('array'),
+                self::isInstanceOf(BaseInterface::class)
+            )
+            ->willReturn($this->createMock(\stdClass::class));
 
         self::assertInternalType('array', $this->objectManager->getAllObjects($baseMock, $this->testRoute));
     }

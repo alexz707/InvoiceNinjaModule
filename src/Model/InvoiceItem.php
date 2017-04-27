@@ -7,6 +7,7 @@ use InvoiceNinjaModule\Model\Interfaces\InvoiceItemInterface;
 
 /**
  * Class InvoiceItem
+ * @codeCoverageIgnore
  */
 class InvoiceItem extends Base implements InvoiceItemInterface
 {
