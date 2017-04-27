@@ -5,8 +5,6 @@ namespace InvoiceNinjaModule\Exception;
 
 /**
  * Class InvalidParameterException
- *
- * @package InvoiceNinjaModule\Exception
  */
 class InvalidParameterException extends \Exception
 {

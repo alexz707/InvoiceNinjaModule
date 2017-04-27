@@ -7,8 +7,6 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 /**
  * Class Module
- *
- * @package InvoiceNinjaModule
  */
 class Module implements ConfigProviderInterface
 {

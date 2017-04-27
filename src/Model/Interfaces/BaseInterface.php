@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model\Interfaces;
 
+/**
+ * Interface BaseInterface
+ */
 interface BaseInterface
 {
     /**

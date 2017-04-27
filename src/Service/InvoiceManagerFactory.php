@@ -6,6 +6,9 @@ namespace InvoiceNinjaModule\Service;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
+/**
+ * Class InvoiceManagerFactory
+ */
 class InvoiceManagerFactory implements FactoryInterface
 {
     /**

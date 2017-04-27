@@ -5,6 +5,9 @@ namespace InvoiceNinjaModule\Model;
 
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 
+/**
+ * Class Base
+ */
 class Base implements BaseInterface
 {
     /** @var  int */

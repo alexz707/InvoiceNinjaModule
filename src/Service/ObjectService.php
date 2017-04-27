@@ -6,6 +6,7 @@ namespace InvoiceNinjaModule\Service;
 use InvoiceNinjaModule\Exception\ApiException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\InvalidParameterException;
+use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Model\RequestOptions;
@@ -16,8 +17,6 @@ use Zend\Hydrator\HydratorInterface;
 
 /**
  * Class ObjectService
- *
- * @package InvoiceNinjaModule\Service
  */
 final class ObjectService implements ObjectServiceInterface
 {
@@ -51,6 +50,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface
      * @throws ApiException
      * @throws EmptyResponseException
+     * @throws InvalidResultException
      */
     public function createObject(BaseInterface $object, string $reqRoute) :BaseInterface
     {
@@ -68,6 +68,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface
      * @throws EmptyResponseException
      * @throws NotFoundException
+     * @throws InvalidResultException
      */
     public function getObjectById(BaseInterface $object, int $id, string $reqRoute) :BaseInterface
     {
@@ -90,6 +91,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface[]
      * @throws ApiException
      * @throws InvalidParameterException
+     * @throws InvalidResultException
      */
     public function findObjectBy(BaseInterface $object, array $searchTerm, string $reqRoute) :array
     {
@@ -120,6 +122,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface
      * @throws ApiException
      * @throws EmptyResponseException
+     * @throws InvalidResultException
      */
     public function restoreObject(BaseInterface $object, string $reqRoute) :BaseInterface
     {
@@ -133,6 +136,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface
      * @throws ApiException
      * @throws EmptyResponseException
+     * @throws InvalidResultException
      */
     public function archiveObject(BaseInterface $object, string $reqRoute) :BaseInterface
     {
@@ -146,6 +150,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface
      * @throws ApiException
      * @throws EmptyResponseException
+     * @throws InvalidResultException
      */
     public function updateObject(BaseInterface $object, string $reqRoute) :BaseInterface
     {
@@ -160,6 +165,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface
      * @throws ApiException
      * @throws EmptyResponseException
+     * @throws InvalidResultException
      */
     private function update(BaseInterface $object, $reqRoute, ?string $action = null) :BaseInterface
     {
@@ -186,6 +192,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface
      * @throws ApiException
      * @throws EmptyResponseException
+     * @throws InvalidResultException
      */
     public function deleteObject(BaseInterface $object, string $reqRoute) :BaseInterface
     {
@@ -208,6 +215,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface[]
      * @throws ApiException
      * @throws EmptyResponseException
+     * @throws InvalidResultException
      */
     public function getAllObjects(BaseInterface $object, string $reqRoute, int $page = 1, int $pageSize = 0) :array
     {
@@ -245,9 +253,14 @@ final class ObjectService implements ObjectServiceInterface
      * @param BaseInterface $object
      *
      * @return BaseInterface
+     * @throws InvalidResultException
      */
     private function hydrateObject(array $data, BaseInterface $object) :BaseInterface
     {
-        return $this->hydrator->hydrate($data, $object);
+        $result = $this->hydrator->hydrate($data, $object);
+        if ($result instanceof BaseInterface) {
+            return $result;
+        }
+        throw new InvalidResultException();
     }
 }

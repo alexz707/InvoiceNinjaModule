@@ -1,11 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Model;
 
 use InvoiceNinjaModule\Model\Client;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
+use PHPUnit\Framework\TestCase;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     public function testCreate() :void
     {

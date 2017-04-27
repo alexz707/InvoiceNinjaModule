@@ -5,6 +5,9 @@ namespace InvoiceNinjaModule\Model;
 
 use InvoiceNinjaModule\Model\Interfaces\InvoiceInterface;
 
+/**
+ * Class Invoice
+ */
 class Invoice extends Base implements InvoiceInterface
 {
     const STATUS_DRAFT = 1;

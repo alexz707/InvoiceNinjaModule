@@ -8,8 +8,6 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class ObjectServiceFactory
- *
- * @package InvoiceNinjaModule\Service
  */
 class ObjectServiceFactory implements FactoryInterface
 {

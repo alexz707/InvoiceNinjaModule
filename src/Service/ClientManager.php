@@ -12,8 +12,6 @@ use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
 
 /**
  * Class ClientManager
- *
- * @package InvoiceNinjaModule\Service
  */
 class ClientManager implements ClientManagerInterface
 {
@@ -24,6 +22,11 @@ class ClientManager implements ClientManagerInterface
     /** @var Client  */
     private $objectType;
 
+    /**
+     * ClientManager constructor.
+     *
+     * @param ObjectServiceInterface $objectManager
+     */
     public function __construct(ObjectServiceInterface $objectManager)
     {
         $this->reqRoute = '/clients';
@@ -31,46 +34,119 @@ class ClientManager implements ClientManagerInterface
         $this->objectType  = new Client();
     }
 
+    /**
+     * @param ClientInterface $client
+     *
+     * @return ClientInterface
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     */
     public function createClient(ClientInterface $client) :ClientInterface
     {
         return $this->checkResult($this->objectManager->createObject($client, $this->reqRoute));
     }
 
+    /**
+     * @param ClientInterface $client
+     *
+     * @return ClientInterface
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     */
     public function delete(ClientInterface $client) :ClientInterface
     {
         return $this->checkResult($this->objectManager->deleteObject($client, $this->reqRoute));
     }
 
+    /**
+     * @param ClientInterface $client
+     *
+     * @return ClientInterface
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     */
     public function update(ClientInterface $client) :ClientInterface
     {
         return $this->checkResult($this->objectManager->updateObject($client, $this->reqRoute));
     }
 
+    /**
+     * @param ClientInterface $client
+     *
+     * @return ClientInterface
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     */
     public function restore(ClientInterface $client) :ClientInterface
     {
         return $this->checkResult($this->objectManager->restoreObject($client, $this->reqRoute));
     }
 
+    /**
+     * @param ClientInterface $client
+     *
+     * @return ClientInterface
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     */
     public function archive(ClientInterface $client) :ClientInterface
     {
         return $this->checkResult($this->objectManager->archiveObject($client, $this->reqRoute));
     }
 
+    /**
+     * @param $id
+     *
+     * @return ClientInterface
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\NotFoundException
+     */
     public function getClientById($id) :ClientInterface
     {
         return $this->checkResult($this->objectManager->getObjectById($this->objectType, $id, $this->reqRoute));
     }
 
+    /**
+     * @param $email
+     *
+     * @return array
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     */
     public function findClientsByEmail($email) :array
     {
         return $this->objectManager->findObjectBy($this->objectType, ['email' => $email], $this->reqRoute);
     }
 
+    /**
+     * @param $idNumber
+     *
+     * @return array
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     */
     public function findClientsByIdNumber($idNumber) :array
     {
         return $this->objectManager->findObjectBy($this->objectType, ['id_number' => $idNumber], $this->reqRoute);
     }
 
+    /**
+     * @param int $page
+     * @param int $pageSize
+     *
+     * @return array
+     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     */
     public function getAllClients($page = 1, $pageSize = 0) :array
     {
         $result = $this->objectManager->getAllObjects($this->objectType, $this->reqRoute, $page, $pageSize);

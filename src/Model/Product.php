@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
 
+/**
+ * Class Product
+ */
 class Product extends Base
 {
     /** @var  string */
@@ -14,7 +17,7 @@ class Product extends Base
     /** @var  float */
     private $qty;
     /** @var  int */
-    private $defaultTaxRateId;
+    private $defaultTaxRateId = 0;
 
     /**
      * @return string

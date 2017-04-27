@@ -18,8 +18,6 @@ use Zend\Stdlib\Parameters;
 
 /**
  * Class RequestService
- *
- * @package InvoiceNinjaModule\Service
  */
 final class RequestService implements RequestServiceInterface
 {

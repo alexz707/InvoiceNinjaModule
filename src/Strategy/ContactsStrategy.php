@@ -11,8 +11,6 @@ use Zend\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class ContactsStrategy
- *
- * @package InvoiceNinjaModule\Strategy
  */
 class ContactsStrategy implements StrategyInterface
 {
@@ -37,12 +35,14 @@ class ContactsStrategy implements StrategyInterface
      * @return array Returns the value that should be extracted.
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function extract($value)
+    public function extract($value) : array
     {
         $result = [];
         /** @var ContactInterface $contactObj */
         foreach ($value as $contactObj) {
-            $result[] = $this->hydrator->extract($contactObj);
+            if ($contactObj instanceof ContactInterface) {
+                $result[] = $this->hydrator->extract($contactObj);
+            }
         }
         return $result;
     }
@@ -54,7 +54,7 @@ class ContactsStrategy implements StrategyInterface
      * @return ContactInterface[]
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function hydrate($value)
+    public function hydrate($value) : array
     {
         $result = [];
         if (is_array($value)) {

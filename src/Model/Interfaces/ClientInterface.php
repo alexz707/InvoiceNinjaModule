@@ -5,8 +5,6 @@ namespace InvoiceNinjaModule\Model\Interfaces;
 
 /**
  * Interface ClientInterface
- *
- * @package InvoiceNinjaModule\Model\Interfaces
  */
 interface ClientInterface extends BaseInterface
 {

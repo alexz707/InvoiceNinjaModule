@@ -10,8 +10,6 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class RequestServiceFactory
- *
- * @package InvoiceNinjaModule\Service
  */
 class RequestServiceFactory implements FactoryInterface
 {

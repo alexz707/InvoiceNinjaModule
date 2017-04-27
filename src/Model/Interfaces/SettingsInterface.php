@@ -5,8 +5,6 @@ namespace InvoiceNinjaModule\Model\Interfaces;
 
 /**
  * Interface SettingsInterface
- *
- * @package InvoiceNinjaModule\Model\Interfaces
  */
 interface SettingsInterface
 {

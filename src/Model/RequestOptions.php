@@ -7,8 +7,6 @@ use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 
 /**
  * Class RequestOptions
- *
- * @package InvoiceNinjaModule\Model
  */
 final class RequestOptions implements RequestOptionsInterface
 {

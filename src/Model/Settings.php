@@ -9,8 +9,6 @@ use InvoiceNinjaModule\Module;
 
 /**
  * Class Settings
- *
- * @package InvoiceNinjaModule\Model
  */
 final class Settings implements SettingsInterface
 {

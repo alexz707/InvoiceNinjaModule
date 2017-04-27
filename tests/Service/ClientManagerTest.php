@@ -7,6 +7,7 @@ use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
 use InvoiceNinjaModule\Service\ClientManager;
+use InvoiceNinjaModule\Service\Interfaces\ClientManagerInterface;
 use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +18,7 @@ class ClientManagerTest extends TestCase
     /** @var  \PHPUnit_Framework_MockObject_MockObject */
     private $objectManagerMock;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
 
@@ -25,12 +26,12 @@ class ClientManagerTest extends TestCase
         $this->clientManager = new ClientManager($this->objectManagerMock);
     }
 
-    public function testCreate()
+    public function testCreate() : void
     {
-        self::assertInstanceOf(ClientManager::class, $this->clientManager);
+        self::assertInstanceOf(ClientManagerInterface::class, $this->clientManager);
     }
 
-    public function testCreateClient()
+    public function testCreateClient() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -47,7 +48,7 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->createClient($clientMock));
     }
 
-    public function testDelete()
+    public function testDelete() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -65,7 +66,7 @@ class ClientManagerTest extends TestCase
     }
 
 
-    public function testGetClientById()
+    public function testGetClientById() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -86,7 +87,7 @@ class ClientManagerTest extends TestCase
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\NotFoundException
      */
-    public function testGetClientByIdException()
+    public function testGetClientByIdException() : void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('getObjectById')
@@ -100,7 +101,7 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->getClientById(777));
     }
 
-    public function testFindClientsByEmail()
+    public function testFindClientsByEmail() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -120,7 +121,7 @@ class ClientManagerTest extends TestCase
         self::assertNotEmpty($result);
     }
 
-    public function testFindClientsByIdNumber()
+    public function testFindClientsByIdNumber() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -141,7 +142,7 @@ class ClientManagerTest extends TestCase
     }
 
 
-    public function testUpdate()
+    public function testUpdate() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -158,7 +159,7 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->update($clientMock));
     }
 
-    public function testRestore()
+    public function testRestore() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -175,7 +176,7 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->restore($clientMock));
     }
 
-    public function testArchive()
+    public function testArchive() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -192,7 +193,7 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->archive($clientMock));
     }
 
-    public function testGetAllClientsEmpty()
+    public function testGetAllClientsEmpty() : void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('getAllObjects')
@@ -209,7 +210,7 @@ class ClientManagerTest extends TestCase
         self::assertInternalType('array', $this->clientManager->getAllClients());
     }
 
-    public function testGetAllClients()
+    public function testGetAllClients() : void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -231,7 +232,7 @@ class ClientManagerTest extends TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidResultException
      */
-    public function testGetAllClientsOtherResult()
+    public function testGetAllClientsOtherResult() : void
     {
         $clientMock = $this->createMock(BaseInterface::class);
 

@@ -5,6 +5,9 @@ namespace InvoiceNinjaModule\Model;
 
 use InvoiceNinjaModule\Model\Interfaces\InvoiceItemInterface;
 
+/**
+ * Class InvoiceItem
+ */
 class InvoiceItem extends Base implements InvoiceItemInterface
 {
     /** @var  string */

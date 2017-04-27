@@ -5,6 +5,9 @@ namespace InvoiceNinjaModule\Model;
 
 use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 
+/**
+ * Class Contact
+ */
 class Contact extends Base implements ContactInterface
 {
     /** @var  string */

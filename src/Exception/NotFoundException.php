@@ -5,8 +5,6 @@ namespace InvoiceNinjaModule\Exception;
 
 /**
  * Class NotFoundException
- *
- * @package InvoiceNinjaModule\Exception
  */
 class NotFoundException extends \Exception
 {

@@ -9,8 +9,6 @@ use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 
 /**
  * Interface RequestServiceInterface
- *
- * @package InvoiceNinjaModule\Service\Interfaces
  */
 interface RequestServiceInterface
 {

@@ -10,6 +10,9 @@ use Zend\Hydrator\Exception\BadMethodCallException;
 use Zend\Hydrator\HydratorInterface;
 use Zend\Hydrator\Strategy\StrategyInterface;
 
+/**
+ * Class InvoiceItemsStrategy
+ */
 class InvoiceItemsStrategy implements StrategyInterface
 {
     /** @var HydratorInterface  */
@@ -33,12 +36,14 @@ class InvoiceItemsStrategy implements StrategyInterface
      * @return array Returns the value that should be extracted.
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function extract($value)
+    public function extract($value) :array
     {
         $result = [];
         /** @var InvoiceItemInterface $invoiceItem */
         foreach ($value as $invoiceItem) {
-            $result[] = $this->hydrator->extract($invoiceItem);
+            if ($invoiceItem instanceof InvoiceItemInterface) {
+                $result[] = $this->hydrator->extract($invoiceItem);
+            }
         }
         return $result;
     }
@@ -50,7 +55,7 @@ class InvoiceItemsStrategy implements StrategyInterface
      * @return ContactInterface[]
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function hydrate($value)
+    public function hydrate($value) :array
     {
         $result = [];
         if (is_array($value)) {
