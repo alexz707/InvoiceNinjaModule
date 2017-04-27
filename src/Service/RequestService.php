@@ -105,13 +105,12 @@ final class RequestService implements RequestServiceInterface
             $needle = 'attachment; filename="';
             $subString = strstr($contentDisposition->getFieldValue(), $needle);
 
-            if ($subString !== false) {
-                $fileName = substr($subString, strlen($needle), -1);
-                if (\is_string($fileName)) {
-                    return [$fileName => $response->getBody()];
-                }
+            if ($subString === false) {
+                return [];
             }
-            return [];
+
+            $fileName = substr($subString, strlen($needle), -1);
+            return [$fileName => $response->getBody()];
         }
 
         $result = json_decode($response->getBody(), true);

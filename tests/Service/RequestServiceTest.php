@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
@@ -27,7 +28,7 @@ class RequestServiceTest extends TestCase
     /** @var  \PHPUnit_Framework_MockObject_MockObject */
     private $requestOptions;
 
-    protected function setUp()
+    protected function setUp() :void
     {
         parent::setUp();
         $this->settingsMock = $this->createMock(SettingsInterface::class);
@@ -39,12 +40,12 @@ class RequestServiceTest extends TestCase
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
     }
 
-    public function testCreate()
+    public function testCreate() :void
     {
         self::assertInstanceOf(RequestServiceInterface::class, $this->manager);
     }
 
-    public function testDispatchRequest()
+    public function testDispatchRequest() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -103,8 +104,7 @@ class RequestServiceTest extends TestCase
         );
     }
 
-
-    public function testDispatchRequestFile()
+    public function testDispatchRequestFile() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -166,7 +166,7 @@ class RequestServiceTest extends TestCase
         self::assertEquals('testfilecontent', $result['test.pdf']);
     }
 
-    public function testDispatchRequestFileInvalidHeader()
+    public function testDispatchRequestFileInvalidHeader() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -227,7 +227,7 @@ class RequestServiceTest extends TestCase
         self::assertEmpty($result);
     }
 
-    public function testDispatchRequestWithOptions()
+    public function testDispatchRequestWithOptions() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -293,7 +293,7 @@ class RequestServiceTest extends TestCase
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\EmptyResponseException
      */
-    public function testDispatchRequestEmptyExceptionEmptyData()
+    public function testDispatchRequestEmptyExceptionEmptyData() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -345,7 +345,7 @@ class RequestServiceTest extends TestCase
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\EmptyResponseException
      */
-    public function testDispatchRequestEmptyExceptionMissingData()
+    public function testDispatchRequestEmptyExceptionMissingData() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -397,7 +397,7 @@ class RequestServiceTest extends TestCase
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\ApiException
      */
-    public function testDispatchRequestApiException()
+    public function testDispatchRequestApiException() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -435,7 +435,7 @@ class RequestServiceTest extends TestCase
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\ApiException
      */
-    public function testDispatchRequestApiExceptionInvalidArgument()
+    public function testDispatchRequestApiExceptionInvalidArgument() :void
     {
         $this->reqMethod = 'TESTPUT';
         $testReqRoute = 'testroute';
@@ -449,7 +449,7 @@ class RequestServiceTest extends TestCase
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\ApiException
      */
-    public function testDispatchRequestApiExceptionInvalidRuntime()
+    public function testDispatchRequestApiExceptionInvalidRuntime() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -479,7 +479,7 @@ class RequestServiceTest extends TestCase
         );
     }
 
-    public function testDispatchRequestEmpty()
+    public function testDispatchRequestEmpty() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -528,7 +528,7 @@ class RequestServiceTest extends TestCase
         );
     }
 
-    public function testDispatchRequestPost()
+    public function testDispatchRequestPost() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';

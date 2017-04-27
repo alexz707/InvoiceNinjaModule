@@ -1,14 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Model;
 
 use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Model\RequestOptions;
+use PHPUnit\Framework\TestCase;
 
-class RequestOptionsTest extends \PHPUnit_Framework_TestCase
+class RequestOptionsTest extends TestCase
 {
 
-    public function testCreate()
+    public function testCreate() :void
     {
         $options = new RequestOptions();
         self::assertInstanceOf(RequestOptionsInterface::class, $options);
@@ -16,7 +18,7 @@ class RequestOptionsTest extends \PHPUnit_Framework_TestCase
         self::assertEmpty($options->getQueryArray());
     }
 
-    public function testAddParams()
+    public function testAddParams() :void
     {
         $options = new RequestOptions();
         self::assertEmpty($options->getPostArray());

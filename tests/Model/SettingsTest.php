@@ -1,16 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Model;
 
 use InvoiceNinjaModule\Model\Settings;
 use InvoiceNinjaModule\Module;
+use PHPUnit\Framework\TestCase;
 
-class SettingsTest extends \PHPUnit_Framework_TestCase
+class SettingsTest extends TestCase
 {
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateEmptySettings()
+    public function testCreateEmptySettings() :void
     {
         new Settings([]);
     }
@@ -18,7 +20,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateEmptyToken()
+    public function testCreateEmptyToken() :void
     {
         $settings = [
             Module::TOKEN => '',
@@ -33,7 +35,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateMissingToken()
+    public function testCreateMissingToken() :void
     {
         $settings = [
             Module::TOKEN_TYPE => 'testtokentype',
@@ -47,7 +49,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateEmptyTokenType()
+    public function testCreateEmptyTokenType() :void
     {
         $settings = [
             Module::TOKEN => 'testtoken',
@@ -62,7 +64,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateMissingTokenType()
+    public function testCreateMissingTokenType() :void
     {
         $settings = [
             Module::TOKEN => 'testtoken',
@@ -76,7 +78,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateEmptyTimeout()
+    public function testCreateEmptyTimeout() :void
     {
         $settings = [
             Module::TOKEN => 'testtoken',
@@ -91,7 +93,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateNegativeTimeout()
+    public function testCreateNegativeTimeout() :void
     {
         $settings = [
             Module::TOKEN => 'testtoken',
@@ -106,7 +108,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateMissingTimeout()
+    public function testCreateMissingTimeout() :void
     {
         $settings = [
             Module::TOKEN => 'testtoken',
@@ -120,7 +122,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateEmptyHostUrl()
+    public function testCreateEmptyHostUrl() :void
     {
         $settings = [
             Module::TOKEN => 'testtoken',
@@ -135,7 +137,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testCreateMissingHostUrl()
+    public function testCreateMissingHostUrl() :void
     {
         $settings = [
             Module::TOKEN => 'testtoken',
@@ -146,7 +148,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
         new Settings($settings);
     }
 
-    public function testCreate()
+    public function testCreate() :void
     {
         $settingsArr = [
             Module::TOKEN => 'testtoken',

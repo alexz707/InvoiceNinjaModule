@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest;
 
@@ -12,7 +13,7 @@ class Bootstrap
 {
     protected static $serviceManager;
 
-    public static function init()
+    public static function init() :void
     {
         error_reporting(E_ALL);
         chdir(__DIR__);
@@ -35,7 +36,7 @@ class Bootstrap
         }
 
         // Prepare the service manager
-        $smConfig = isset($configuration['service_manager']) ? $configuration['service_manager'] : [];
+        $smConfig = $configuration['service_manager'] ?? [];
         $smConfig = new ServiceManagerConfig($smConfig);
 
         $serviceManager = new ServiceManager();
@@ -51,12 +52,12 @@ class Bootstrap
     /**
      * @return ServiceManager
      */
-    public static function getServiceManager()
+    public static function getServiceManager() :ServiceManager
     {
         return static::$serviceManager;
     }
 
-    protected static function initAutoloader()
+    protected static function initAutoloader() :void
     {
         $vendorPath = static::findParentPath('vendor');
 
@@ -65,7 +66,7 @@ class Bootstrap
         }
     }
 
-    protected static function findParentPath($path)
+    protected static function findParentPath(string $path)
     {
         $dir = __DIR__;
         $previousDir = '.';

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 23.04.17
- * Time: 22:03
- */
+declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
@@ -13,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class InvoiceManagerTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate() :void
     {
         self::assertTrue(true);
     }

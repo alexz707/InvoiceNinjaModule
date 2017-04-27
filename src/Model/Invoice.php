@@ -406,7 +406,7 @@ class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $taxName1
      */
-    public function setTaxName1(float $taxName1) : void
+    public function setTaxName1(string $taxName1) : void
     {
         $this->taxName1 = $taxName1;
     }
@@ -438,7 +438,7 @@ class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $taxName2
      */
-    public function setTaxName2(float $taxName2) : void
+    public function setTaxName2(string $taxName2) : void
     {
         $this->taxName2 = $taxName2;
     }

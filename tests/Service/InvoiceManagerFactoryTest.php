@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
@@ -11,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class InvoiceManagerFactoryTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate() :void
     {
         $containerMock = $this->createMock(ContainerInterface::class);
         $containerMock->expects(self::once())

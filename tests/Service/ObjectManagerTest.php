@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
@@ -8,7 +9,6 @@ use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use InvoiceNinjaModule\Service\ObjectService;
-use InvoiceNinjaModule\Service\RequestService;
 use Zend\Http\Request;
 use Zend\Hydrator\HydratorInterface;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +24,7 @@ class ObjectManagerTest extends TestCase
     /** @var  string */
     private $testRoute;
 
-    protected function setUp()
+    protected function setUp() :void
     {
         parent::setUp();
 
@@ -35,12 +35,12 @@ class ObjectManagerTest extends TestCase
         $this->objectManager = new ObjectService($this->requestServiceMock, $this->hydratorMock);
     }
 
-    public function testCreate()
+    public function testCreate() :void
     {
         self::assertInstanceOf(ObjectService::class, $this->objectManager);
     }
 
-    public function testCreateObject()
+    public function testCreateObject() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -69,7 +69,7 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->createObject($baseMock, $this->testRoute));
     }
 
-    public function testDeleteObject()
+    public function testDeleteObject() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
@@ -97,7 +97,7 @@ class ObjectManagerTest extends TestCase
     }
 
 
-    public function testGetObjectById()
+    public function testGetObjectById() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -118,13 +118,16 @@ class ObjectManagerTest extends TestCase
             )
             ->willReturn([]);
 
-        self::assertInstanceOf(BaseInterface::class, $this->objectManager->getObjectById($baseMock, 777, $this->testRoute));
+        self::assertInstanceOf(
+            BaseInterface::class,
+            $this->objectManager->getObjectById($baseMock, 777, $this->testRoute)
+        );
     }
 
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\NotFoundException
      */
-    public function testGetObjectByIdException()
+    public function testGetObjectByIdException() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -137,20 +140,26 @@ class ObjectManagerTest extends TestCase
             )
             ->willThrowException(new ApiException());
 
-        self::assertInstanceOf(BaseInterface::class, $this->objectManager->getObjectById($baseMock, 777, $this->testRoute));
+        self::assertInstanceOf(
+            BaseInterface::class,
+            $this->objectManager->getObjectById($baseMock, 777, $this->testRoute)
+        );
     }
 
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
-    public function testFindObjectByException()
+    public function testFindObjectByException() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = [];
-        self::assertInstanceOf(BaseInterface::class, $this->objectManager->findObjectBy($baseMock, $searchTerm, $this->testRoute));
+        self::assertInstanceOf(
+            BaseInterface::class,
+            $this->objectManager->findObjectBy($baseMock, $searchTerm, $this->testRoute)
+        );
     }
 
-    public function testFindObjectByEmpty()
+    public function testFindObjectByEmpty() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = ['test' => 'tester123'];
@@ -174,7 +183,7 @@ class ObjectManagerTest extends TestCase
         self::assertInternalType('array', $result);
     }
 
-    public function testFindObjectByEmptyException()
+    public function testFindObjectByEmptyException() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = ['test' => 'tester123'];
@@ -198,7 +207,7 @@ class ObjectManagerTest extends TestCase
         self::assertInternalType('array', $result);
     }
 
-    public function testFindObjectBy()
+    public function testFindObjectBy() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = ['test' => 'tester123'];
@@ -227,11 +236,10 @@ class ObjectManagerTest extends TestCase
         self::assertInternalType('array', $result);
     }
 
-
     /**
      * @expectedException \InvoiceNinjaModule\Exception\ApiException
      */
-    public function testFindObjectByApiException()
+    public function testFindObjectByApiException() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = ['test' => 'tester123'];
@@ -255,10 +263,7 @@ class ObjectManagerTest extends TestCase
         self::assertInternalType('array', $result);
     }
 
-
-
-
-    public function testUpdate()
+    public function testUpdate() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
@@ -290,7 +295,7 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->updateObject($baseMock, $this->testRoute));
     }
 
-    public function testArchive()
+    public function testArchive() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
@@ -322,7 +327,7 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->archiveObject($baseMock, $this->testRoute));
     }
 
-    public function testRestore()
+    public function testRestore() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
@@ -354,7 +359,7 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->restoreObject($baseMock, $this->testRoute));
     }
 
-    public function testGetAllObjectsEmpty()
+    public function testGetAllObjectsEmpty() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -370,7 +375,7 @@ class ObjectManagerTest extends TestCase
         self::assertInternalType('array', $this->objectManager->getAllObjects($baseMock, $this->testRoute));
     }
 
-    public function testGetAllClients()
+    public function testGetAllClients() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -394,7 +399,7 @@ class ObjectManagerTest extends TestCase
         self::assertInternalType('array', $this->objectManager->getAllObjects($baseMock, $this->testRoute));
     }
 
-    public function testDownloadFile()
+    public function testDownloadFile() :void
     {
         $this->requestServiceMock->expects(self::once())
             ->method('dispatchRequest')
