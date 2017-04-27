@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Strategy;
 
 use InvoiceNinjaModule\Model\Contact;
 use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
-use Zend\Hydrator\ClassMethods;
 use Zend\Hydrator\Exception\BadMethodCallException;
 use Zend\Hydrator\HydratorInterface;
 use Zend\Hydrator\Strategy\StrategyInterface;

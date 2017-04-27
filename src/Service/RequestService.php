@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service;
 
@@ -54,23 +55,30 @@ final class RequestService implements RequestServiceInterface
      */
     public function dispatchRequest($reqMethod, $reqRoute, RequestOptionsInterface $requestOptions) :array
     {
+        $request = new Request();
+        $request->setAllowCustomMethods(false);
         try {
-            $request = new Request();
-            $request->setAllowCustomMethods(false);
             $request->setMethod($reqMethod);
-            $request->setQuery(new Parameters($requestOptions->getQueryArray()));
-
-            $postArray = $requestOptions->getPostArray();
-            if (!empty($postArray)) {
-                $request->setContent(json_encode($postArray));
-            }
-
-            $request->getHeaders()->addHeaders($this->getRequestHeaderArray());
-            $request->setUri($this->settings->getHostUrl().$reqRoute);
-
-            $response = $this->httpClient->send($request);
         } catch (InvalidArgumentException $e) {
             throw new ApiException($e->getMessage());
+        }
+
+        $request->setQuery(new Parameters($requestOptions->getQueryArray()));
+
+        $postArray = $requestOptions->getPostArray();
+        if (!empty($postArray)) {
+            $request->setContent(json_encode($postArray));
+        }
+
+        try {
+            $request->getHeaders()->addHeaders($this->getRequestHeaderArray());
+            $request->setUri($this->settings->getHostUrl().$reqRoute);
+        } catch (InvalidArgumentException $e) {
+            throw new ApiException($e->getMessage());
+        }
+
+        try {
+            $response = $this->httpClient->send($request);
         } catch (RuntimeException $e) {
             throw new ApiException($e->getMessage());
         }
@@ -95,9 +103,13 @@ final class RequestService implements RequestServiceInterface
         $contentDisposition = $headers->get('Content-disposition');
         if ($contentDisposition !== false) {
             $needle = 'attachment; filename="';
-            $fileName = substr(strstr($contentDisposition->getFieldValue(), $needle), strlen($needle), -1);
-            if (\is_string($fileName)) {
-                return [$fileName => $response->getBody()];
+            $subString = strstr($contentDisposition->getFieldValue(), $needle);
+
+            if ($subString !== false) {
+                $fileName = substr($subString, strlen($needle), -1);
+                if (\is_string($fileName)) {
+                    return [$fileName => $response->getBody()];
+                }
             }
             return [];
         }

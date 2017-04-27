@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
 
@@ -7,19 +8,19 @@ use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 class Contact extends Base implements ContactInterface
 {
     /** @var  string */
-    private $firstName;
+    private $firstName = '';
     /** @var  string */
-    private $lastName;
+    private $lastName = '';
     /** @var  string */
-    private $email;
+    private $email = '';
     /** @var bool */
-    private $isPrimary;
+    private $isPrimary = false;
     /** @var  string */
-    private $phone;
+    private $phone  = '';
     /** @var  int */
     private $lastLogin;
     /** @var  bool */
-    private $sendInvoice;
+    private $sendInvoice = false;
 
     /**
      * @return string

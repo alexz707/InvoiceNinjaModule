@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
 
@@ -8,54 +9,57 @@ use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 class Client extends Base implements ClientInterface
 {
     /** @var  string */
-    private $name;
+    private $name = '';
     /** @var  float */
-    private $balance;
+    private $balance = 0;
     /** @var float */
-    private $paidToDate;
+    private $paidToDate = 0;
     /** @var  int */
-    private $userId;
+    private $userId = 0;
     /** @var  string */
-    private $address1;
+    private $address1 = '';
     /** @var  string */
-    private $address2;
+    private $address2 = '';
     /** @var  string */
-    private $city;
+    private $city = '';
     /** @var  string */
-    private $state;
+    private $state = '';
     /** @var  string */
-    private $postalCode;
+    private $postalCode = '';
     /** @var  int */
-    private $countryId;
+    private $countryId = 0;
     /** @var  string */
-    private $workPhone;
+    private $workPhone = '';
     /** @var  string */
-    private $privateNotes;
+    private $privateNotes = '';
     /** @var  int */
     private $lastLogin;
     /** @var  string */
-    private $website;
+    private $website = '';
     /** @var  int */
-    private $industryId;
+    private $industryId = 0;
     /** @var  int */
-    private $sizeId;
+    private $sizeId = 0;
     /** @var int  */
-    private $paymentTerms;
+    private $paymentTerms = 0;
     /** @var  string */
     private $customValue1;
     /** @var  string */
     private $customValue2;
     /** @var  string */
-    private $vatNumber;
+    private $vatNumber = '';
     /** @var  string */
-    private $idNumber;
+    private $idNumber = '';
     /** @var  int */
-    private $languageId;
+    private $languageId = 0;
     /** @var  int */
-    private $currencyId;
+    private $currencyId = 0;
     /** @var ContactInterface[]  */
     private $contacts;
 
+    /**
+     * Client constructor.
+     */
     public function __construct()
     {
         $this->contacts = [];

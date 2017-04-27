@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model\Interfaces;
 
@@ -32,7 +33,7 @@ interface ProductInterface extends BaseInterface
     /**
      * @param float $cost
      */
-    public function setCost(float $cost);
+    public function setCost(float $cost) :void;
 
     /**
      * @return float
@@ -42,14 +43,15 @@ interface ProductInterface extends BaseInterface
     /**
      * @param float $qty
      */
-    public function setQty(float $qty);
+    public function setQty(float $qty) :void;
 
     /**
      * @return int
      */
     public function getDefaultTaxRateId() : int;
+
     /**
      * @param int $defaultTaxRateId
      */
-    public function setDefaultTaxRateId(int $defaultTaxRateId);
+    public function setDefaultTaxRateId(int $defaultTaxRateId) :void;
 }

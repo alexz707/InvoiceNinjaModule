@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
 
@@ -7,17 +8,17 @@ use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 class Base implements BaseInterface
 {
     /** @var  int */
-    protected $id;
+    protected $id = 0;
     /** @var  string */
-    protected $accountKey;
+    protected $accountKey = '';
     /** @var  bool */
-    protected $isOwner;
+    protected $isOwner = false;
     /** @var  int */
     protected $updatedAt;
     /** @var  int */
     protected $archivedAt;
     /** @var  bool */
-    protected $isDeleted;
+    protected $isDeleted = false;
 
     /**
      * @return int

@@ -1,15 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
 
 class Product extends Base
 {
     /** @var  string */
-    private $productKey;
+    private $productKey = '';
     /** @var  string */
-    private $notes;
+    private $notes = '';
     /** @var  float */
-    private $cost;
+    private $cost = 0;
     /** @var  float */
     private $qty;
     /** @var  int */
@@ -26,7 +27,7 @@ class Product extends Base
     /**
      * @param string $productKey
      */
-    public function setProductKey(string $productKey)
+    public function setProductKey(string $productKey) :void
     {
         $this->productKey = $productKey;
     }
@@ -42,7 +43,7 @@ class Product extends Base
     /**
      * @param string $notes
      */
-    public function setNotes(string $notes)
+    public function setNotes(string $notes) :void
     {
         $this->notes = $notes;
     }
@@ -58,7 +59,7 @@ class Product extends Base
     /**
      * @param float $cost
      */
-    public function setCost(float $cost)
+    public function setCost(float $cost) :void
     {
         $this->cost = $cost;
     }
@@ -74,7 +75,7 @@ class Product extends Base
     /**
      * @param float $qty
      */
-    public function setQty(float $qty)
+    public function setQty(float $qty) :void
     {
         $this->qty = $qty;
     }
@@ -90,7 +91,7 @@ class Product extends Base
     /**
      * @param int $defaultTaxRateId
      */
-    public function setDefaultTaxRateId(int $defaultTaxRateId)
+    public function setDefaultTaxRateId(int $defaultTaxRateId) :void
     {
         $this->defaultTaxRateId = $defaultTaxRateId;
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
 
@@ -7,26 +8,26 @@ use InvoiceNinjaModule\Model\Interfaces\InvoiceItemInterface;
 class InvoiceItem extends Base implements InvoiceItemInterface
 {
     /** @var  string */
-    private $productKey;
+    private $productKey = '';
     /** @var  string */
-    private $notes;
+    private $notes = '';
     /** @var  double */
-    private $cost;
+    private $cost = 0;
     /** @var  int */
-    private $qty;
+    private $qty = 0;
     /** @var  string */
-    private $taxName1;
+    private $taxName1 = '';
     /** @var  double */
-    private $taxRate1;
+    private $taxRate1 = 0;
     /** @var  string */
-    private $taxName2;
+    private $taxName2 = '';
     /** @var  double */
-    private $taxRate2;
+    private $taxRate2 = 0;
 
     /**
      * @return string
      */
-    public function getProductKey()
+    public function getProductKey() : string
     {
         return $this->productKey;
     }
@@ -34,7 +35,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @param string $productKey
      */
-    public function setProductKey($productKey)
+    public function setProductKey(string $productKey) : void
     {
         $this->productKey = $productKey;
     }
@@ -42,7 +43,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @return string
      */
-    public function getNotes()
+    public function getNotes() : string
     {
         return $this->notes;
     }
@@ -50,7 +51,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @param string $notes
      */
-    public function setNotes($notes)
+    public function setNotes(string $notes) : void
     {
         $this->notes = $notes;
     }
@@ -58,7 +59,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @return float
      */
-    public function getCost()
+    public function getCost() : float
     {
         return $this->cost;
     }
@@ -66,7 +67,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @param float $cost
      */
-    public function setCost($cost)
+    public function setCost(float $cost) : void
     {
         $this->cost = $cost;
     }
@@ -74,7 +75,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @return int
      */
-    public function getQty()
+    public function getQty() : int
     {
         return $this->qty;
     }
@@ -82,7 +83,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @param int $qty
      */
-    public function setQty($qty)
+    public function setQty(int $qty) : void
     {
         $this->qty = $qty;
     }
@@ -90,7 +91,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @return string
      */
-    public function getTaxName1()
+    public function getTaxName1() : string
     {
         return $this->taxName1;
     }
@@ -98,7 +99,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @param string $taxName1
      */
-    public function setTaxName1($taxName1)
+    public function setTaxName1(string $taxName1) : void
     {
         $this->taxName1 = $taxName1;
     }
@@ -106,7 +107,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @return float
      */
-    public function getTaxRate1()
+    public function getTaxRate1() : float
     {
         return $this->taxRate1;
     }
@@ -114,7 +115,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @param float $taxRate1
      */
-    public function setTaxRate1($taxRate1)
+    public function setTaxRate1(float $taxRate1) : void
     {
         $this->taxRate1 = $taxRate1;
     }
@@ -122,7 +123,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @return string
      */
-    public function getTaxName2()
+    public function getTaxName2() : string
     {
         return $this->taxName2;
     }
@@ -130,7 +131,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @param string $taxName2
      */
-    public function setTaxName2($taxName2)
+    public function setTaxName2(string $taxName2) : void
     {
         $this->taxName2 = $taxName2;
     }
@@ -138,7 +139,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @return float
      */
-    public function getTaxRate2()
+    public function getTaxRate2() : float
     {
         return $this->taxRate2;
     }
@@ -146,7 +147,7 @@ class InvoiceItem extends Base implements InvoiceItemInterface
     /**
      * @param float $taxRate2
      */
-    public function setTaxRate2($taxRate2)
+    public function setTaxRate2(float $taxRate2) : void
     {
         $this->taxRate2 = $taxRate2;
     }
