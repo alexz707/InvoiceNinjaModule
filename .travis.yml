@@ -12,7 +12,7 @@ before_script:
   - pwd
 
 script:
-  - ./vendor/bin/phpunit --disallow-test-output --report-useless-tests --coverage-text --coverage-clover=clover.xml --colors
+  - ./vendor/bin/phpunit --disallow-test-output --report-useless-tests --coverage-text --coverage-clover ./clover.xml --colors
   - ./vendor/bin/phpcs
   - ./humbug/bin/humbug
   - ./build/check-humbug-mutators.php
