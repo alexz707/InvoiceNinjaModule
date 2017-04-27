@@ -98,7 +98,5 @@ class ClientTest extends TestCase
         self::assertSame('1234ee', $client->getIdNumber());
         self::assertSame('name', $client->getName());
         self::assertNotEmpty($client->getContacts());
-
-
     }
 }
