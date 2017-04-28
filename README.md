@@ -6,7 +6,7 @@ ZF3 Module to consume the InvoiceNinja API (https://www.invoiceninja.com).
 [![Build Status](https://travis-ci.org/alexz707/InvoiceNinjaModule.svg?branch=master)](https://travis-ci.org/alexz707/InvoiceNinjaModule)
 [![Code Coverage](https://scrutinizer-ci.com/g/alexz707/InvoiceNinjaModule/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alexz707/InvoiceNinjaModule/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alexz707/InvoiceNinjaModule/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alexz707/InvoiceNinjaModule/?branch=master)
-[![Dependency Status](https://www.versioneye.com/user/projects/59025f0a45de6b004ab703e8/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/59025f0a45de6b004ab703e8)
+[![Dependency Status](https://www.versioneye.com/user/projects/59025f0a45de6b004ab703e8/badge.svg)](https://www.versioneye.com/user/projects/59025f0a45de6b004ab703e8)
 [![Total Downloads](https://poser.pugx.org/alexz707/invoiceninja-module/downloads)](https://packagist.org/packages/alexz707/invoiceninja-module)
 [![Latest Stable Version](https://poser.pugx.org/alexz707/invoiceninja-module/v/stable.png)](https://packagist.org/packages/alexz707/invoiceninja-module)
 
@@ -28,7 +28,7 @@ The suggested installation method is via [composer](https://getcomposer.org/):
 php composer.phar require alexz707/invoiceninja-module
 ```
 ### Configure module
-* Copy /vendor/alexz707/invoiceninja-module/config/invoiceninja.global.php.dist into your global autoload folder, remove the dist extension so that Zend Framework picks it up
+* Copy `/vendor/alexz707/invoiceninja-module/config/invoiceninja.global.php.dist` into your global autoload folder, remove the dist extension so that Zend Framework picks it up
 * If you use your own instance of invoice ninja change the `host url`
 * Replace the `token` with your generated invoice ninja token
 
