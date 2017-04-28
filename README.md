@@ -1,6 +1,6 @@
 InvoiceNinjaModule
 =================
-ZF3 Module to consume the InvoiceNinja API.
+ZF3 Module to consume the InvoiceNinja API (https://www.invoiceninja.com).
 
 [![GitHub release](https://img.shields.io/github/release/alexz707/InvoiceNinjaModule.svg)](https://github.com/alexz707/InvoiceninjaModule/releases)
 [![Build Status](https://travis-ci.org/alexz707/InvoiceNinjaModule.svg?branch=master)](https://travis-ci.org/alexz707/InvoiceninjaModule)
@@ -28,7 +28,7 @@ The suggested installation method is via [composer](https://getcomposer.org/):
 php composer.phar require alexz707/invoiceninja-module
 ```
 ### Configure module
-* Copy /vendor/alexz707/invoiceninja-module/config/invoiceninja.config.php.dist into your global autoload folder, remove the dist extension so that Zend Framework picks it up
+* Copy /vendor/alexz707/invoiceninja-module/config/invoiceninja.global.php.dist into your global autoload folder, remove the dist extension so that Zend Framework picks it up
 * If you use your own instance of invoice ninja change the `host url`
 * Replace the `token` with your generated invoice ninja token
 

@@ -1,12 +1,13 @@
 {
   "name":              "alexz707/invoiceninja-module",
-  "description":       "Zend Framework Module that provides invoiceninja api functionality",
+  "description":       "Zend Framework 3 Module that provides InvoiceNinja api functionality",
   "type":              "library",
   "license":           "MIT",
   "keywords":          [
-    "invoiceninja",
+    "InvoiceNinja",
     "module",
-    "zf"
+    "zf3",
+    "rest"
   ],
   "homepage":          "https://github.com/alexz707/InvoiceNinjaModule",
   "authors":           [
