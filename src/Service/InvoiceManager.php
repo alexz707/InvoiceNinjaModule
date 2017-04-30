@@ -14,7 +14,7 @@ use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
 /**
  * Class InvoiceManager
  */
-class InvoiceManager implements InvoiceManagerInterface
+final class InvoiceManager implements InvoiceManagerInterface
 {
     /** @var ObjectServiceInterface  */
     private $objectManager;
@@ -39,9 +39,10 @@ class InvoiceManager implements InvoiceManagerInterface
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws \InvoiceNinjaModule\Exception\ApiException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function createInvoice(InvoiceInterface $invoice) :InvoiceInterface
     {
@@ -52,9 +53,10 @@ class InvoiceManager implements InvoiceManagerInterface
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws \InvoiceNinjaModule\Exception\ApiException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function delete(InvoiceInterface $invoice) :InvoiceInterface
     {
@@ -65,9 +67,10 @@ class InvoiceManager implements InvoiceManagerInterface
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws \InvoiceNinjaModule\Exception\ApiException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function update(InvoiceInterface $invoice) :InvoiceInterface
     {
@@ -78,9 +81,10 @@ class InvoiceManager implements InvoiceManagerInterface
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws \InvoiceNinjaModule\Exception\ApiException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function restore(InvoiceInterface $invoice) :InvoiceInterface
     {
@@ -91,9 +95,10 @@ class InvoiceManager implements InvoiceManagerInterface
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws \InvoiceNinjaModule\Exception\ApiException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function archive(InvoiceInterface $invoice) :InvoiceInterface
     {
@@ -106,7 +111,9 @@ class InvoiceManager implements InvoiceManagerInterface
      * @return InvoiceInterface
      * @throws NotFoundException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function getInvoiceById(int $id) :InvoiceInterface
     {
@@ -117,10 +124,11 @@ class InvoiceManager implements InvoiceManagerInterface
      * @param string $invoiceNumber
      *
      * @return InvoiceInterface
-     * @throws InvalidResultException
-     * @throws NotFoundException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\NotFoundException
      * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function getInvoiceByNumber(string $invoiceNumber) :InvoiceInterface
     {
@@ -145,9 +153,10 @@ class InvoiceManager implements InvoiceManagerInterface
      * @param int $pageSize
      *
      * @return array
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function getAllInvoices(int $page = 1, int $pageSize = 0) :array
     {
@@ -162,19 +171,35 @@ class InvoiceManager implements InvoiceManagerInterface
      * @param int $invoiceId
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\ApiException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function downloadInvoice(int $invoiceId) :array
     {
         return $this->objectManager->downloadFile($invoiceId);
     }
 
+
+    /**
+     * @param int $invoiceId
+     *
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     */
+    public function sendEmailInvoice(int $invoiceId) :void
+    {
+        $this->objectManager->sendCommand('email_invoice', ['id'=> $invoiceId]);
+    }
+
+
+
     /**
      * @param BaseInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      */
     private function checkResult(BaseInterface $invoice) :InvoiceInterface
     {

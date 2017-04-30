@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service\Interfaces;
 
-use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
 
 /**
@@ -15,18 +14,20 @@ interface ClientManagerInterface
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function createClient(ClientInterface $client) :ClientInterface;
     /**
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function delete(ClientInterface $client) :ClientInterface;
 
@@ -34,9 +35,10 @@ interface ClientManagerInterface
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function update(ClientInterface $client) :ClientInterface;
 
@@ -44,27 +46,31 @@ interface ClientManagerInterface
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function restore(ClientInterface $client) :ClientInterface;
     /**
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function archive(ClientInterface $client) :ClientInterface;
     /**
      * @param $id
      *
      * @return ClientInterface
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
      * @throws \InvoiceNinjaModule\Exception\NotFoundException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function getClientById($id) :ClientInterface;
 
@@ -72,18 +78,20 @@ interface ClientManagerInterface
      * @param $email
      *
      * @return array
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function findClientsByEmail($email) :array;
     /**
      * @param $idNumber
      *
      * @return array
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function findClientsByIdNumber($idNumber) :array;
     /**
@@ -91,9 +99,10 @@ interface ClientManagerInterface
      * @param int $pageSize
      *
      * @return array
-     * @throws InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\ApiException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
      * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function getAllClients($page = 1, $pageSize = 0) :array;
 }

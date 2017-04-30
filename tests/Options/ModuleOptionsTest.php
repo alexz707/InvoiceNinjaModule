@@ -1,20 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace InvoiceNinjaModuleTest\Model;
+namespace InvoiceNinjaModuleTest\Options;
 
-use InvoiceNinjaModule\Model\Settings;
+use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
+use InvoiceNinjaModule\Options\ModuleOptions;
 use InvoiceNinjaModule\Module;
 use PHPUnit\Framework\TestCase;
 
-class SettingsTest extends TestCase
+class ModuleOptionsTest extends TestCase
 {
     /**
      * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
      */
     public function testCreateEmptySettings() :void
     {
-        new Settings([]);
+        new ModuleOptions([], $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -29,7 +30,7 @@ class SettingsTest extends TestCase
             Module::HOST_URL => 'http://test.dev',
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -43,7 +44,7 @@ class SettingsTest extends TestCase
             Module::HOST_URL => 'http://test.dev',
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -58,7 +59,7 @@ class SettingsTest extends TestCase
             Module::HOST_URL => 'http://test.dev',
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -72,7 +73,7 @@ class SettingsTest extends TestCase
             Module::HOST_URL => 'http://test.dev',
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -87,7 +88,7 @@ class SettingsTest extends TestCase
             Module::HOST_URL => 'http://test.dev',
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -102,7 +103,7 @@ class SettingsTest extends TestCase
             Module::HOST_URL => 'http://test.dev',
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -116,7 +117,7 @@ class SettingsTest extends TestCase
             Module::HOST_URL => 'http://test.dev',
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -131,7 +132,7 @@ class SettingsTest extends TestCase
             Module::HOST_URL => '',
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     /**
@@ -145,22 +146,24 @@ class SettingsTest extends TestCase
             Module::API_TIMEOUT => 100,
         ];
 
-        new Settings($settings);
+        new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
     public function testCreate() :void
     {
+        $authOptions = $this->createMock(AuthOptionsInterface::class);
         $settingsArr = [
             Module::TOKEN => 'testtoken',
             Module::TOKEN_TYPE => 'testtokentype',
             Module::API_TIMEOUT => 0,
             Module::HOST_URL => 'http://test.dev',
         ];
-        $settings = new Settings($settingsArr);
-        self::assertInstanceOf(Settings::class, $settings);
-        self::assertSame($settingsArr[Module::TOKEN], $settings->getToken());
-        self::assertSame($settingsArr[Module::TOKEN_TYPE], $settings->getTokenType());
-        self::assertSame($settingsArr[Module::API_TIMEOUT], $settings->getTimeout());
-        self::assertSame($settingsArr[Module::HOST_URL], $settings->getHostUrl());
+        $moduleOptions = new ModuleOptions($settingsArr, $authOptions);
+        self::assertInstanceOf(ModuleOptions::class, $moduleOptions);
+        self::assertSame($settingsArr[Module::TOKEN], $moduleOptions->getToken());
+        self::assertSame($settingsArr[Module::TOKEN_TYPE], $moduleOptions->getTokenType());
+        self::assertSame($settingsArr[Module::API_TIMEOUT], $moduleOptions->getTimeout());
+        self::assertSame($settingsArr[Module::HOST_URL], $moduleOptions->getHostUrl());
+        self::assertSame($authOptions, $moduleOptions->getAuthOptions());
     }
 }

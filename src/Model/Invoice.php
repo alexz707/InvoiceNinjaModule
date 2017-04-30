@@ -9,7 +9,7 @@ use InvoiceNinjaModule\Model\Interfaces\InvoiceInterface;
  * Class Invoice
  * @codeCoverageIgnore
  */
-class Invoice extends Base implements InvoiceInterface
+final class Invoice extends Base implements InvoiceInterface
 {
     /** @var float */
     private $amount = 0;

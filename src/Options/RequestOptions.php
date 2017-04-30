@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace InvoiceNinjaModule\Model;
+namespace InvoiceNinjaModule\Options;
 
-use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
+use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 
 /**
  * Class RequestOptions

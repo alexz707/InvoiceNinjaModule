@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace InvoiceNinjaModule\Model\Interfaces;
+namespace InvoiceNinjaModule\Options\Interfaces;
 
 /**
  * Interface RequestOptionsInterface

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace InvoiceNinjaModuleTest\Model;
+namespace InvoiceNinjaModuleTest\Options;
 
-use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
-use InvoiceNinjaModule\Model\RequestOptions;
+use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
+use InvoiceNinjaModule\Options\RequestOptions;
 use PHPUnit\Framework\TestCase;
 
 class RequestOptionsTest extends TestCase

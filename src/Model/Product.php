@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
 
+use InvoiceNinjaModule\Model\Interfaces\ProductInterface;
+
 /**
  * Class Product
  * @codeCoverageIgnore
  */
-class Product extends Base
+final class Product extends Base implements ProductInterface
 {
     /** @var  string */
     private $productKey = '';

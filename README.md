@@ -13,11 +13,13 @@ ZF3 Module to consume the InvoiceNinja API (https://www.invoiceninja.com).
 Description
 ==================
 
-First release can handle the following api services:
+Latest release can handle the following api services:
 
 * Clients
 * Invoices
 * Products
+
+Can use `basic` or `digest` server authorization.
 
 
 ## Installation
@@ -31,6 +33,7 @@ php composer.phar require alexz707/invoiceninja-module
 * Copy `/vendor/alexz707/invoiceninja-module/config/invoiceninja.global.php.dist` into your global autoload folder, remove the dist extension so that Zend Framework picks it up
 * If you use your own instance of invoice ninja change the `host url`
 * Replace the `token` with your generated invoice ninja token
+* If you use `basic` or `digest` authorization uncomment the used method and fill in your credentials
 
 ### Enable module 
 Register as Zend Framework module inside your ```config/application.config.php``` file:

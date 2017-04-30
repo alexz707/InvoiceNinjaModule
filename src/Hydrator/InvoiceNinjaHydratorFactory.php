@@ -11,7 +11,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 /**
  * Class InvoiceNinjaHydratorFactory
  */
-class InvoiceNinjaHydratorFactory implements FactoryInterface
+final class InvoiceNinjaHydratorFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {

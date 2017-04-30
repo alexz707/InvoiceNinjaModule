@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
-use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
-use InvoiceNinjaModule\Model\Interfaces\SettingsInterface;
+use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
+use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
+use InvoiceNinjaModule\Options\Interfaces\ModuleOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use InvoiceNinjaModule\Service\RequestService;
 use Zend\Http\Client;
@@ -31,7 +32,7 @@ class RequestServiceTest extends TestCase
     protected function setUp() :void
     {
         parent::setUp();
-        $this->settingsMock = $this->createMock(SettingsInterface::class);
+        $this->settingsMock = $this->createMock(ModuleOptionsInterface::class);
         $this->httpClientMock = $this->createMock(Client::class);
         $this->reqMethod = Request::METHOD_GET;
         $this->requestOptions = $this->createMock(RequestOptionsInterface::class);
@@ -81,6 +82,86 @@ class RequestServiceTest extends TestCase
         $this->settingsMock->expects(self::once())
             ->method('getToken')
             ->willReturn($testToken);
+
+        $this->httpClientMock->expects(self::once())
+            ->method('send')
+            ->with(
+                self::logicalAnd(
+                    self::isInstanceOf(RequestInterface::class),
+                    self::callback(function ($request) {
+                        /** @var Request $request */
+                        return $request->getAllowCustomMethods() === false;
+                    })
+                )
+            )
+            ->willReturn($response);
+
+
+        $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
+
+        self::assertInternalType(
+            'array',
+            $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
+        );
+    }
+
+    public function testDispatchRequestAuth() :void
+    {
+        $testTokenType = 'testtokentype';
+        $testToken = 'testtoken';
+        $testReqRoute = 'testroute';
+
+        $authOptions = $this->createMock(AuthOptionsInterface::class);
+        $authOptions->expects(self::once())
+            ->method('isAuthorization')
+            ->willReturn(true);
+
+        $authOptions->expects(self::once())
+            ->method('getUsername')
+            ->willReturn('username');
+
+        $authOptions->expects(self::once())
+            ->method('getPassword')
+            ->willReturn('password');
+
+        $authOptions->expects(self::once())
+            ->method('getAuthType')
+            ->willReturn(Client::AUTH_BASIC);
+
+        $headers = $this->createMock(Headers::class);
+        $headers->expects(self::once())
+            ->method('get')
+            ->with(self::stringContains('Content-disposition'))
+            ->willReturn(false);
+
+        $response = $this->createMock(Response::class);
+        $response->expects(self::once())
+            ->method('getStatusCode')
+            ->willReturn(Response::STATUS_CODE_200);
+
+        $response->expects(self::once())
+            ->method('getHeaders')
+            ->willReturn($headers);
+
+        $response->expects(self::once())
+            ->method('getBody')
+            ->willReturn('{"data": [0]}');
+
+        $this->settingsMock->expects(self::once())
+            ->method('getTimeout')
+            ->willReturn(10);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getTokenType')
+            ->willReturn($testTokenType);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getToken')
+            ->willReturn($testToken);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getAuthOptions')
+            ->willReturn($authOptions);
 
         $this->httpClientMock->expects(self::once())
             ->method('send')
@@ -395,9 +476,9 @@ class RequestServiceTest extends TestCase
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\ApiException
+     * @expectedException  \InvoiceNinjaModule\Exception\HttpClientException
      */
-    public function testDispatchRequestApiException() :void
+    public function testDispatchRequestHttpClientException() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -433,9 +514,85 @@ class RequestServiceTest extends TestCase
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\ApiException
+     * @expectedException  \InvoiceNinjaModule\Exception\HttpClientException
      */
-    public function testDispatchRequestApiExceptionInvalidArgument() :void
+    public function testDispatchRequestHttpAuthClientException() :void
+    {
+        $testTokenType = 'testtokentype';
+        $testToken = 'testtoken';
+        $testReqRoute = 'testroute';
+
+        $response = $this->createMock(Response::class);
+        $response->expects(self::exactly(2))
+            ->method('getStatusCode')
+            ->willReturn(Response::STATUS_CODE_401);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getTimeout')
+            ->willReturn(10);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getTokenType')
+            ->willReturn($testTokenType);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getToken')
+            ->willReturn($testToken);
+
+        $this->httpClientMock->expects(self::once())
+            ->method('send')
+            ->with(self::isInstanceOf(RequestInterface::class))
+            ->willReturn($response);
+
+        $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
+        self::assertInternalType(
+            'array',
+            $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
+        );
+    }
+
+    /**
+     * @expectedException  \InvoiceNinjaModule\Exception\ApiAuthException
+     */
+    public function testDispatchRequestApiAuthClientException() :void
+    {
+        $testTokenType = 'testtokentype';
+        $testToken = 'testtoken';
+        $testReqRoute = 'testroute';
+
+        $response = $this->createMock(Response::class);
+        $response->expects(self::exactly(2))
+            ->method('getStatusCode')
+            ->willReturn(Response::STATUS_CODE_403);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getTimeout')
+            ->willReturn(10);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getTokenType')
+            ->willReturn($testTokenType);
+
+        $this->settingsMock->expects(self::once())
+            ->method('getToken')
+            ->willReturn($testToken);
+
+        $this->httpClientMock->expects(self::once())
+            ->method('send')
+            ->with(self::isInstanceOf(RequestInterface::class))
+            ->willReturn($response);
+
+        $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
+        self::assertInternalType(
+            'array',
+            $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
+        );
+    }
+
+    /**
+     * @expectedException  \InvoiceNinjaModule\Exception\HttpClientException
+     */
+    public function testDispatchRequestHttpClientExceptionInvalidArgument() :void
     {
         $this->reqMethod = 'TESTPUT';
         $testReqRoute = 'testroute';
@@ -447,9 +604,9 @@ class RequestServiceTest extends TestCase
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\ApiException
+     * @expectedException  \InvoiceNinjaModule\Exception\HttpClientException
      */
-    public function testDispatchRequestApiExceptionInvalidRuntime() :void
+    public function testDispatchRequestHttpClientExceptionInvalidRuntime() :void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -479,6 +636,9 @@ class RequestServiceTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException \InvoiceNinjaModule\Exception\EmptyResponseException
+     */
     public function testDispatchRequestEmpty() :void
     {
         $testTokenType = 'testtokentype';
@@ -557,7 +717,7 @@ class RequestServiceTest extends TestCase
 
         $response->expects(self::once())
             ->method('getBody')
-            ->willReturn('');
+            ->willReturn('{"data": [0]}');
 
         $this->settingsMock->expects(self::once())
             ->method('getTimeout')

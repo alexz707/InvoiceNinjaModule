@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
-use InvoiceNinjaModule\Exception\ApiException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
-use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
-use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
+use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use InvoiceNinjaModule\Service\ObjectService;
 use Zend\Http\Request;
@@ -139,7 +137,7 @@ class ObjectManagerTest extends TestCase
                 self::stringContains($this->testRoute),
                 self::isInstanceOf(RequestOptionsInterface::class)
             )
-            ->willThrowException(new ApiException());
+            ->willThrowException(new EmptyResponseException());
 
         self::assertInstanceOf(
             BaseInterface::class,
@@ -237,9 +235,7 @@ class ObjectManagerTest extends TestCase
         self::assertInternalType('array', $result);
     }
 
-    /**
-     * @expectedException \InvoiceNinjaModule\Exception\ApiException
-     */
+
     public function testFindObjectByApiException() :void
     {
         $baseMock = $this->createMock(BaseInterface::class);
@@ -256,7 +252,7 @@ class ObjectManagerTest extends TestCase
                 self::stringContains($this->testRoute),
                 self::isInstanceOf(RequestOptionsInterface::class)
             )
-            ->willThrowException(new ApiException());
+            ->willThrowException(new EmptyResponseException());
 
         $result = $this->objectManager->findObjectBy($baseMock, $searchTerm, $this->testRoute);
 
@@ -438,5 +434,18 @@ class ObjectManagerTest extends TestCase
             )
             ->willReturn(['test' => 'test2' ]);
         self::assertInternalType('array', $this->objectManager->downloadFile(1));
+    }
+
+    public function testSendCommand() :void
+    {
+        $this->requestServiceMock->expects(self::once())
+            ->method('dispatchRequest')
+            ->with(
+                self::stringContains(Request::METHOD_POST),
+                self::stringContains('/testcommand'),
+                self::isInstanceOf(RequestOptionsInterface::class)
+            )
+            ->willReturn(['test' => 'test2' ]);
+        $this->objectManager->sendCommand('testcommand', ['id'=>123]);
     }
 }

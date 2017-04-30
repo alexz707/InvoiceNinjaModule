@@ -3,11 +3,6 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service\Interfaces;
 
-use InvoiceNinjaModule\Exception\ApiException;
-use InvoiceNinjaModule\Exception\EmptyResponseException;
-use InvoiceNinjaModule\Exception\InvalidParameterException;
-use InvoiceNinjaModule\Exception\InvalidResultException;
-use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 
 /**
@@ -21,9 +16,10 @@ interface ObjectServiceInterface
      * @param               $reqRoute
      *
      * @return BaseInterface
-     * @throws ApiException
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function createObject(BaseInterface $object, string $reqRoute) :BaseInterface;
 
@@ -33,9 +29,11 @@ interface ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws EmptyResponseException
-     * @throws NotFoundException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\NotFoundException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function getObjectById(BaseInterface $object, int $id, string $reqRoute) :BaseInterface;
 
@@ -45,9 +43,10 @@ interface ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface[]
-     * @throws ApiException
-     * @throws InvalidParameterException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function findObjectBy(BaseInterface $object, array $searchTerm, string $reqRoute) :array;
 
@@ -56,9 +55,10 @@ interface ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws ApiException
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function restoreObject(BaseInterface $object, string $reqRoute) :BaseInterface;
 
@@ -67,9 +67,10 @@ interface ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws ApiException
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function archiveObject(BaseInterface $object, string $reqRoute) :BaseInterface;
 
@@ -78,9 +79,10 @@ interface ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws ApiException
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function updateObject(BaseInterface $object, string $reqRoute) :BaseInterface;
 
@@ -89,24 +91,27 @@ interface ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws ApiException
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function deleteObject(BaseInterface $object, string $reqRoute) :BaseInterface;
 
     /**
      * Retrieves all objects.
      * Default page size on server side is 15!
+     *
      * @param BaseInterface $object
      * @param string        $reqRoute
      * @param int           $page
      * @param int           $pageSize
      *
      * @return BaseInterface[]
-     * @throws ApiException
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function getAllObjects(BaseInterface $object, string $reqRoute, int $page = 1, int $pageSize = 0) :array;
 
@@ -114,8 +119,18 @@ interface ObjectServiceInterface
      * @param int $id
      *
      * @return array
-     * @throws ApiException
-     * @throws EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
      */
     public function downloadFile(int $id) :array;
+
+    /**
+     * @param string $command
+     * @param array  $body
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     */
+    public function sendCommand(string $command, array $body) :void;
 }

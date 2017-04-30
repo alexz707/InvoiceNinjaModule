@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace InvoiceNinjaModule\Model\Interfaces;
+namespace InvoiceNinjaModule\Options\Interfaces;
 
 /**
- * Interface SettingsInterface
+ * Interface ModuleOptionsInterface
  */
-interface SettingsInterface
+interface ModuleOptionsInterface
 {
     /**
      * @return string
@@ -25,4 +25,9 @@ interface SettingsInterface
      * @return string
      */
     public function getHostUrl() :string;
+
+    /**
+     * @return AuthOptionsInterface
+     */
+    public function getAuthOptions() : AuthOptionsInterface;
 }

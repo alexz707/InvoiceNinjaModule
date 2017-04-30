@@ -31,7 +31,7 @@ class InvoiceManagerTest extends TestCase
         self::assertInstanceOf(InvoiceManagerInterface::class, $this->invoiceManager);
     }
 
-    public function testCreateClient() : void
+    public function testCreateInvoice() : void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -66,7 +66,7 @@ class InvoiceManagerTest extends TestCase
     }
 
 
-    public function testGetClientById() : void
+    public function testGetInvoiceById() : void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -87,7 +87,7 @@ class InvoiceManagerTest extends TestCase
     /**
      * @expectedException  \InvoiceNinjaModule\Exception\NotFoundException
      */
-    public function testGetClientByIdException() : void
+    public function testGetInvoiceByIdException() : void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('getObjectById')
@@ -283,5 +283,19 @@ class InvoiceManagerTest extends TestCase
         $this->invoiceManager = new InvoiceManager($this->objectManagerMock);
 
         self::assertInternalType('array', $this->invoiceManager->downloadInvoice(10));
+    }
+
+    public function testSendEmailInvoice() : void
+    {
+        $this->objectManagerMock->expects(self::once())
+            ->method('sendCommand')
+            ->with(
+                self::stringContains('email_invoice'),
+                self::isType('array')
+            );
+
+        $this->invoiceManager = new InvoiceManager($this->objectManagerMock);
+
+        $this->invoiceManager->sendEmailInvoice(10);
     }
 }

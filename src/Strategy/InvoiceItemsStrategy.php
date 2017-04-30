@@ -13,7 +13,7 @@ use Zend\Hydrator\Strategy\StrategyInterface;
 /**
  * Class InvoiceItemsStrategy
  */
-class InvoiceItemsStrategy implements StrategyInterface
+final class InvoiceItemsStrategy implements StrategyInterface
 {
     /** @var HydratorInterface  */
     private $hydrator;
@@ -58,7 +58,7 @@ class InvoiceItemsStrategy implements StrategyInterface
     public function hydrate($value) :array
     {
         $result = [];
-        if (is_array($value)) {
+        if (\is_array($value)) {
             foreach ($value as $invoiceItemArr) {
                 $invoiceItem = new InvoiceItem();
                 $this->hydrator->hydrate($invoiceItemArr, $invoiceItem);

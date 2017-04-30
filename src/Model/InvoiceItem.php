@@ -9,7 +9,7 @@ use InvoiceNinjaModule\Model\Interfaces\InvoiceItemInterface;
  * Class InvoiceItem
  * @codeCoverageIgnore
  */
-class InvoiceItem extends Base implements InvoiceItemInterface
+final class InvoiceItem extends Base implements InvoiceItemInterface
 {
     /** @var  string */
     private $productKey = '';

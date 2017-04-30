@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service;
 
-use InvoiceNinjaModule\Exception\ApiException;
+use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
-use InvoiceNinjaModule\Model\Interfaces\RequestOptionsInterface;
-use InvoiceNinjaModule\Model\Interfaces\SettingsInterface;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
+use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
+use InvoiceNinjaModule\Options\Interfaces\ModuleOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use Zend\Http\Client;
 use Zend\Http\Client\Adapter\Curl;
@@ -22,34 +24,38 @@ use Zend\Stdlib\Parameters;
 final class RequestService implements RequestServiceInterface
 {
     const RETURN_KEY = 'data';
-    /** @var SettingsInterface */
-    private $settings;
+    /** @var ModuleOptionsInterface */
+    private $moduleOptions;
     /** @var Client  */
     private $httpClient;
 
     /**
      * RequestService constructor.
      *
-     * @param SettingsInterface $settings
-     * @param Client            $client
-     * @throws InvalidArgumentException
+     * @param ModuleOptionsInterface $moduleOptions
+     * @param Client                 $client
+     *
+     * @throws \Zend\Http\Exception\InvalidArgumentException
      */
-    public function __construct(SettingsInterface $settings, Client $client)
+    public function __construct(ModuleOptionsInterface $moduleOptions, Client $client)
     {
-        $this->settings = $settings;
-        $this->httpClient = $client;
+        $this->moduleOptions = $moduleOptions;
+        $this->httpClient    = $client;
         $this->initHttpClient();
     }
 
     /**
      * Sends the request to the server
+     *
      * @param string                  $reqMethod
      * @param string                  $reqRoute
      * @param RequestOptionsInterface $requestOptions
      *
      * @return array
-     * @throws ApiException
-     * @throws EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
      */
     public function dispatchRequest($reqMethod, $reqRoute, RequestOptionsInterface $requestOptions) :array
     {
@@ -58,32 +64,30 @@ final class RequestService implements RequestServiceInterface
         try {
             $request->setMethod($reqMethod);
         } catch (InvalidArgumentException $e) {
-            throw new ApiException($e->getMessage());
+            throw new HttpClientException($e->getMessage());
         }
 
         $request->setQuery(new Parameters($requestOptions->getQueryArray()));
 
         $postArray = $requestOptions->getPostArray();
         if (!empty($postArray)) {
-            $request->setContent(json_encode($postArray));
+            $request->setContent(\json_encode($postArray));
         }
 
         try {
             $request->getHeaders()->addHeaders($this->getRequestHeaderArray());
-            $request->setUri($this->settings->getHostUrl().$reqRoute);
+            $request->setUri($this->moduleOptions->getHostUrl().$reqRoute);
         } catch (InvalidArgumentException $e) {
-            throw new ApiException($e->getMessage());
+            throw new HttpClientException($e->getMessage());
         }
 
         try {
             $response = $this->httpClient->send($request);
         } catch (RuntimeException $e) {
-            throw new ApiException($e->getMessage());
+            throw new HttpClientException($e->getMessage());
         }
 
-        if ($response->getStatusCode() !== Response::STATUS_CODE_200) {
-            throw new ApiException($response->getStatusCode() .' '.$response->getReasonPhrase());
-        }
+        $this->checkResponseCode($response);
 
         return $this->convertResponse($response);
     }
@@ -91,8 +95,29 @@ final class RequestService implements RequestServiceInterface
     /**
      * @param Response $response
      *
+     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientException
+     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     */
+    private function checkResponseCode(Response $response) :void
+    {
+        switch ($response->getStatusCode()) {
+            case Response::STATUS_CODE_200:
+                break;
+            case Response::STATUS_CODE_403:
+                throw new ApiAuthException($response->getStatusCode() .' '.$response->getReasonPhrase());
+            case Response::STATUS_CODE_401:
+                throw new HttpClientAuthException($response->getStatusCode() .' '.$response->getReasonPhrase());
+            default:
+                throw new HttpClientException($response->getStatusCode() .' '.$response->getReasonPhrase());
+        }
+    }
+
+    /**
+     * @param Response $response
+     *
      * @return array
-     * @throws EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
      */
     private function convertResponse(Response $response) :array
     {
@@ -101,32 +126,32 @@ final class RequestService implements RequestServiceInterface
         $contentDisposition = $headers->get('Content-disposition');
         if ($contentDisposition !== false) {
             $needle = 'attachment; filename="';
-            $subString = strstr($contentDisposition->getFieldValue(), $needle);
+            $subString = \strstr($contentDisposition->getFieldValue(), $needle);
 
             if ($subString === false) {
                 return [];
             }
 
-            $fileName = substr($subString, strlen($needle), -1);
+            $fileName = \substr($subString, \strlen($needle), -1);
             return [$fileName => $response->getBody()];
         }
 
-        $result = json_decode($response->getBody(), true);
-        if (is_array($result)) {
+        $result = \json_decode($response->getBody(), true);
+        if (\is_array($result)) {
             return $this->checkResponseKey($result);
         }
-        return [];
+        throw new EmptyResponseException();
     }
 
     /**
      * @param array $result
      *
      * @return array
-     * @throws EmptyResponseException
+     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
      */
     private function checkResponseKey(array $result) :array
     {
-        if (!array_key_exists(self::RETURN_KEY, $result) || empty($result[self::RETURN_KEY])) {
+        if (!\array_key_exists(self::RETURN_KEY, $result) || empty($result[self::RETURN_KEY])) {
             throw new EmptyResponseException();
         }
         return $result[self::RETURN_KEY];
@@ -138,22 +163,32 @@ final class RequestService implements RequestServiceInterface
     private function getRequestHeaderArray() :array
     {
         return [
-            'Accept' => 'application/json',
-            'Content-type' => 'application/json; charset=UTF-8',
-            $this->settings->getTokenType() => $this->settings->getToken()
+            'Accept'                             => 'application/json',
+            'Content-type'                       => 'application/json; charset=UTF-8',
+            $this->moduleOptions->getTokenType() => $this->moduleOptions->getToken()
         ];
     }
 
     /**
      * @return void
-     * @throws InvalidArgumentException
+     * @throws \Zend\Http\Exception\InvalidArgumentException
      */
     private function initHttpClient() :void
     {
         $options = [
-            'timeout' => $this->settings->getTimeout()
+            'timeout' => $this->moduleOptions->getTimeout()
         ];
         $this->httpClient->setOptions($options);
         $this->httpClient->setAdapter(Curl::class);
+
+        $authOptions = $this->moduleOptions->getAuthOptions();
+
+        if ($authOptions->isAuthorization()) {
+            $this->httpClient->setAuth(
+                $authOptions->getUsername(),
+                $authOptions->getPassword(),
+                $authOptions->getAuthType()
+            );
+        }
     }
 }

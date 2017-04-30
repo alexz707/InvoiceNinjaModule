@@ -12,7 +12,7 @@ use Zend\Hydrator\Strategy\StrategyInterface;
 /**
  * Class ContactsStrategy
  */
-class ContactsStrategy implements StrategyInterface
+final class ContactsStrategy implements StrategyInterface
 {
     /** @var HydratorInterface  */
     private $hydrator;
@@ -57,7 +57,7 @@ class ContactsStrategy implements StrategyInterface
     public function hydrate($value) : array
     {
         $result = [];
-        if (is_array($value)) {
+        if (\is_array($value)) {
             foreach ($value as $contact) {
                 $contactObj = new Contact();
                 $this->hydrator->hydrate($contact, $contactObj);

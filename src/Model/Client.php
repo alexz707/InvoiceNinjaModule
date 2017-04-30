@@ -9,7 +9,7 @@ use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 /**
  * Class Client
  */
-class Client extends Base implements ClientInterface
+final class Client extends Base implements ClientInterface
 {
     /** @var  string */
     private $name = '';
