@@ -35,6 +35,36 @@ php composer.phar require alexz707/invoiceninja-module
 * Replace the `token` with your generated invoice ninja token
 * If you use `basic` or `digest` authorization uncomment the used method and fill in your credentials
 
+```php
+    Module::INVOICE_NINJA_CONFIG => [
+        Module::API_TIMEOUT     => 100,
+        Module::TOKEN           => 'YOURTOKEN',
+        Module::HOST_URL        => 'http://ninja.dev/api/v1',
+
+        /*
+         * If the api is protected by htaccess uncomment
+         * ONE of the following code blocks and use your credentials.
+         */
+        Module::AUTHORIZATION   => [
+            /*
+             * BASIC authorization
+             * \Zend\Http\Client::AUTH_BASIC => [
+             *    Module::AUTH_USER => 'YOURUSER',
+             *    Module::AUTH_PASS => 'YOURPASSWORD'
+             * ]
+             */
+
+            /*
+             * DIGEST authorization
+             * \Zend\Http\ClientClient::AUTH_DIGEST => [
+             *    Module::AUTH_USER => 'YOURUSER',
+             *    Module::AUTH_PASS => 'YOURPASSWORD'
+             * ]
+             */
+        ]
+    ]
+```
+
 ### Enable module 
 Register as Zend Framework module inside your ```config/application.config.php``` file:
 
