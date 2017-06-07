@@ -18,6 +18,7 @@ Latest release can handle the following api services:
 * Clients
 * Invoices
 * Products
+* Tax rates
 
 Can use `basic` or `digest` server authorization.
 
