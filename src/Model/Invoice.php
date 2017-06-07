@@ -18,7 +18,7 @@ final class Invoice extends Base implements InvoiceInterface
     /** @var int */
     private $clientId = 0;
     /** @var int */
-    private $invoiceStatusId = 0;
+    private $invoiceStatusId = InvoiceInterface::STATUS_DRAFT;
     /** @var string */
     private $invoiceNumber = '';
     /** @var float */
@@ -201,19 +201,19 @@ final class Invoice extends Base implements InvoiceInterface
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getInvoiceDate() : string
+    public function getInvoiceDate() : \DateTime
     {
-        return $this->invoiceDate;
+        return \DateTime::createFromFormat('Y-m-d', $this->invoiceDate);
     }
 
     /**
-     * @param string $invoiceDate
+     * @param \DateTime $invoiceDate
      */
-    public function setInvoiceDate(string $invoiceDate) : void
+    public function setInvoiceDate(\DateTime $invoiceDate) : void
     {
-        $this->invoiceDate = $invoiceDate;
+        $this->invoiceDate = $invoiceDate->format('Y-m-d');
     }
 
     /**

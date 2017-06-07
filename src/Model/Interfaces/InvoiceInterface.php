@@ -104,14 +104,14 @@ interface InvoiceInterface extends BaseInterface
     public function setPoNumber(string $poNumber) : void;
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getInvoiceDate() : string;
+    public function getInvoiceDate() : \DateTime;
 
     /**
-     * @param string $invoiceDate
+     * @param \DateTime $invoiceDate
      */
-    public function setInvoiceDate(string $invoiceDate) : void;
+    public function setInvoiceDate(\DateTime $invoiceDate) : void;
 
     /**
      * @return string

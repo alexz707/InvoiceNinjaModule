@@ -11,7 +11,6 @@ use InvoiceNinjaModule\Options\ModuleOptions;
 use InvoiceNinjaModule\Options\ModuleOptionsFactory;
 use InvoiceNinjaModule\Service\ClientManager;
 use InvoiceNinjaModule\Service\ClientManagerFactory;
-use InvoiceNinjaModule\Service\Interfaces\ProductManagerInterface;
 use InvoiceNinjaModule\Service\InvoiceManager;
 use InvoiceNinjaModule\Service\InvoiceManagerFactory;
 use InvoiceNinjaModule\Service\ObjectService;
@@ -20,11 +19,12 @@ use InvoiceNinjaModule\Service\ProductManager;
 use InvoiceNinjaModule\Service\ProductManagerFactory;
 use InvoiceNinjaModule\Service\RequestService;
 use InvoiceNinjaModule\Service\RequestServiceFactory;
+use InvoiceNinjaModule\Service\TaxRateManager;
+use InvoiceNinjaModule\Service\TaxRateManagerFactory;
 use InvoiceNinjaModule\Strategy\ContactsStrategy;
 use InvoiceNinjaModule\Strategy\ContactsStrategyFactory;
 use InvoiceNinjaModule\Strategy\InvoiceItemsStrategy;
 use InvoiceNinjaModule\Strategy\InvoiceItemStrategyFactory;
-use Zend\Http\Client;
 
 return [
     Module::INVOICE_NINJA_CONFIG => [
@@ -41,6 +41,7 @@ return [
             ClientManager::class        => ClientManagerFactory::class,
             InvoiceManager::class       => InvoiceManagerFactory::class,
             ProductManager::class       => ProductManagerFactory::class,
+            TaxRateManager::class       => TaxRateManagerFactory::class,
             ModuleOptions::class        => ModuleOptionsFactory::class,
             AuthOptions::class          => AuthOptionsFactory::class,
             'ReflectionHydrator'        => ReflectionHydratorFactory::class,
