@@ -217,19 +217,19 @@ final class Invoice extends Base implements InvoiceInterface
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getDueDate() : string
+    public function getDueDate() : \DateTime
     {
-        return $this->dueDate;
+        return \DateTime::createFromFormat('Y-m-d', $this->dueDate);
     }
 
     /**
-     * @param string $dueDate
+     * @param \DateTime $dueDate
      */
-    public function setDueDate(string $dueDate) : void
+    public function setDueDate(\DateTime $dueDate) : void
     {
-        $this->dueDate = $dueDate;
+        $this->dueDate = $dueDate->format('Y-m-d');
     }
 
     /**

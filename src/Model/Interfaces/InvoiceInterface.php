@@ -114,14 +114,14 @@ interface InvoiceInterface extends BaseInterface
     public function setInvoiceDate(\DateTime $invoiceDate) : void;
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getDueDate() : string;
+    public function getDueDate() : \DateTime;
 
     /**
-     * @param string $dueDate
+     * @param \DateTime $dueDate
      */
-    public function setDueDate(string $dueDate) : void;
+    public function setDueDate(\DateTime $dueDate) : void;
 
     /**
      * @return string
