@@ -19,8 +19,14 @@ final class Product extends Base implements ProductInterface
     private $cost = 0;
     /** @var  float */
     private $qty;
-    /** @var  int */
-    private $defaultTaxRateId = 0;
+    /** @var  string */
+    private $taxName1;
+    /** @var  string */
+    private $taxName2;
+    /** @var  float */
+    private $taxRate1;
+    /** @var  float */
+    private $taxRate2;
 
     /**
      * @return string
@@ -59,7 +65,7 @@ final class Product extends Base implements ProductInterface
      */
     public function getCost() : float
     {
-        return $this->cost;
+        return (float)$this->cost;
     }
 
     /**
@@ -87,18 +93,66 @@ final class Product extends Base implements ProductInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getDefaultTaxRateId() : int
+    public function getTaxName1() : string
     {
-        return $this->defaultTaxRateId;
+        return $this->taxName1;
     }
 
     /**
-     * @param int $defaultTaxRateId
+     * @param string $taxName1
      */
-    public function setDefaultTaxRateId(int $defaultTaxRateId) :void
+    public function setTaxName1(string $taxName1) :void
     {
-        $this->defaultTaxRateId = $defaultTaxRateId;
+        $this->taxName1 = $taxName1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaxName2() : string
+    {
+        return $this->taxName2;
+    }
+
+    /**
+     * @param string $taxName2
+     */
+    public function setTaxName2(string $taxName2) :void
+    {
+        $this->taxName2 = $taxName2;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTaxRate1() : float
+    {
+        return $this->taxRate1;
+    }
+
+    /**
+     * @param float $taxRate1
+     */
+    public function setTaxRate1(float $taxRate1) :void
+    {
+        $this->taxRate1 = $taxRate1;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTaxRate2() : float
+    {
+        return $this->taxRate2;
+    }
+
+    /**
+     * @param float $taxRate2
+     */
+    public function setTaxRate2(float $taxRate2) :void
+    {
+        $this->taxRate2 = $taxRate2;
     }
 }

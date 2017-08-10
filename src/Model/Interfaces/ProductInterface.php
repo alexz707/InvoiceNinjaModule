@@ -49,12 +49,41 @@ interface ProductInterface extends BaseInterface
     public function setQty(float $qty) :void;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getDefaultTaxRateId() : int;
+    public function getTaxName1() : string;
 
     /**
-     * @param int $defaultTaxRateId
+     * @param string $taxName1
      */
-    public function setDefaultTaxRateId(int $defaultTaxRateId) :void;
+    public function setTaxName1(string $taxName1) :void;
+
+    /**
+     * @return string
+     */
+    public function getTaxName2() : string;
+
+    /**
+     * @param string $taxName2
+     */
+    public function setTaxName2(string $taxName2) :void;
+
+    /**
+     * @return float
+     */
+    public function getTaxRate1() : float;
+    /**
+     * @param float $taxRate1
+     */
+    public function setTaxRate1(float $taxRate1) :void;
+
+    /**
+     * @return float
+     */
+    public function getTaxRate2() : float;
+
+    /**
+     * @param float $taxRate2
+     */
+    public function setTaxRate2(float $taxRate2) :void;
 }
