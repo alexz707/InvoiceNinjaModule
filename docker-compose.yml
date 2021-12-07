@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  php-cli:
+    build: ./docker/php/
+    expose:
+      - 9000
+    volumes:
+      - .:/var/www
