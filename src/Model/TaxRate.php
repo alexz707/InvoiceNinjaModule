@@ -11,12 +11,8 @@ use InvoiceNinjaModule\Model\Interfaces\TaxRateInterface;
  */
 final class TaxRate extends Base implements TaxRateInterface
 {
-    /** @var  string */
-    private $name = '';
-    /** @var  float */
-    private $rate = '';
-    /** @var  float */
-    private $isInclusive = false;
+    private string $name = '';
+    private float $rate = 0;
 
     /**
      * @return string
@@ -35,34 +31,18 @@ final class TaxRate extends Base implements TaxRateInterface
     }
 
     /**
-     * @return float
+     * @return float|int
      */
-    public function getRate() : float
+    public function getRate() : float|int
     {
         return $this->rate;
     }
 
     /**
-     * @param float $rate
+     * @param float|int $rate
      */
-    public function setRate(float $rate)
+    public function setRate(float|int $rate) : void
     {
         $this->rate = $rate;
-    }
-
-    /**
-     * @return float
-     */
-    public function getisInclusive() : float
-    {
-        return $this->isInclusive;
-    }
-
-    /**
-     * @param float $isInclusive
-     */
-    public function setIsInclusive(float $isInclusive)
-    {
-        $this->isInclusive = $isInclusive;
     }
 }

@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service;
 
+use InvoiceNinjaModule\Exception\ApiAuthException;
+use InvoiceNinjaModule\Exception\EmptyResponseException;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
+use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Client;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
@@ -15,12 +20,9 @@ use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
  */
 final class ClientManager implements ClientManagerInterface
 {
-    /** @var ObjectServiceInterface  */
-    private $objectManager;
-    /** @var  string */
-    private $reqRoute;
-    /** @var Client  */
-    private $objectType;
+    private ObjectServiceInterface $objectManager;
+    private string $reqRoute;
+    private Client $objectType;
 
     /**
      * ClientManager constructor.
@@ -38,13 +40,21 @@ final class ClientManager implements ClientManagerInterface
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function createClient(ClientInterface $client) :ClientInterface
     {
+        //@TODO: Client needs at least one contact!!
+        /*
+                    $contact = new Contact();
+                    $contact->setEmail('test@test.de');
+                    $contact->setFirstName('dddd');
+                    $contact->setLastName('XXXXXX');
+                    $contact->setPrimary(true);
+                    $contact->setSendInvoice(true); */
         return $this->checkResult($this->objectManager->createObject($client, $this->reqRoute));
     }
 
@@ -52,10 +62,10 @@ final class ClientManager implements ClientManagerInterface
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function delete(ClientInterface $client) :ClientInterface
     {
@@ -66,10 +76,10 @@ final class ClientManager implements ClientManagerInterface
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function update(ClientInterface $client) :ClientInterface
     {
@@ -80,10 +90,10 @@ final class ClientManager implements ClientManagerInterface
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function restore(ClientInterface $client) :ClientInterface
     {
@@ -94,10 +104,10 @@ final class ClientManager implements ClientManagerInterface
      * @param ClientInterface $client
      *
      * @return ClientInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function archive(ClientInterface $client) :ClientInterface
     {
@@ -105,44 +115,44 @@ final class ClientManager implements ClientManagerInterface
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return ClientInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\NotFoundException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws NotFoundException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
-    public function getClientById($id) :ClientInterface
+    public function getClientById(string $id) :ClientInterface
     {
         return $this->checkResult($this->objectManager->getObjectById($this->objectType, $id, $this->reqRoute));
     }
 
     /**
-     * @param $email
+     * @param string $email
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws InvalidParameterException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
-    public function findClientsByEmail($email) :array
+    public function findClientsByEmail(string $email) :array
     {
         return $this->objectManager->findObjectBy($this->objectType, ['email' => $email], $this->reqRoute);
     }
 
     /**
-     * @param $idNumber
+     * @param string $idNumber
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws InvalidParameterException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
-    public function findClientsByIdNumber($idNumber) :array
+    public function findClientsByIdNumber(string $idNumber) :array
     {
         return $this->objectManager->findObjectBy($this->objectType, ['id_number' => $idNumber], $this->reqRoute);
     }
@@ -152,12 +162,12 @@ final class ClientManager implements ClientManagerInterface
      * @param int $pageSize
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
-    public function getAllClients($page = 1, $pageSize = 0) :array
+    public function getAllClients(int $page = 1, int $pageSize = 0) :array
     {
         $result = $this->objectManager->getAllObjects($this->objectType, $this->reqRoute, $page, $pageSize);
         foreach ($result as $client) {
@@ -170,7 +180,7 @@ final class ClientManager implements ClientManagerInterface
      * @param BaseInterface $client
      *
      * @return ClientInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws InvalidResultException
      */
     private function checkResult(BaseInterface $client) :ClientInterface
     {

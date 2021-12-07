@@ -6,7 +6,7 @@ namespace InvoiceNinjaModule\Hydrator;
 use Interop\Container\ContainerInterface;
 use InvoiceNinjaModule\Strategy\ContactsStrategy;
 use InvoiceNinjaModule\Strategy\InvoiceItemsStrategy;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class InvoiceNinjaHydratorFactory
@@ -17,8 +17,8 @@ final class InvoiceNinjaHydratorFactory implements FactoryInterface
     {
         $hydrator = $container->get('ReflectionHydrator');
 
-        $hydrator->addStrategy('invoiceItems', $container->get(InvoiceItemsStrategy::class));
-        $hydrator->addStrategy('invoice_items', $container->get(InvoiceItemsStrategy::class));
+        $hydrator->addStrategy('lineItems', $container->get(InvoiceItemsStrategy::class));
+        $hydrator->addStrategy('line_items', $container->get(InvoiceItemsStrategy::class));
         $hydrator->addStrategy('contacts', $container->get(ContactsStrategy::class));
 
         return $hydrator;

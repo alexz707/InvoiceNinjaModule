@@ -6,7 +6,7 @@ namespace InvoiceNinjaModuleTest\Strategy;
 use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 use InvoiceNinjaModule\Strategy\ContactsStrategy;
 use PHPUnit\Framework\TestCase;
-use Zend\Hydrator\HydratorInterface;
+use Laminas\Hydrator\HydratorInterface;
 
 class ContactsStrategyTest extends TestCase
 {
@@ -33,7 +33,7 @@ class ContactsStrategyTest extends TestCase
 
         $result = $this->strategy->extract($testValue);
         self::assertEmpty($result);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
     }
 
     public function testExtract() :void
@@ -44,7 +44,7 @@ class ContactsStrategyTest extends TestCase
 
         $result = $this->strategy->extract($testValue);
         self::assertNotEmpty($result);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
     }
 
     public function testHydrateEmpty() :void
@@ -52,9 +52,9 @@ class ContactsStrategyTest extends TestCase
         $testValue = [
         ];
 
-        $result = $this->strategy->hydrate($testValue);
+        $result = $this->strategy->hydrate($testValue, null);
         self::assertEmpty($result);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
     }
 
     public function testHydrate() :void
@@ -63,9 +63,9 @@ class ContactsStrategyTest extends TestCase
             [ 'id' => 1]
         ];
 
-        $result = $this->strategy->hydrate($testValue);
+        $result = $this->strategy->hydrate($testValue, null);
         self::assertNotEmpty($result);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         self::assertInstanceOf(ContactInterface::class, $result[0]);
     }
 }

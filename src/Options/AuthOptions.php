@@ -6,18 +6,14 @@ namespace InvoiceNinjaModule\Options;
 use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Module;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
-use Zend\Http\Client;
+use Laminas\Http\Client;
 
 final class AuthOptions implements AuthOptionsInterface
 {
-    /** @var bool  */
-    private $isAuthorization = false;
-    /** @var string  */
-    private $authType = 'none';
-    /** @var string  */
-    private $username = '';
-    /** @var string  */
-    private $password = '';
+    private bool $isAuthorization = false;
+    private string $authType = 'none';
+    private string $username = '';
+    private string $password = '';
 
     /**
      * Config constructor.
@@ -68,11 +64,11 @@ final class AuthOptions implements AuthOptionsInterface
     }
 
     /**
-     * @param $config
+     * @param array $config
      *
      * @throws InvalidParameterException
      */
-    private function checkCredentials($config) :void
+    private function checkCredentials(array $config) :void
     {
         $this->checkUsername($config[$this->authType]);
         $this->checkPassword($config[$this->authType]);

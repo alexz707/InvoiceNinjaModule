@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service;
 
+use InvoiceNinjaModule\Exception\ApiAuthException;
+use InvoiceNinjaModule\Exception\EmptyResponseException;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
@@ -16,12 +19,9 @@ use InvoiceNinjaModule\Service\Interfaces\ProductManagerInterface;
  */
 final class ProductManager implements ProductManagerInterface
 {
-    /** @var ObjectServiceInterface  */
-    private $objectManager;
-    /** @var  string */
-    private $reqRoute;
-    /** @var ProductInterface  */
-    private $objectType;
+    private ObjectServiceInterface $objectManager;
+    private string $reqRoute;
+    private ProductInterface $objectType;
 
     /**
      * ProductManager constructor.
@@ -39,10 +39,10 @@ final class ProductManager implements ProductManagerInterface
      * @param ProductInterface $product
      *
      * @return ProductInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function createProduct(ProductInterface $product) :ProductInterface
     {
@@ -53,10 +53,10 @@ final class ProductManager implements ProductManagerInterface
      * @param ProductInterface $product
      *
      * @return ProductInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function delete(ProductInterface $product) :ProductInterface
     {
@@ -67,10 +67,10 @@ final class ProductManager implements ProductManagerInterface
      * @param ProductInterface $product
      *
      * @return ProductInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function update(ProductInterface $product) :ProductInterface
     {
@@ -81,10 +81,10 @@ final class ProductManager implements ProductManagerInterface
      * @param ProductInterface $product
      *
      * @return ProductInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function restore(ProductInterface $product) :ProductInterface
     {
@@ -95,10 +95,10 @@ final class ProductManager implements ProductManagerInterface
      * @param ProductInterface $product
      *
      * @return ProductInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function archive(ProductInterface $product) :ProductInterface
     {
@@ -106,16 +106,16 @@ final class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $id
+     * @param int string
      *
      * @return ProductInterface
      * @throws NotFoundException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
-    public function getProductById(int $id) :ProductInterface
+    public function getProductById(string $id) :ProductInterface
     {
         return $this->checkResult($this->objectManager->getObjectById($this->objectType, $id, $this->reqRoute));
     }
@@ -125,10 +125,10 @@ final class ProductManager implements ProductManagerInterface
      * @param int $pageSize
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function getAllProducts(int $page = 1, int $pageSize = 0) :array
     {
@@ -143,7 +143,7 @@ final class ProductManager implements ProductManagerInterface
      * @param BaseInterface $product
      *
      * @return ProductInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws InvalidResultException
      */
     private function checkResult(BaseInterface $product) :ProductInterface
     {

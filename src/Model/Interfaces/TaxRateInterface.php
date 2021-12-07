@@ -19,22 +19,12 @@ interface TaxRateInterface extends BaseInterface
     public function setName(string $name);
 
     /**
-     * @return float
+     * @return float|int
      */
-    public function getRate() : float;
+    public function getRate() : float|int;
 
     /**
-     * @param float $rate
+     * @param float|int $rate
      */
-    public function setRate(float $rate);
-
-    /**
-     * @return float
-     */
-    public function getisInclusive() : float;
-
-    /**
-     * @param float $isInclusive
-     */
-    public function setIsInclusive(float $isInclusive);
+    public function setRate(float|int $rate) : void;
 }

@@ -13,16 +13,11 @@ use InvoiceNinjaModule\Module;
  */
 final class ModuleOptions implements ModuleOptionsInterface
 {
-    /** @var AuthOptionsInterface  */
-    private $authOptions;
-    /** @var  string */
-    private $token;
-    /** @var  string */
-    private $tokenType;
-    /** @var  int */
-    private $timeout;
-    /** @var  string */
-    private $hostUrl;
+    private AuthOptionsInterface $authOptions;
+    private string $token;
+    private string $tokenType;
+    private int $timeout;
+    private string $hostUrl;
 
     /**
      * ModuleOptions constructor.

@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest;
 
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Mvc\Service\ServiceManagerConfig;
+use Laminas\ServiceManager\ServiceManager;
+use function dirname;
 
 /**
  * Test bootstrap, for setting up autoloading

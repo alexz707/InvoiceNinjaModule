@@ -2,7 +2,7 @@
 declare(strict_types=1);
 return [
     'modules' => [
-        'Zend\Router',
+        'Laminas\Router',
         'InvoiceNinjaModule'
     ],
     'module_listener_options' => [

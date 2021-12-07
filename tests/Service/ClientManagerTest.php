@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
+use InvoiceNinjaModule\Exception\ApiAuthException;
+use InvoiceNinjaModule\Exception\EmptyResponseException;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
@@ -15,7 +19,7 @@ class ClientManagerTest extends TestCase
 {
     /** @var  ClientManager */
     private $clientManager;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
+    /** @var  \PHPUnit\Framework\MockObject\MockObject */
     private $objectManagerMock;
 
     protected function setUp() : void
@@ -74,31 +78,37 @@ class ClientManagerTest extends TestCase
             ->method('getObjectById')
             ->with(
                 self::isInstanceOf(ClientInterface::class),
-                self::isType('integer'),
+                self::isType('string'),
                 self::stringContains('/clients')
             )
             ->willReturn($clientMock);
 
         $this->clientManager = new ClientManager($this->objectManagerMock);
 
-        self::assertInstanceOf(ClientInterface::class, $this->clientManager->getClientById(777));
+        self::assertInstanceOf(ClientInterface::class, $this->clientManager->getClientById('777'));
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\NotFoundException
+     * @throws NotFoundException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws InvalidResultException
      */
     public function testGetClientByIdException() : void
     {
+        $this->expectException(NotFoundException::class);
+
         $this->objectManagerMock->expects(self::once())
             ->method('getObjectById')
             ->with(
                 self::isInstanceOf(ClientInterface::class),
-                self::isType('integer'),
+                self::isType('string'),
                 self::stringContains('/clients')
             )
             ->willThrowException(new NotFoundException());
 
-        self::assertInstanceOf(ClientInterface::class, $this->clientManager->getClientById(777));
+        self::assertInstanceOf(ClientInterface::class, $this->clientManager->getClientById('777'));
     }
 
     public function testFindClientsByEmail() : void
@@ -117,7 +127,7 @@ class ClientManagerTest extends TestCase
         $this->clientManager = new ClientManager($this->objectManagerMock);
 
         $result = $this->clientManager->findClientsByEmail('test@test.com');
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         self::assertNotEmpty($result);
     }
 
@@ -137,7 +147,8 @@ class ClientManagerTest extends TestCase
         $this->clientManager = new ClientManager($this->objectManagerMock);
 
         $result = $this->clientManager->findClientsByIdNumber('12343');
-        self::assertInternalType('array', $result);
+
+        self::assertIsArray($result);
         self::assertNotEmpty($result);
     }
 
@@ -207,7 +218,7 @@ class ClientManagerTest extends TestCase
 
         $this->clientManager = new ClientManager($this->objectManagerMock);
 
-        self::assertInternalType('array', $this->clientManager->getAllClients());
+        self::assertIsArray($this->clientManager->getAllClients());
     }
 
     public function testGetAllClients() : void
@@ -226,14 +237,19 @@ class ClientManagerTest extends TestCase
 
         $this->clientManager = new ClientManager($this->objectManagerMock);
 
-        self::assertInternalType('array', $this->clientManager->getAllClients());
+        self::assertIsArray($this->clientManager->getAllClients());
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws InvalidResultException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
      */
     public function testGetAllClientsOtherResult() : void
     {
+        $this->expectException(InvalidResultException::class);
+
         $clientMock = $this->createMock(BaseInterface::class);
 
         $this->objectManagerMock->expects(self::once())
@@ -248,6 +264,6 @@ class ClientManagerTest extends TestCase
 
         $this->clientManager = new ClientManager($this->objectManagerMock);
 
-        self::assertInternalType('array', $this->clientManager->getAllClients());
+        self::assertIsArray($this->clientManager->getAllClients());
     }
 }

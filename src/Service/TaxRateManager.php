@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service;
 
+use InvoiceNinjaModule\Exception\ApiAuthException;
+use InvoiceNinjaModule\Exception\EmptyResponseException;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
@@ -16,12 +19,9 @@ use InvoiceNinjaModule\Service\Interfaces\TaxRateManagerInterface;
  */
 final class TaxRateManager implements TaxRateManagerInterface
 {
-    /** @var ObjectServiceInterface  */
-    private $objectManager;
-    /** @var  string */
-    private $reqRoute;
-    /** @var TaxRateInterface  */
-    private $objectType;
+    private ObjectServiceInterface $objectManager;
+    private string $reqRoute;
+    private TaxRateInterface $objectType;
 
     /**
      * ProductManager constructor.
@@ -39,10 +39,10 @@ final class TaxRateManager implements TaxRateManagerInterface
      * @param TaxRateInterface $taxRate
      *
      * @return TaxRateInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function createTaxRate(TaxRateInterface $taxRate) :TaxRateInterface
     {
@@ -53,10 +53,10 @@ final class TaxRateManager implements TaxRateManagerInterface
      * @param TaxRateInterface $taxRate
      *
      * @return TaxRateInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function delete(TaxRateInterface $taxRate) :TaxRateInterface
     {
@@ -67,10 +67,10 @@ final class TaxRateManager implements TaxRateManagerInterface
      * @param TaxRateInterface $taxRate
      *
      * @return TaxRateInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function update(TaxRateInterface $taxRate) :TaxRateInterface
     {
@@ -81,10 +81,10 @@ final class TaxRateManager implements TaxRateManagerInterface
      * @param TaxRateInterface $taxRate
      *
      * @return TaxRateInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function restore(TaxRateInterface $taxRate) :TaxRateInterface
     {
@@ -95,10 +95,10 @@ final class TaxRateManager implements TaxRateManagerInterface
      * @param TaxRateInterface $taxRate
      *
      * @return TaxRateInterface
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function archive(TaxRateInterface $taxRate) :TaxRateInterface
     {
@@ -106,16 +106,16 @@ final class TaxRateManager implements TaxRateManagerInterface
     }
 
     /**
-     * @param int $id
+     * @param string $id
      *
      * @return TaxRateInterface
      * @throws NotFoundException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws InvalidResultException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
-    public function getTaxRateById(int $id) :TaxRateInterface
+    public function getTaxRateById(string $id) :TaxRateInterface
     {
         return $this->checkResult($this->objectManager->getObjectById($this->objectType, $id, $this->reqRoute));
     }
@@ -125,10 +125,10 @@ final class TaxRateManager implements TaxRateManagerInterface
      * @param int $pageSize
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
      */
     public function getAllTaxRates(int $page = 1, int $pageSize = 0) :array
     {
@@ -143,7 +143,7 @@ final class TaxRateManager implements TaxRateManagerInterface
      * @param BaseInterface $taxRate
      *
      * @return TaxRateInterface
-     * @throws \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws InvalidResultException
      */
     private function checkResult(BaseInterface $taxRate) :TaxRateInterface
     {

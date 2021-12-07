@@ -11,62 +11,45 @@ use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
  */
 final class Client extends Base implements ClientInterface
 {
-    /** @var  string */
-    private $name = '';
-    /** @var  float */
-    private $balance = 0;
-    /** @var float */
-    private $paidToDate = 0;
-    /** @var  int */
-    private $userId = 0;
-    /** @var  string */
-    private $address1 = '';
-    /** @var  string */
-    private $address2 = '';
-    /** @var  string */
-    private $city = '';
-    /** @var  string */
-    private $state = '';
-    /** @var  string */
-    private $postalCode = '';
-    /** @var  int */
-    private $countryId = 0;
-    /** @var  string */
-    private $workPhone = '';
-    /** @var  string */
-    private $privateNotes = '';
-    /** @var  int */
-    private $lastLogin;
-    /** @var  string */
-    private $website = '';
-    /** @var  int */
-    private $industryId = 0;
-    /** @var  int */
-    private $sizeId = 0;
-    /** @var int  */
-    private $paymentTerms = 0;
-    /** @var  string */
-    private $customValue1;
-    /** @var  string */
-    private $customValue2;
-    /** @var  string */
-    private $vatNumber = '';
-    /** @var  string */
-    private $idNumber = '';
-    /** @var  int */
-    private $languageId = 0;
-    /** @var  int */
-    private $currencyId = 0;
+    private string $userId = '';
+    private string $assignedUserId = '';
+    private string $groupSettingsId = '';
+    private string $displayName = '';
+    private string $number = '';
+    private string $companyId = '';
+    private string $name = '';
+    private string $website = '';
+    private string $privateNotes = '';
+    private string $clientHash = '';
+    private string $industryId = '';
+    private string $sizeId = '';
+    private string $address1 = '';
+    private string $address2 = '';
+    private string $city = '';
+    private string $state = '';
+    private string $postalCode = '';
+    private string $phone = '';
+    private string $countryId = '';
+    private string $customValue1 = '';
+    private string $customValue2 = '';
+    private string $customValue3 = '';
+    private string $customValue4 = '';
+    private string $vatNumber = '';
+    private string $idNumber = '';
+    private string $shippingAddress1 = '';
+    private string $shippingAddress2 = '';
+    private string $shippingCity = '';
+    private string $shippingState= '';
+    private string $shippingPostalCode= '';
+    private string $shippingCountryId= '';
+    private float $balance = 0;
+    private float $paidToDate = 0;
+    private float $creditBalance = 0;
+    private int $lastLogin = 0;
     /** @var ContactInterface[]  */
-    private $contacts;
-
-    /**
-     * Client constructor.
-     */
-    public function __construct()
-    {
-        $this->contacts = [];
-    }
+    private array $contacts = [];
+    private array $documents = [];
+    private array $gatewayTokens = [];
 
     /**
      * @return float
@@ -101,17 +84,17 @@ final class Client extends Base implements ClientInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getUserId() :int
+    public function getUserId() :string
     {
         return $this->userId;
     }
 
     /**
-     * @param int $userId
+     * @param string $userId
      */
-    public function setUserId(int $userId) :void
+    public function setUserId(string $userId) :void
     {
         $this->userId = $userId;
     }
@@ -197,35 +180,19 @@ final class Client extends Base implements ClientInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getCountryId() :int
+    public function getCountryId() :string
     {
         return $this->countryId;
     }
 
     /**
-     * @param int $countryId
+     * @param string $countryId
      */
-    public function setCountryId(int $countryId) :void
+    public function setCountryId(string $countryId) :void
     {
         $this->countryId = $countryId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getWorkPhone() :string
-    {
-        return $this->workPhone;
-    }
-
-    /**
-     * @param string $workPhone
-     */
-    public function setWorkPhone(string $workPhone) :void
-    {
-        $this->workPhone = $workPhone;
     }
 
     /**
@@ -247,7 +214,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return int
      */
-    public function getLastLogin() :?int
+    public function getLastLogin() :int
     {
         return $this->lastLogin;
     }
@@ -269,83 +236,67 @@ final class Client extends Base implements ClientInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIndustryId() :int
+    public function getIndustryId() :string
     {
         return $this->industryId;
     }
 
     /**
-     * @param int $industryId
+     * @param string $industryId
      */
-    public function setIndustryId(int $industryId) :void
+    public function setIndustryId(string $industryId) :void
     {
         $this->industryId = $industryId;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getSizeId() :int
+    public function getSizeId() :string
     {
         return $this->sizeId;
     }
 
     /**
-     * @param int $sizeId
+     * @param string $sizeId
      */
-    public function setSizeId(int $sizeId) :void
+    public function setSizeId(string $sizeId) :void
     {
         $this->sizeId = $sizeId;
     }
 
     /**
-     * @return int
-     */
-    public function getPaymentTerms() :int
-    {
-        return $this->paymentTerms;
-    }
-
-    /**
-     * @param int $paymentTerms
-     */
-    public function setPaymentTerms(int $paymentTerms) :void
-    {
-        $this->paymentTerms = $paymentTerms;
-    }
-
-    /**
      * @return string
      */
-    public function getCustomValue1() :?string
+    public function getCustomValue1() :string
     {
         return $this->customValue1;
     }
 
     /**
-     * @param string $customValue1
+     * @param string $customValue
      */
-    public function setCustomValue1(string $customValue1) :void
+    public function setCustomValue1(string $customValue) :void
     {
-        $this->customValue1 = $customValue1;
+        $this->customValue1 = $customValue;
     }
 
     /**
      * @return string
      */
-    public function getCustomValue2() :?string
+    public function getCustomValue2() :string
     {
         return $this->customValue2;
     }
 
     /**
-     * @param string $customValue2
+     * @param string $customValue
      */
-    public function setCustomValue2(string $customValue2) :void
+    public function setCustomValue2(string $customValue) :void
     {
-        $this->customValue2 = $customValue2;
+        $this->customValue2 = $customValue;
     }
 
     /**
@@ -381,22 +332,6 @@ final class Client extends Base implements ClientInterface
     }
 
     /**
-     * @return int
-     */
-    public function getLanguageId() :int
-    {
-        return $this->languageId;
-    }
-
-    /**
-     * @param int $languageId
-     */
-    public function setLanguageId(int $languageId) :void
-    {
-        $this->languageId = $languageId;
-    }
-
-    /**
      * @return ContactInterface[]
      */
     public function getContacts() :array
@@ -429,18 +364,290 @@ final class Client extends Base implements ClientInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getCurrencyId() :int
+    public function getAssignedUserId() : string
     {
-        return $this->currencyId;
+        return $this->assignedUserId;
     }
 
     /**
-     * @param int $currencyId
+     * @param string $assignedUserId
      */
-    public function setCurrencyId(int $currencyId) :void
+    public function setAssignedUserId(string $assignedUserId) : void
     {
-        $this->currencyId = $currencyId;
+        $this->assignedUserId = $assignedUserId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroupSettingsId() : string
+    {
+        return $this->groupSettingsId;
+    }
+
+    /**
+     * @param string $groupSettingsId
+     */
+    public function setGroupSettingsId(string $groupSettingsId) : void
+    {
+        $this->groupSettingsId = $groupSettingsId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayName() : string
+    {
+        return $this->displayName;
+    }
+
+    /**
+     * @param string $displayName
+     */
+    public function setDisplayName(string $displayName) : void
+    {
+        $this->displayName = $displayName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNumber() : string
+    {
+        return $this->number;
+    }
+
+    /**
+     * @param string $number
+     */
+    public function setNumber(string $number) : void
+    {
+        $this->number = $number;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompanyId() : string
+    {
+        return $this->companyId;
+    }
+
+    /**
+     * @param string $companyId
+     */
+    public function setCompanyId(string $companyId) : void
+    {
+        $this->companyId = $companyId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientHash() : string
+    {
+        return $this->clientHash;
+    }
+
+    /**
+     * @param string $clientHash
+     */
+    public function setClientHash(string $clientHash) : void
+    {
+        $this->clientHash = $clientHash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone() : string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone(string $phone) : void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomValue3() : string
+    {
+        return $this->customValue3;
+    }
+
+    /**
+     * @param string $customValue3
+     */
+    public function setCustomValue3(string $customValue3) : void
+    {
+        $this->customValue3 = $customValue3;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomValue4() : string
+    {
+        return $this->customValue4;
+    }
+
+    /**
+     * @param string $customValue4
+     */
+    public function setCustomValue4(string $customValue4) : void
+    {
+        $this->customValue4 = $customValue4;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShippingAddress1() : string
+    {
+        return $this->shippingAddress1;
+    }
+
+    /**
+     * @param string $shippingAddress1
+     */
+    public function setShippingAddress1(string $shippingAddress1) : void
+    {
+        $this->shippingAddress1 = $shippingAddress1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShippingAddress2() : string
+    {
+        return $this->shippingAddress2;
+    }
+
+    /**
+     * @param string $shippingAddress2
+     */
+    public function setShippingAddress2(string $shippingAddress2) : void
+    {
+        $this->shippingAddress2 = $shippingAddress2;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShippingCity() : string
+    {
+        return $this->shippingCity;
+    }
+
+    /**
+     * @param string $shippingCity
+     */
+    public function setShippingCity(string $shippingCity) : void
+    {
+        $this->shippingCity = $shippingCity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShippingState() : string
+    {
+        return $this->shippingState;
+    }
+
+    /**
+     * @param string $shippingState
+     */
+    public function setShippingState(string $shippingState) : void
+    {
+        $this->shippingState = $shippingState;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShippingPostalCode() : string
+    {
+        return $this->shippingPostalCode;
+    }
+
+    /**
+     * @param string $shippingPostalCode
+     */
+    public function setShippingPostalCode(string $shippingPostalCode) : void
+    {
+        $this->shippingPostalCode = $shippingPostalCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShippingCountryId() : string
+    {
+        return $this->shippingCountryId;
+    }
+
+    /**
+     * @param string $shippingCountryId
+     */
+    public function setShippingCountryId(string $shippingCountryId) : void
+    {
+        $this->shippingCountryId = $shippingCountryId;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getCreditBalance() : float|int
+    {
+        return $this->creditBalance;
+    }
+
+    /**
+     * @param float|int $creditBalance
+     */
+    public function setCreditBalance(float|int $creditBalance) : void
+    {
+        $this->creditBalance = $creditBalance;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDocuments() : array
+    {
+        return $this->documents;
+    }
+
+    /**
+     * @param array $documents
+     */
+    public function setDocuments(array $documents) : void
+    {
+        $this->documents = $documents;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGatewayTokens() : array
+    {
+        return $this->gatewayTokens;
+    }
+
+    /**
+     * @param array $gatewayTokens
+     */
+    public function setGatewayTokens(array $gatewayTokens) : void
+    {
+        $this->gatewayTokens = $gatewayTokens;
     }
 }

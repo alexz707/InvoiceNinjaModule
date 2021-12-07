@@ -5,7 +5,7 @@ namespace InvoiceNinjaModule\Options;
 
 use Interop\Container\ContainerInterface;
 use InvoiceNinjaModule\Module;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class AuthOptionsFactory

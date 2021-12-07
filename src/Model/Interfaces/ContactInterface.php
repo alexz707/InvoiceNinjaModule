@@ -55,18 +55,74 @@ interface ContactInterface extends BaseInterface
      * @param string $phone
      */
     public function setPhone(string $phone) :void;
+
     /**
      * @return int
      */
-    public function getLastLogin() :?int;
+    public function getLastLogin() :int;
 
     /**
      * @return bool
      */
-    public function isSendInvoice() :bool;
+    public function isLocked() : bool;
 
     /**
-     * @param bool $sendInvoice
+     * @param bool $isLocked
      */
-    public function setSendInvoice(bool $sendInvoice) :void;
+    public function setIsLocked(bool $isLocked) : void;
+
+    /**
+     * @return string
+     */
+    public function getCustomValue1() : string;
+
+    /**
+     * @param string $customValue1
+     */
+    public function setCustomValue1(string $customValue1) : void;
+    /**
+     * @return string
+     */
+    public function getCustomValue2() : string;
+    /**
+     * @param string $customValue2
+     */
+    public function setCustomValue2(string $customValue2) : void;
+    /**
+     * @return string
+     */
+    public function getCustomValue3() : string;
+    /**
+     * @param string $customValue3
+     */
+    public function setCustomValue3(string $customValue3) : void;
+    /**
+     * @return string
+     */
+    public function getCustomValue4() : string;
+
+    /**
+     * @param string $customValue4
+     */
+    public function setCustomValue4(string $customValue4) : void;
+
+    /**
+     * @return string
+     */
+    public function getContactKey() : string;
+
+    /**
+     * @param string $contactKey
+     */
+    public function setContactKey(string $contactKey) : void;
+
+    /**
+     * @return bool
+     */
+    public function isSendEmail() : bool;
+
+    /**
+     * @param bool $sendEmail
+     */
+    public function setSendEmail(bool $sendEmail) : void;
 }

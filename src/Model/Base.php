@@ -10,47 +10,25 @@ use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
  */
 class Base implements BaseInterface
 {
-    /** @var  int */
-    protected $id = 0;
-    /** @var  string */
-    protected $accountKey = '';
-    /** @var  bool */
-    protected $isOwner = false;
-    /** @var  int */
-    protected $updatedAt;
-    /** @var  int */
-    protected $archivedAt;
+    protected string $id = '';
+    protected int $updatedAt = 0;
+    protected int $archivedAt = 0;
+    protected int $createdAt = 0;
     /** @var  bool */
     protected $isDeleted = false;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId() :int
+    public function getId() :string
     {
         return $this->id;
     }
 
     /**
-     * @return string
-     */
-    public function getAccountKey() :string
-    {
-        return $this->accountKey;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOwner() :bool
-    {
-        return $this->isOwner;
-    }
-
-    /**
      * @return int
      */
-    public function getUpdatedAt() :?int
+    public function getUpdatedAt() :int
     {
         return $this->updatedAt;
     }
@@ -58,7 +36,15 @@ class Base implements BaseInterface
     /**
      * @return int
      */
-    public function getArchivedAt() :?int
+    public function getArchivedAt() :int
+    {
+        return $this->archivedAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatedAt() :int
     {
         return $this->archivedAt;
     }

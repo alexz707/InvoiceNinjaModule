@@ -11,20 +11,19 @@ use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
  */
 final class Contact extends Base implements ContactInterface
 {
-    /** @var  string */
-    private $firstName = '';
-    /** @var  string */
-    private $lastName = '';
-    /** @var  string */
-    private $email = '';
-    /** @var bool */
-    private $isPrimary = false;
-    /** @var  string */
-    private $phone  = '';
-    /** @var  int */
-    private $lastLogin;
-    /** @var  bool */
-    private $sendInvoice = false;
+    private string $firstName = '';
+    private string $lastName = '';
+    private string $email = '';
+    private bool $isPrimary = false;
+    private bool $isLocked = false;
+    private string $phone  = '';
+    private string $customValue1  = '';
+    private string $customValue2  = '';
+    private string $customValue3  = '';
+    private string $customValue4  = '';
+    private string $contactKey  = '';
+    private bool $sendEmail = false;
+    private int $lastLogin;
 
     /**
      * @return string
@@ -109,7 +108,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return int
      */
-    public function getLastLogin() :?int
+    public function getLastLogin() :int
     {
         return $this->lastLogin;
     }
@@ -117,16 +116,112 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return bool
      */
-    public function isSendInvoice() :bool
+    public function isLocked() : bool
     {
-        return $this->sendInvoice;
+        return $this->isLocked;
     }
 
     /**
-     * @param bool $sendInvoice
+     * @param bool $isLocked
      */
-    public function setSendInvoice(bool $sendInvoice) :void
+    public function setIsLocked(bool $isLocked) : void
     {
-        $this->sendInvoice = $sendInvoice;
+        $this->isLocked = $isLocked;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomValue1() : string
+    {
+        return $this->customValue1;
+    }
+
+    /**
+     * @param string $customValue1
+     */
+    public function setCustomValue1(string $customValue1) : void
+    {
+        $this->customValue1 = $customValue1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomValue2() : string
+    {
+        return $this->customValue2;
+    }
+
+    /**
+     * @param string $customValue2
+     */
+    public function setCustomValue2(string $customValue2) : void
+    {
+        $this->customValue2 = $customValue2;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomValue3() : string
+    {
+        return $this->customValue3;
+    }
+
+    /**
+     * @param string $customValue3
+     */
+    public function setCustomValue3(string $customValue3) : void
+    {
+        $this->customValue3 = $customValue3;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomValue4() : string
+    {
+        return $this->customValue4;
+    }
+
+    /**
+     * @param string $customValue4
+     */
+    public function setCustomValue4(string $customValue4) : void
+    {
+        $this->customValue4 = $customValue4;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactKey() : string
+    {
+        return $this->contactKey;
+    }
+
+    /**
+     * @param string $contactKey
+     */
+    public function setContactKey(string $contactKey) : void
+    {
+        $this->contactKey = $contactKey;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSendEmail() : bool
+    {
+        return $this->sendEmail;
+    }
+
+    /**
+     * @param bool $sendEmail
+     */
+    public function setSendEmail(bool $sendEmail) : void
+    {
+        $this->sendEmail = $sendEmail;
     }
 }

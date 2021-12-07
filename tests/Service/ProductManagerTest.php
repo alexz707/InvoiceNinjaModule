@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
+use InvoiceNinjaModule\Exception\ApiAuthException;
+use InvoiceNinjaModule\Exception\EmptyResponseException;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Model\Interfaces\ProductInterface;
@@ -74,31 +78,36 @@ class ProductManagerTest extends TestCase
             ->method('getObjectById')
             ->with(
                 self::isInstanceOf(ProductInterface::class),
-                self::isType('integer'),
+                self::isType('string'),
                 self::stringContains('/products')
             )
             ->willReturn($productMock);
 
         $this->productManager = new ProductManager($this->objectManagerMock);
 
-        self::assertInstanceOf(ProductInterface::class, $this->productManager->getProductById(777));
+        self::assertInstanceOf(ProductInterface::class, $this->productManager->getProductById('777'));
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\NotFoundException
+     * @throws NotFoundException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws InvalidResultException
      */
     public function testGetProductByIdException() : void
     {
+        $this->expectException(NotFoundException::class);
         $this->objectManagerMock->expects(self::once())
             ->method('getObjectById')
             ->with(
                 self::isInstanceOf(ProductInterface::class),
-                self::isType('integer'),
+                self::isType('string'),
                 self::stringContains('/products')
             )
             ->willThrowException(new NotFoundException());
 
-        self::assertInstanceOf(ProductInterface::class, $this->productManager->getProductById(777));
+        self::assertInstanceOf(ProductInterface::class, $this->productManager->getProductById('777'));
     }
 
     public function testUpdate() : void
@@ -166,7 +175,7 @@ class ProductManagerTest extends TestCase
 
         $this->productManager = new ProductManager($this->objectManagerMock);
 
-        self::assertInternalType('array', $this->productManager->getAllProducts());
+        self::assertIsArray($this->productManager->getAllProducts());
     }
 
     public function testGetAllProducts() : void
@@ -185,14 +194,18 @@ class ProductManagerTest extends TestCase
 
         $this->productManager = new ProductManager($this->objectManagerMock);
 
-        self::assertInternalType('array', $this->productManager->getAllProducts());
+        self::assertIsArray($this->productManager->getAllProducts());
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws InvalidResultException
      */
     public function testGetAllProductsOtherResult() : void
     {
+        $this->expectException(InvalidResultException::class);
         $productMock = $this->createMock(BaseInterface::class);
 
         $this->objectManagerMock->expects(self::once())
@@ -207,6 +220,6 @@ class ProductManagerTest extends TestCase
 
         $this->productManager = new ProductManager($this->objectManagerMock);
 
-        self::assertInternalType('array', $this->productManager->getAllProducts());
+        self::assertIsArray($this->productManager->getAllProducts());
     }
 }

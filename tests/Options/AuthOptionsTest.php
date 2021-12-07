@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Options;
 
+use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Module;
 use InvoiceNinjaModule\Options\AuthOptions;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
 use PHPUnit\Framework\TestCase;
-use Zend\Http\Client;
+use Laminas\Http\Client;
 
 class AuthOptionsTest extends TestCase
 {
@@ -20,10 +21,12 @@ class AuthOptionsTest extends TestCase
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws InvalidParameterException
      */
     public function testCreateMoreThanOneConfig() :void
     {
+        $this->expectException(InvalidParameterException::class);
+
         $authSettings = [
             Client::AUTH_BASIC => [],
             Client::AUTH_DIGEST => []
@@ -33,10 +36,12 @@ class AuthOptionsTest extends TestCase
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws InvalidParameterException
      */
     public function testCreateNoAuthConfig() :void
     {
+        $this->expectException(InvalidParameterException::class);
+
         $authSettings = [
             'test' => []
         ];
@@ -45,10 +50,12 @@ class AuthOptionsTest extends TestCase
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws InvalidParameterException
      */
     public function testCreateNoUser() :void
     {
+        $this->expectException(InvalidParameterException::class);
+
         $authSettings = [
             Client::AUTH_BASIC => [
                 Module::AUTH_PASS => 'password'
@@ -59,10 +66,12 @@ class AuthOptionsTest extends TestCase
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws InvalidParameterException
      */
     public function testCreateEmptyUser() :void
     {
+        $this->expectException(InvalidParameterException::class);
+
         $authSettings = [
             Client::AUTH_BASIC => [
                 Module::AUTH_USER => '',
@@ -74,10 +83,12 @@ class AuthOptionsTest extends TestCase
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws InvalidParameterException
      */
     public function testCreateNoPassword() :void
     {
+        $this->expectException(InvalidParameterException::class);
+
         $authSettings = [
             Client::AUTH_BASIC => [
                 Module::AUTH_USER => 'username'
@@ -88,10 +99,12 @@ class AuthOptionsTest extends TestCase
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws InvalidParameterException
      */
     public function testCreateEmptyPassword() :void
     {
+        $this->expectException(InvalidParameterException::class);
+
         $authSettings = [
             Client::AUTH_BASIC => [
                 Module::AUTH_USER => 'username',

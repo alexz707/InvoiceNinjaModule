@@ -3,7 +3,7 @@
 .svn/
 ### ZendFramework template
 # Composer files
-composer.phar
+composer_2.phar
 vendor/
 
 # Local configs

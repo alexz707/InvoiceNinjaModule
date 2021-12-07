@@ -6,17 +6,17 @@ namespace InvoiceNinjaModule\Strategy;
 use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
 use InvoiceNinjaModule\Model\Interfaces\InvoiceItemInterface;
 use InvoiceNinjaModule\Model\InvoiceItem;
-use Zend\Hydrator\Exception\BadMethodCallException;
-use Zend\Hydrator\HydratorInterface;
-use Zend\Hydrator\Strategy\StrategyInterface;
+use Laminas\Hydrator\Exception\BadMethodCallException;
+use Laminas\Hydrator\HydratorInterface;
+use Laminas\Hydrator\Strategy\StrategyInterface;
+use function is_array;
 
 /**
  * Class InvoiceItemsStrategy
  */
 final class InvoiceItemsStrategy implements StrategyInterface
 {
-    /** @var HydratorInterface  */
-    private $hydrator;
+    private HydratorInterface $hydrator;
 
     /**
      * InvoiceItemsStrategy constructor.
@@ -31,15 +31,14 @@ final class InvoiceItemsStrategy implements StrategyInterface
     /**
      * Converts the given value so that it can be extracted by the hydrator.
      *
-     * @param ContactInterface[]  $value  The original value.
+     * @param InvoiceItemInterface[]  $value  The original value.
      *
      * @return array Returns the value that should be extracted.
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function extract($value) :array
+    public function extract($value, ?object $object = null): array
     {
         $result = [];
-        /** @var InvoiceItemInterface $invoiceItem */
         foreach ($value as $invoiceItem) {
             if ($invoiceItem instanceof InvoiceItemInterface) {
                 $result[] = $this->hydrator->extract($invoiceItem);
@@ -55,10 +54,10 @@ final class InvoiceItemsStrategy implements StrategyInterface
      * @return ContactInterface[]
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function hydrate($value) :array
+    public function hydrate($value, ?array $data) :array
     {
         $result = [];
-        if (\is_array($value)) {
+        if (is_array($value)) {
             foreach ($value as $invoiceItemArr) {
                 $invoiceItem = new InvoiceItem();
                 $this->hydrator->hydrate($invoiceItemArr, $invoiceItem);

@@ -5,17 +5,17 @@ namespace InvoiceNinjaModule\Strategy;
 
 use InvoiceNinjaModule\Model\Contact;
 use InvoiceNinjaModule\Model\Interfaces\ContactInterface;
-use Zend\Hydrator\Exception\BadMethodCallException;
-use Zend\Hydrator\HydratorInterface;
-use Zend\Hydrator\Strategy\StrategyInterface;
+use Laminas\Hydrator\Exception\BadMethodCallException;
+use Laminas\Hydrator\HydratorInterface;
+use Laminas\Hydrator\Strategy\StrategyInterface;
+use function is_array;
 
 /**
  * Class ContactsStrategy
  */
 final class ContactsStrategy implements StrategyInterface
 {
-    /** @var HydratorInterface  */
-    private $hydrator;
+    private HydratorInterface $hydrator;
 
     /**
      * ContactsStrategy constructor.
@@ -35,10 +35,9 @@ final class ContactsStrategy implements StrategyInterface
      * @return array Returns the value that should be extracted.
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function extract($value) : array
+    public function extract($value, ?object $object = null) : array
     {
         $result = [];
-        /** @var ContactInterface $contactObj */
         foreach ($value as $contactObj) {
             if ($contactObj instanceof ContactInterface) {
                 $result[] = $this->hydrator->extract($contactObj);
@@ -54,10 +53,10 @@ final class ContactsStrategy implements StrategyInterface
      * @return ContactInterface[]
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function hydrate($value) : array
+    public function hydrate($value, ?array $data) : array
     {
         $result = [];
-        if (\is_array($value)) {
+        if (is_array($value)) {
             foreach ($value as $contact) {
                 $contactObj = new Contact();
                 $this->hydrator->hydrate($contact, $contactObj);

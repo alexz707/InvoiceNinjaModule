@@ -10,30 +10,18 @@ use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
  */
 final class RequestOptions implements RequestOptionsInterface
 {
-    /** @var string  */
-    private $paramPageSize = 'per_page';
-    /** @var string  */
-    private $paramPage = 'page';
-    /** @var string  */
-    private $paramClientId='client_id';
-    /** @var string  */
-    private $paramUpdated='updated_at';
-    /** @var string  */
-    private $paramInclude='include';
-    /** @var array  */
-    private $additionalGetParams;
-    /** @var array  */
-    private $additionalPostParams;
+    private string $paramPageSize = 'per_page';
+    private string $paramPage = 'page';
+    private string $paramClientId='client_id';
+    private string $paramUpdated='updated_at';
+    private string $paramInclude='include';
+    private array $additionalGetParams = [];
+    private array $additionalPostParams = [];
 
 /*
 include: A comma-separated list of nested relationships to include.
 updated_at: Timestamp used as a filter to only show recently updated records.
 */
-    public function __construct()
-    {
-        $this->additionalPostParams = [];
-        $this->additionalGetParams = [];
-    }
 
     /**
      * @param array $params

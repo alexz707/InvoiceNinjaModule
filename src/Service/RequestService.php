@@ -10,24 +10,29 @@ use InvoiceNinjaModule\Exception\HttpClientException;
 use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Options\Interfaces\ModuleOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
-use Zend\Http\Client;
-use Zend\Http\Client\Adapter\Curl;
-use Zend\Http\Exception\InvalidArgumentException;
-use Zend\Http\Exception\RuntimeException;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Stdlib\Parameters;
+use Laminas\Http\Client;
+use Laminas\Http\Client\Adapter\Curl;
+use Laminas\Http\Exception\InvalidArgumentException;
+use Laminas\Http\Exception\RuntimeException;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Stdlib\Parameters;
+use function array_key_exists;
+use function is_array;
+use function json_decode;
+use function json_encode;
+use function strlen;
+use function strstr;
+use function substr;
 
 /**
  * Class RequestService
  */
 final class RequestService implements RequestServiceInterface
 {
-    const RETURN_KEY = 'data';
-    /** @var ModuleOptionsInterface */
-    private $moduleOptions;
-    /** @var Client  */
-    private $httpClient;
+    public const RETURN_KEY = 'data';
+    private ModuleOptionsInterface $moduleOptions;
+    private Client $httpClient;
 
     /**
      * RequestService constructor.
@@ -35,7 +40,7 @@ final class RequestService implements RequestServiceInterface
      * @param ModuleOptionsInterface $moduleOptions
      * @param Client                 $client
      *
-     * @throws \Zend\Http\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(ModuleOptionsInterface $moduleOptions, Client $client)
     {
@@ -52,12 +57,12 @@ final class RequestService implements RequestServiceInterface
      * @param RequestOptionsInterface $requestOptions
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientException
+     * @throws HttpClientAuthException
      */
-    public function dispatchRequest($reqMethod, $reqRoute, RequestOptionsInterface $requestOptions) :array
+    public function dispatchRequest(string $reqMethod, string $reqRoute, RequestOptionsInterface $requestOptions) :array
     {
         $request = new Request();
         $request->setAllowCustomMethods(false);
@@ -71,7 +76,7 @@ final class RequestService implements RequestServiceInterface
 
         $postArray = $requestOptions->getPostArray();
         if (!empty($postArray)) {
-            $request->setContent(\json_encode($postArray));
+            $request->setContent(json_encode($postArray));
         }
 
         try {
@@ -95,9 +100,9 @@ final class RequestService implements RequestServiceInterface
     /**
      * @param Response $response
      *
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws ApiAuthException
+     * @throws HttpClientException
+     * @throws HttpClientAuthException
      */
     private function checkResponseCode(Response $response) :void
     {
@@ -117,7 +122,7 @@ final class RequestService implements RequestServiceInterface
      * @param Response $response
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws EmptyResponseException
      */
     private function convertResponse(Response $response) :array
     {
@@ -126,18 +131,18 @@ final class RequestService implements RequestServiceInterface
         $contentDisposition = $headers->get('Content-disposition');
         if ($contentDisposition !== false) {
             $needle = 'attachment; filename="';
-            $subString = \strstr($contentDisposition->getFieldValue(), $needle);
+            $subString = strstr($contentDisposition->getFieldValue(), $needle);
 
             if ($subString === false) {
                 return [];
             }
 
-            $fileName = \substr($subString, \strlen($needle), -1);
+            $fileName = substr($subString, strlen($needle), -1);
             return [$fileName => $response->getBody()];
         }
 
-        $result = \json_decode($response->getBody(), true);
-        if (\is_array($result)) {
+        $result = json_decode($response->getBody(), true);
+        if (is_array($result)) {
             return $this->checkResponseKey($result);
         }
         throw new EmptyResponseException();
@@ -147,11 +152,11 @@ final class RequestService implements RequestServiceInterface
      * @param array $result
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws EmptyResponseException
      */
     private function checkResponseKey(array $result) :array
     {
-        if (!\array_key_exists(self::RETURN_KEY, $result) || empty($result[self::RETURN_KEY])) {
+        if (!array_key_exists(self::RETURN_KEY, $result) || empty($result[self::RETURN_KEY])) {
             throw new EmptyResponseException();
         }
         return $result[self::RETURN_KEY];
@@ -171,7 +176,7 @@ final class RequestService implements RequestServiceInterface
 
     /**
      * @return void
-     * @throws \Zend\Http\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function initHttpClient() :void
     {

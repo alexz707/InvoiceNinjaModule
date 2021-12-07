@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace InvoiceNinjaModule\Service;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class TaxRateManagerFactory

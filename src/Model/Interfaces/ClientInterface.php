@@ -29,14 +29,14 @@ interface ClientInterface extends BaseInterface
     public function setPaidToDate(float $paidToDate) :void;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getUserId() :int;
+    public function getUserId() :string;
 
     /**
-     * @param int $userId
+     * @param string $userId
      */
-    public function setUserId(int $userId) :void;
+    public function setUserId(string $userId) :void;
 
     /**
      * @return string
@@ -47,6 +47,7 @@ interface ClientInterface extends BaseInterface
      * @param string $address1
      */
     public function setAddress1(string $address1) :void;
+
     /**
      * @return string
      */
@@ -56,10 +57,12 @@ interface ClientInterface extends BaseInterface
      * @param string $address2
      */
     public function setAddress2(string $address2) :void;
+
     /**
      * @return string
      */
     public function getCity() :string;
+
     /**
      * @param string $city
      */
@@ -69,6 +72,7 @@ interface ClientInterface extends BaseInterface
      * @return string
      */
     public function getState() :string;
+
     /**
      * @param string $state
      */
@@ -85,23 +89,14 @@ interface ClientInterface extends BaseInterface
     public function setPostalCode(string $postalCode) :void;
 
     /**
-     * @return int
-     */
-    public function getCountryId() :int;
-    /**
-     * @param int $countryId
-     */
-    public function setCountryId(int $countryId) :void;
-
-    /**
      * @return string
      */
-    public function getWorkPhone() :string;
+    public function getCountryId() :string;
 
     /**
-     * @param string $workPhone
+     * @param string $countryId
      */
-    public function setWorkPhone(string $workPhone) :void;
+    public function setCountryId(string $countryId) :void;
 
     /**
      * @return string
@@ -112,68 +107,87 @@ interface ClientInterface extends BaseInterface
      * @param string $privateNotes
      */
     public function setPrivateNotes(string $privateNotes) :void;
+
     /**
      * @return int
      */
-    public function getLastLogin() :?int;
+    public function getLastLogin() :int;
 
     /**
      * @return string
      */
     public function getWebsite() :string;
+
     /**
      * @param string $website
      */
     public function setWebsite(string $website) :void;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIndustryId() :int;
-    /**
-     * @param int $industryId
-     */
-    public function setIndustryId(int $industryId) :void;
+    public function getIndustryId() :string;
 
     /**
-     * @return int
+     * @param string $industryId
      */
-    public function getSizeId() :int;
+    public function setIndustryId(string $industryId) :void;
 
-    /**
-     * @param int $sizeId
-     */
-    public function setSizeId(int $sizeId) :void;
-
-    /**
-     * @return int
-     */
-    public function getPaymentTerms() :int;
-
-    /**
-     * @param int $paymentTerms
-     */
-    public function setPaymentTerms(int $paymentTerms) :void;
     /**
      * @return string
      */
-    public function getCustomValue1() :?string;
+    public function getSizeId() :string;
+
     /**
-     * @param string $customValue1
+     * @param string $sizeId
      */
-    public function setCustomValue1(string $customValue1) :void;
+    public function setSizeId(string $sizeId) :void;
+
     /**
      * @return string
      */
-    public function getCustomValue2() :?string;
+    public function getCustomValue1() :string;
+
     /**
-     * @param string $customValue2
+     * @param string $customValue
      */
-    public function setCustomValue2(string $customValue2) :void;
+    public function setCustomValue1(string $customValue) :void;
+
+    /**
+     * @return string
+     */
+    public function getCustomValue2() :string;
+
+    /**
+     * @param string $customValue
+     */
+    public function setCustomValue2(string $customValue) :void;
+
+    /**
+     * @return string
+     */
+    public function getCustomValue3() :string;
+
+    /**
+     * @param string $customValue
+     */
+    public function setCustomValue3(string $customValue) :void;
+
+    /**
+     * @return string
+     */
+    public function getCustomValue4() :string;
+
+    /**
+     * @param string $customValue
+     */
+    public function setCustomValue4(string $customValue) :void;
+
     /**
      * @return string
      */
     public function getVatNumber() :string;
+
     /**
      * @param string $vatNumber
      */
@@ -183,20 +197,11 @@ interface ClientInterface extends BaseInterface
      * @return string
      */
     public function getIdNumber() :string;
+
     /**
      * @param string $idNumber
      */
     public function setIdNumber(string $idNumber) :void;
-
-    /**
-     * @return int
-     */
-    public function getLanguageId() :int;
-
-    /**
-     * @param int $languageId
-     */
-    public function setLanguageId(int $languageId) :void;
 
     /**
      * @return ContactInterface[]
@@ -207,6 +212,7 @@ interface ClientInterface extends BaseInterface
      * @param ContactInterface[] $contacts
      */
     public function setContacts(array $contacts) :void;
+
     /**
      * @return string
      */
@@ -216,12 +222,94 @@ interface ClientInterface extends BaseInterface
      * @param string $name
      */
     public function setName(string $name) :void;
+
     /**
-     * @return int
+     * @return string
      */
-    public function getCurrencyId() :int;
+    public function getShippingAddress1() : string;
+
     /**
-     * @param int $currencyId
+     * @param string $shippingAddress1
      */
-    public function setCurrencyId(int $currencyId) :void;
+    public function setShippingAddress1(string $shippingAddress1) : void;
+
+    /**
+     * @return string
+     */
+    public function getShippingAddress2() : string;
+
+    /**
+     * @param string $shippingAddress2
+     */
+    public function setShippingAddress2(string $shippingAddress2) : void;
+
+    /**
+     * @return string
+     */
+    public function getShippingCity() : string;
+
+    /**
+     * @param string $shippingCity
+     */
+    public function setShippingCity(string $shippingCity) : void;
+
+    /**
+     * @return string
+     */
+    public function getShippingState() : string;
+
+    /**
+     * @param string $shippingState
+     */
+    public function setShippingState(string $shippingState) : void;
+
+    /**
+     * @return string
+     */
+    public function getShippingPostalCode() : string;
+
+    /**
+     * @param string $shippingPostalCode
+     */
+    public function setShippingPostalCode(string $shippingPostalCode) : void;
+
+    /**
+     * @return string
+     */
+    public function getShippingCountryId() : string;
+
+    /**
+     * @param string $shippingCountryId
+     */
+    public function setShippingCountryId(string $shippingCountryId) : void;
+
+    /**
+     * @return float|int
+     */
+    public function getCreditBalance() : float|int;
+
+    /**
+     * @param float|int $creditBalance
+     */
+    public function setCreditBalance(float|int $creditBalance) : void;
+
+    /**
+     * @return array
+     */
+    public function getDocuments() : array;
+
+    /**
+     * @param array $documents
+     */
+    public function setDocuments(array $documents) : void;
+
+    /**
+     * @return array
+     */
+    public function getGatewayTokens() : array;
+
+    /**
+     * @param array $gatewayTokens
+     */
+    public function setGatewayTokens(array $gatewayTokens) : void;
 }

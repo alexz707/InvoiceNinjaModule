@@ -3,17 +3,21 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
+use InvoiceNinjaModule\Exception\ApiAuthException;
+use InvoiceNinjaModule\Exception\EmptyResponseException;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
 use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Options\Interfaces\ModuleOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use InvoiceNinjaModule\Service\RequestService;
-use Zend\Http\Client;
-use Zend\Http\Header\HeaderInterface;
-use Zend\Http\Headers;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Stdlib\RequestInterface;
+use Laminas\Http\Client;
+use Laminas\Http\Header\HeaderInterface;
+use Laminas\Http\Headers;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Stdlib\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
 class RequestServiceTest extends TestCase
@@ -99,8 +103,7 @@ class RequestServiceTest extends TestCase
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
 
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
@@ -179,8 +182,7 @@ class RequestServiceTest extends TestCase
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
 
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
@@ -242,7 +244,7 @@ class RequestServiceTest extends TestCase
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
         $result = $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         self::assertArrayHasKey('test.pdf', $result);
         self::assertEquals('testfilecontent', $result['test.pdf']);
     }
@@ -304,7 +306,7 @@ class RequestServiceTest extends TestCase
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
         $result = $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         self::assertEmpty($result);
     }
 
@@ -364,18 +366,21 @@ class RequestServiceTest extends TestCase
 
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
 
-
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
      */
     public function testDispatchRequestEmptyExceptionEmptyData() :void
     {
+        $this->expectException(EmptyResponseException::class);
+
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
         $testReqRoute = 'testroute';
@@ -417,17 +422,14 @@ class RequestServiceTest extends TestCase
             ->willReturn($response);
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
 
-    /**
-     * @expectedException  \InvoiceNinjaModule\Exception\EmptyResponseException
-     */
     public function testDispatchRequestEmptyExceptionMissingData() :void
     {
+        $this->expectException(EmptyResponseException::class);
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
         $testReqRoute = 'testroute';
@@ -469,17 +471,21 @@ class RequestServiceTest extends TestCase
             ->willReturn($response);
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\HttpClientException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
      */
     public function testDispatchRequestHttpClientException() :void
     {
+        $this->expectException(HttpClientException::class);
+
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
         $testReqRoute = 'testroute';
@@ -507,17 +513,21 @@ class RequestServiceTest extends TestCase
             ->willReturn($response);
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\HttpClientException
+     * @throws EmptyResponseException
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
      */
     public function testDispatchRequestHttpAuthClientException() :void
     {
+        $this->expectException(HttpClientException::class);
+
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
         $testReqRoute = 'testroute';
@@ -545,17 +555,21 @@ class RequestServiceTest extends TestCase
             ->willReturn($response);
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientException
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
      */
     public function testDispatchRequestApiAuthClientException() :void
     {
+        $this->expectException(ApiAuthException::class);
+
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
         $testReqRoute = 'testroute';
@@ -583,31 +597,37 @@ class RequestServiceTest extends TestCase
             ->willReturn($response);
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\HttpClientException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
      */
     public function testDispatchRequestHttpClientExceptionInvalidArgument() :void
     {
+        $this->expectException(HttpClientException::class);
         $this->reqMethod = 'TESTPUT';
         $testReqRoute = 'testroute';
 
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\HttpClientException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
      */
     public function testDispatchRequestHttpClientExceptionInvalidRuntime() :void
     {
+        $this->expectException(HttpClientException::class);
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
         $testReqRoute = 'testroute';
@@ -630,17 +650,21 @@ class RequestServiceTest extends TestCase
             ->willThrowException(new Client\Exception\RuntimeException());
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\EmptyResponseException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
      */
     public function testDispatchRequestEmpty() :void
     {
+        $this->expectException(EmptyResponseException::class);
+
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
         $testReqRoute = 'testroute';
@@ -682,8 +706,7 @@ class RequestServiceTest extends TestCase
             ->willReturn($response);
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }
@@ -754,8 +777,7 @@ class RequestServiceTest extends TestCase
             ->willReturn($response);
 
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
-        self::assertInternalType(
-            'array',
+        self::assertIsArray(
             $this->manager->dispatchRequest($this->reqMethod, $testReqRoute, $this->requestOptions)
         );
     }

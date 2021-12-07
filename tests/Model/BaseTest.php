@@ -14,11 +14,10 @@ class BaseTest extends TestCase
         $base = new Base();
         self::assertInstanceOf(BaseInterface::class, $base);
 
-        self::assertNull($base->getUpdatedAt());
-        self::assertNull($base->getArchivedAt());
         self::assertFalse($base->isDeleted());
-        self::assertFalse($base->isOwner());
-        self::assertEquals(0, $base->getId());
-        self::assertEmpty($base->getAccountKey());
+        self::assertEquals('', $base->getId());
+        self::assertEquals(0, $base->getUpdatedAt());
+        self::assertEquals(0, $base->getCreatedAt());
+        self::assertEquals(0, $base->getArchivedAt());
     }
 }

@@ -10,8 +10,9 @@ use InvoiceNinjaModule\Options\AuthOptionsFactory;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
 use InvoiceNinjaModule\Options\ModuleOptions;
 use InvoiceNinjaModule\Options\ModuleOptionsFactory;
+use PHPUnit\Framework\TestCase;
 
-class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsFactoryTest extends TestCase
 {
     public function testCreate() :void
     {
@@ -27,15 +28,9 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         $authMock = $this->createMock(AuthOptionsInterface::class);
         $containerMock = $this->createMock(ContainerInterface::class);
 
-        $containerMock->expects(self::at(0))
-            ->method('get')
-            ->with(self::stringContains('Config'))
-            ->willReturn($config);
-
-        $containerMock->expects(self::at(1))
-            ->method('get')
-            ->with(self::stringContains(AuthOptions::class))
-            ->willReturn($authMock);
+        $containerMock->method('get')
+            ->withConsecutive([self::stringContains('Config')], [self::stringContains(AuthOptions::class)])
+            ->willReturnOnConsecutiveCalls($config, $authMock);
 
         $factory = new ModuleOptionsFactory();
         self::assertInstanceOf(ModuleOptionsFactory::class, $factory);

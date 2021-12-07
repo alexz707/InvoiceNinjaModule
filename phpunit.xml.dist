@@ -7,16 +7,15 @@
          convertWarningsToExceptions="true"
          backupGlobals="false"
          backupStaticAttributes="false"
-         stopOnFailure="false"
-         syntaxCheck="true" >
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="InvoiceNinjaModule tests">
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">./src/</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 </phpunit>

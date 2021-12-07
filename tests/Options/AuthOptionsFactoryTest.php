@@ -6,8 +6,9 @@ namespace InvoiceNinjaModuleTest\Options;
 use Interop\Container\ContainerInterface;
 use InvoiceNinjaModule\Options\AuthOptionsFactory;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
+use PHPUnit\Framework\TestCase;
 
-class AuthOptionsFactoryTest extends \PHPUnit_Framework_TestCase
+class AuthOptionsFactoryTest extends TestCase
 {
     public function testCreate() :void
     {

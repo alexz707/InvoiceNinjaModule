@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service\Interfaces;
 
+use InvoiceNinjaModule\Exception\ApiAuthException;
+use InvoiceNinjaModule\Exception\EmptyResponseException;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
 use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 
 /**
@@ -17,9 +20,9 @@ interface RequestServiceInterface
      * @param RequestOptionsInterface $requestOptions
      *
      * @return array
-     * @throws \InvoiceNinjaModule\Exception\ApiAuthException
-     * @throws \InvoiceNinjaModule\Exception\EmptyResponseException
-     * @throws \InvoiceNinjaModule\Exception\HttpClientAuthException
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
      */
-    public function dispatchRequest($reqMethod, $reqRoute, RequestOptionsInterface $requestOptions) :array;
+    public function dispatchRequest(string $reqMethod, string $reqRoute, RequestOptionsInterface $requestOptions) :array;
 }

@@ -3,22 +3,28 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
 
+use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
+use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\InvalidParameterException;
+use InvoiceNinjaModule\Exception\InvalidResultException;
+use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use InvoiceNinjaModule\Service\ObjectService;
-use Zend\Http\Request;
-use Zend\Hydrator\HydratorInterface;
+use Laminas\Http\Request;
+use Laminas\Hydrator\HydratorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ObjectManagerTest extends TestCase
 {
     /** @var  ObjectService */
     private $objectManager;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
+    /** @var  MockObject */
     private $requestServiceMock;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
+    /** @var  MockObject */
     private $hydratorMock;
     /** @var  string */
     private $testRoute;
@@ -73,7 +79,7 @@ class ObjectManagerTest extends TestCase
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
             ->method('getId')
-            ->willReturn(777);
+            ->willReturn('777');
 
         $this->hydratorMock->expects(self::once())
             ->method('hydrate')
@@ -119,15 +125,20 @@ class ObjectManagerTest extends TestCase
 
         self::assertInstanceOf(
             BaseInterface::class,
-            $this->objectManager->getObjectById($baseMock, 777, $this->testRoute)
+            $this->objectManager->getObjectById($baseMock, '777', $this->testRoute)
         );
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\NotFoundException
+     * @throws NotFoundException
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws InvalidResultException
      */
     public function testGetObjectByIdException() :void
     {
+        $this->expectException(NotFoundException::class);
+
         $baseMock = $this->createMock(BaseInterface::class);
 
         $this->requestServiceMock->expects(self::once())
@@ -141,15 +152,20 @@ class ObjectManagerTest extends TestCase
 
         self::assertInstanceOf(
             BaseInterface::class,
-            $this->objectManager->getObjectById($baseMock, 777, $this->testRoute)
+            $this->objectManager->getObjectById($baseMock, '777', $this->testRoute)
         );
     }
 
     /**
-     * @expectedException \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws InvalidParameterException
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws InvalidResultException
      */
     public function testFindObjectByException() :void
     {
+        $this->expectException(InvalidParameterException::class);
+
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = [];
         self::assertInstanceOf(
@@ -179,7 +195,7 @@ class ObjectManagerTest extends TestCase
         $result = $this->objectManager->findObjectBy($baseMock, $searchTerm, $this->testRoute);
 
         self::assertEmpty($result);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
     }
 
     public function testFindObjectByEmptyException() :void
@@ -203,7 +219,7 @@ class ObjectManagerTest extends TestCase
         $result = $this->objectManager->findObjectBy($baseMock, $searchTerm, $this->testRoute);
 
         self::assertEmpty($result);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
     }
 
     public function testFindObjectBy() :void
@@ -232,7 +248,7 @@ class ObjectManagerTest extends TestCase
         $result = $this->objectManager->findObjectBy($baseMock, $searchTerm, $this->testRoute);
 
         self::assertNotEmpty($result);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
     }
 
 
@@ -257,7 +273,7 @@ class ObjectManagerTest extends TestCase
         $result = $this->objectManager->findObjectBy($baseMock, $searchTerm, $this->testRoute);
 
         self::assertEmpty($result);
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
     }
 
     public function testUpdate() :void
@@ -265,7 +281,7 @@ class ObjectManagerTest extends TestCase
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
             ->method('getId')
-            ->willReturn(777);
+            ->willReturn('777');
 
         $this->hydratorMock->expects(self::once())
             ->method('extract')
@@ -297,7 +313,7 @@ class ObjectManagerTest extends TestCase
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
             ->method('getId')
-            ->willReturn(777);
+            ->willReturn('777');
 
         $this->hydratorMock->expects(self::never())
             ->method('extract')
@@ -329,7 +345,7 @@ class ObjectManagerTest extends TestCase
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
             ->method('getId')
-            ->willReturn(777);
+            ->willReturn('777');
 
         $this->hydratorMock->expects(self::never())
             ->method('extract')
@@ -369,7 +385,7 @@ class ObjectManagerTest extends TestCase
             )
             ->willReturn([]);
 
-        self::assertInternalType('array', $this->objectManager->getAllObjects($baseMock, $this->testRoute));
+        self::assertIsArray($this->objectManager->getAllObjects($baseMock, $this->testRoute));
     }
 
     public function testGetAllClients() :void
@@ -393,14 +409,18 @@ class ObjectManagerTest extends TestCase
             )
             ->willReturn($this->createMock(BaseInterface::class));
 
-        self::assertInternalType('array', $this->objectManager->getAllObjects($baseMock, $this->testRoute));
+        self::assertIsArray($this->objectManager->getAllObjects($baseMock, $this->testRoute));
     }
 
     /**
-     * @expectedException  \InvoiceNinjaModule\Exception\InvalidResultException
+     * @throws EmptyResponseException
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws InvalidResultException
      */
     public function testGetAllClientsException() :void
     {
+        $this->expectException(InvalidResultException::class);
         $baseMock = $this->createMock(BaseInterface::class);
 
         $this->requestServiceMock->expects(self::once())
@@ -420,7 +440,7 @@ class ObjectManagerTest extends TestCase
             )
             ->willReturn($this->createMock(\stdClass::class));
 
-        self::assertInternalType('array', $this->objectManager->getAllObjects($baseMock, $this->testRoute));
+        self::assertIsArray($this->objectManager->getAllObjects($baseMock, $this->testRoute));
     }
 
     public function testDownloadFile() :void
@@ -433,7 +453,7 @@ class ObjectManagerTest extends TestCase
                 self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn(['test' => 'test2' ]);
-        self::assertInternalType('array', $this->objectManager->downloadFile(1));
+        self::assertIsArray($this->objectManager->downloadFile('1'));
     }
 
     public function testSendCommand() :void
