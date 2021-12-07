@@ -1,6 +1,6 @@
 InvoiceNinjaModule
 =================
-ZF3 Module to consume the InvoiceNinja API (https://www.invoiceninja.com).
+Laminas Module to consume the InvoiceNinja API (https://www.invoiceninja.com).
 
 [![GitHub release](https://img.shields.io/github/release/alexz707/InvoiceNinjaModule.svg)](https://github.com/alexz707/InvoiceNinjaModule/releases)
 [![Build Status](https://travis-ci.org/alexz707/InvoiceNinjaModule.svg?branch=master)](https://travis-ci.org/alexz707/InvoiceNinjaModule)
@@ -31,7 +31,7 @@ The suggested installation method is via [composer](https://getcomposer.org/):
 php composer.phar require alexz707/invoiceninja-module
 ```
 ### Configure module
-* Copy `/vendor/alexz707/invoiceninja-module/config/invoiceninja.global.php.dist` into your global autoload folder, remove the dist extension so that Zend Framework picks it up
+* Copy `/vendor/alexz707/invoiceninja-module/config/invoiceninja.global.php.dist` into your global autoload folder, remove the dist extension so that Laminas picks it up
 * If you use your own instance of invoice ninja change the `host url`
 * Replace the `token` with your generated invoice ninja token
 * If you use `basic` or `digest` authorization uncomment the used method and fill in your credentials
@@ -40,7 +40,7 @@ php composer.phar require alexz707/invoiceninja-module
     Module::INVOICE_NINJA_CONFIG => [
         Module::API_TIMEOUT     => 100,
         Module::TOKEN           => 'YOURTOKEN',
-        Module::HOST_URL        => 'http://ninja.dev/api/v1',
+        Module::HOST_URL        => 'https://ninja.dev/api/v1',
 
         /*
          * If the api is protected by htaccess uncomment
@@ -67,11 +67,11 @@ php composer.phar require alexz707/invoiceninja-module
 ```
 
 ### Enable module 
-Register as Zend Framework module inside your ```config/application.config.php``` file:
+Register as Laminas module inside your ```config/application.config.php``` file:
 
 ```php
     'modules' => [
-        'Zend\Router',
+        'Laminas\Router',
         'InvoiceNinjaModule',
         'YourApplicationModule',
     ],
@@ -81,7 +81,7 @@ Register as Zend Framework module inside your ```config/application.config.php``
 ```php
         /** @var ClientManager $clientManager */
         $clientManager = $sm->get(ClientManager::class);
-        $client = $clientManager->getClientById(1);
+        $client = $clientManager->getClientById('1');
 ```
 
 
