@@ -1,3 +1,42 @@
+build:
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
+
+filter:
+    excluded_paths:
+        - tests/*
+checks:
+    php:
+        code_rating: true
+        verify_property_names: true
+        verify_argument_usable_as_reference: true
+        verify_access_scope_valid: true
+        variable_existence: true
+        use_statement_alias_conflict: true
+        useless_calls: true
+        unused_variables: true
+        unreachable_code: true
+        switch_fallthrough_commented: true
+        sql_injection_vulnerabilities: true
+        simplify_boolean_return: true
+        security_vulnerabilities: true
+        return_in_constructor: true
+        require_scope_for_methods: true
+        require_php_tag_first: true
+        precedence_in_conditions: true
+        phpunit_assertions: true
+        non_commented_empty_catch_block: true
+        no_trailing_whitespace: true
+        no_non_implemented_abstract_methods: true
+        no_goto: true
+        no_eval: true
+        no_error_suppression: true
+        deprecated_code_usage: true
+        avoid_closing_tag: true
+
 before_commands:
     - "composer update --prefer-source"
 
@@ -6,19 +45,10 @@ tools:
         enabled: true
         timeout: 600
         runs: 1
-    php_code_coverage:
-        enabled: true
-    php_code_sniffer:
-        enabled: false
+    php_code_coverage: true
     php_cpd:
         enabled: true
         excluded_dirs: ["tests", "vendor"]
-    php_cs_fixer:
-        enabled: true
-        config:
-            level: all
-        filter:
-            paths: ["src/*", "tests/*"]
     php_loc:
         enabled: true
         excluded_dirs: ["tests", "vendor"]
@@ -30,10 +60,6 @@ tools:
         enabled: true
         excluded_dirs: ["tests", "vendor"]
     php_analyzer:
-        enabled: true
-        filter:
-            paths: ["src/*", "tests/*"]
-    php_hhvm:
         enabled: true
         filter:
             paths: ["src/*", "tests/*"]
