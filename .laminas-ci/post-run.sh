@@ -7,4 +7,4 @@
 
 # JOB=$4
 # PHP_VERSION=$(echo "${JOB}" | jq -r '.php')
-vendor/bin/ocular code-coverage:upload --repository=g/alexz707/InvoiceNinjaModule --format=php-clover coverage.clover
+vendor/bin/ocular code-coverage:upload --repository=g/alexz707/InvoiceNinjaModule --format=php-clover coverage.xml
