@@ -1,9 +1,9 @@
 InvoiceNinjaModule
 =================
-Laminas Module to consume the InvoiceNinja API (https://www.invoiceninja.com).
+Laminas Module to consume the InvoiceNinja V5 API (https://www.invoiceninja.com).
 
 [![GitHub release](https://img.shields.io/github/release/alexz707/InvoiceNinjaModule.svg)](https://github.com/alexz707/InvoiceNinjaModule/releases)
-[![Build Status](https://travis-ci.org/alexz707/InvoiceNinjaModule.svg?branch=master)](https://travis-ci.org/alexz707/InvoiceNinjaModule)
+[![CI](https://github.com/alexz707/InvoiceNinjaModule/actions/workflows/main.yml/badge.svg)](https://github.com/alexz707/InvoiceNinjaModule/actions/workflows/main.yml)
 [![Code Coverage](https://scrutinizer-ci.com/g/alexz707/InvoiceNinjaModule/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alexz707/InvoiceNinjaModule/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alexz707/InvoiceNinjaModule/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alexz707/InvoiceNinjaModule/?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/59025f0a45de6b004ab703e8/badge.svg)](https://www.versioneye.com/user/projects/59025f0a45de6b004ab703e8)
