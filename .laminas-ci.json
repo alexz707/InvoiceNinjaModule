@@ -3,7 +3,8 @@
     {
       "name": "Coverage",
       "job": {
-        "command": "vendor/bin/phpunit --coverage-clover coverage.xml"
+        "command": "vendor/bin/phpunit --coverage-clover coverage.xml",
+        "php": "8.0"
       }
     }
   ],
