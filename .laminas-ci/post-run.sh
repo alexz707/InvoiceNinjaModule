@@ -8,5 +8,6 @@
 # JOB=$4
 # PHP_VERSION=$(echo "${JOB}" | jq -r '.php')
 pwd
-ls -Al
+ls -Al ./.laminas-ci/
+ls -Al ./vendor/bin/
 vendor/bin/ocular code-coverage:upload --repository=g/alexz707/InvoiceNinjaModule --format=php-clover ./coverage.xml
