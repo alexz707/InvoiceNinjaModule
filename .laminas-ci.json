@@ -2,6 +2,9 @@
   "extensions": [
     "xdebug"
   ],
+  "ini": [
+    "xdebug.mode=coverage"
+  ],
   "additional_checks": [
     {
       "name": "Coverage",
