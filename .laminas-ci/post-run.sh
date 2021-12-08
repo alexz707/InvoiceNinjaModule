@@ -5,6 +5,8 @@
 # $3 = WorkDir
 # $4 = The JOB Json String
 
-# JOB=$4
-# PHP_VERSION=$(echo "${JOB}" | jq -r '.php')
+JOB=$4
+PHP_VERSION=$(echo "${JOB}" | jq -r '.php')
+echo $PHP_VERSION
+echo $JOB
 vendor/bin/ocular code-coverage:upload --repository=g/alexz707/InvoiceNinjaModule --format=php-clover ./coverage.xml
