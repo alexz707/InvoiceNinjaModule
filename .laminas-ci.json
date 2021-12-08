@@ -1,4 +1,7 @@
 {
+  "extensions": [
+    "xdebug"
+  ],
   "additional_checks": [
     {
       "name": "Coverage",
