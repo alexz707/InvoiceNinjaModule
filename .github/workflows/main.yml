@@ -34,7 +34,3 @@ jobs:
         uses: laminas/laminas-continuous-integration-action@v1
         with:
           job: ${{ matrix.job }}
-      - name: Upload Coverage to Scrutinizer CI
-        run: |
-          composer require scrutinizer/ocular
-          vendor/bin/ocular code-coverage:upload --repository=g/alexz707/InvoiceNinjaModule --format=php-clover coverage.clover
