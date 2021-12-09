@@ -29,9 +29,9 @@ use InvoiceNinjaModule\Strategy\InvoiceItemStrategyFactory;
 return [
     Module::INVOICE_NINJA_CONFIG => [
         Module::API_TIMEOUT     => 100,
-        Module::TOKEN_TYPE      => 'X-Ninja-Token',
+        Module::TOKEN_TYPE      => 'X-API-Token',
         Module::TOKEN           => 'YOURTOKEN',
-        Module::HOST_URL        => 'http://ninja.dev/api/v1',
+        Module::HOST_URL        => 'https://ninja.dev/api/v1',
         Module::AUTHORIZATION   => []
     ],
     'service_manager' => [
