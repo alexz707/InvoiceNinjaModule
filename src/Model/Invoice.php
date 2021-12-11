@@ -44,10 +44,10 @@ final class Invoice extends Base implements InvoiceInterface
     private string $footer = '';
     private int $partial = 0;
     private string $partialDueDate = '';
-    private string $customValue1;
-    private string $customValue2;
-    private string $customValue3;
-    private string $customValue4;
+    private string $customValue1 = '';
+    private string $customValue2 = '';
+    private string $customValue3 = '';
+    private string $customValue4 = '';
     private bool $hasTasks = false;
     private bool $hasExpenses = false;
     private float $customSurcharge1 = 0;
