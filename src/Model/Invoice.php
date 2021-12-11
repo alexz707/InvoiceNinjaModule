@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
 
+use DateTime;
+use DateTimeInterface;
 use InvoiceNinjaModule\Model\Interfaces\InvoiceInterface;
 
 /**
@@ -247,19 +249,19 @@ final class Invoice extends Base implements InvoiceInterface
     }
 
     /**
-     * @return string
+     * @return DateTimeInterface
      */
-    public function getDate() : string
+    public function getDate() : DateTimeInterface
     {
-        return $this->date;
+        return DateTime::createFromFormat('Y-m-d', $this->date);
     }
 
     /**
-     * @param string $date
+     * @param DateTimeInterface $date
      */
-    public function setDate(string $date) : void
+    public function setDate(DateTimeInterface $date) : void
     {
-        $this->date = $date;
+        $this->date = $date->format('Y-m-d');
     }
 
     /**
@@ -295,19 +297,19 @@ final class Invoice extends Base implements InvoiceInterface
     }
 
     /**
-     * @return string
+     * @return DateTimeInterface
      */
-    public function getDueDate() : string
+    public function getDueDate() : DateTimeInterface
     {
-        return $this->dueDate;
+        return DateTime::createFromFormat('Y-m-d', $this->dueDate);
     }
 
     /**
-     * @param string $dueDate
+     * @param DateTimeInterface $dueDate
      */
-    public function setDueDate(string $dueDate) : void
+    public function setDueDate(DateTimeInterface $dueDate) : void
     {
-        $this->dueDate = $dueDate;
+        $this->dueDate = $dueDate->format('Y-m-d');
     }
 
     /**
