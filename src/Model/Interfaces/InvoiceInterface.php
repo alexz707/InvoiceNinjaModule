@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model\Interfaces;
 
+use DateTimeInterface;
 use InvoiceNinjaModule\Model\InvoiceItem;
 
 /**
@@ -147,14 +148,14 @@ interface InvoiceInterface extends BaseInterface
     public function setPoNumber(string $poNumber) : void;
 
     /**
-     * @return string
+     * @return DateTimeInterface
      */
-    public function getDate() : string;
+    public function getDate() : DateTimeInterface;
 
     /**
-     * @param string $date
+     * @param DateTimeInterface $date
      */
-    public function setDate(string $date) : void;
+    public function setDate(DateTimeInterface $date) : void;
 
     /**
      * @return string
@@ -177,14 +178,14 @@ interface InvoiceInterface extends BaseInterface
     public function setNextSendDate(string $nextSendDate) : void;
 
     /**
-     * @return string
+     * @return DateTimeInterface
      */
-    public function getDueDate() : string;
+    public function getDueDate() : DateTimeInterface;
 
     /**
-     * @param string $dueDate
+     * @param DateTimeInterface $dueDate
      */
-    public function setDueDate(string $dueDate) : void;
+    public function setDueDate(DateTimeInterface $dueDate) : void;
 
     /**
      * @return string
