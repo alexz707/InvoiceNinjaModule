@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace InvoiceNinjaModule\Model\Interfaces;
 
 use DateTimeInterface;
+use InvoiceNinjaModule\Model\Invitation;
 use InvoiceNinjaModule\Model\InvoiceItem;
 
 /**
@@ -577,12 +578,12 @@ interface InvoiceInterface extends BaseInterface
     public function setAutoBillEnabled(bool $autoBillEnabled) : void;
 
     /**
-     * @return array
+     * @return Invitation[]
      */
     public function getInvitations() : array;
 
     /**
-     * @param array $invitations
+     * @param Invitation[] $invitations
      */
     public function setInvitations(array $invitations) : void;
 
