@@ -6,6 +6,7 @@ namespace InvoiceNinjaModule\Service\Interfaces;
 use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 
@@ -14,10 +15,16 @@ use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
  */
 interface ObjectServiceInterface
 {
+    public const ACTION_EMAIL = 'emailInvoice';
+    public const ACTION_MARK_SENT = 'markSent';
+    public const ACTION_ARCHIVE = 'archive';
+    public const ACTION_DELETE = 'delete';
+    public const ACTION_RESTORE = 'restore';
+    public const ACTION_MARK_PAID = 'markPaid';
 
     /**
      * @param BaseInterface $object
-     * @param               $reqRoute
+     * @param string        $reqRoute
      *
      * @return BaseInterface
      * @throws EmptyResponseException
@@ -29,7 +36,7 @@ interface ObjectServiceInterface
 
     /**
      * @param BaseInterface $object
-     * @param int           $id
+     * @param string        $id
      * @param string        $reqRoute
      *
      * @return BaseInterface
@@ -47,7 +54,7 @@ interface ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface[]
-     * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws InvalidParameterException
      * @throws InvalidResultException
      * @throws HttpClientAuthException
      * @throws ApiAuthException

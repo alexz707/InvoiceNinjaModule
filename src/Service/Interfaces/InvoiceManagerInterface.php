@@ -125,4 +125,22 @@ interface InvoiceManagerInterface
      * @throws HttpClientAuthException
      */
     public function sendEmailInvoice(string $invoiceId) :void;
+
+    /**
+     * @param string $invoiceId
+     *
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     */
+    public function markInvoiceSent(string $invoiceId) :void;
+
+    /**
+     * @param string $invoiceId
+     *
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     */
+    public function markInvoicePaid(string $invoiceId) :void;
 }

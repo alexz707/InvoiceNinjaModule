@@ -19,7 +19,7 @@ final class Invoice extends Base implements InvoiceInterface
     private float $balance = 0;
     private string $clientId = '';
     private string $vendorId = '';
-    private string $statusId = InvoiceInterface::STATUS_DRAFT;
+    private int $statusId = InvoiceInterface::STATUS_DRAFT;
     private string $designId = '';
     private string $recurringId = '';
     private string $number = '';
@@ -153,17 +153,17 @@ final class Invoice extends Base implements InvoiceInterface
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getStatusId() : string
+    public function getStatusId() : int
     {
         return $this->statusId;
     }
 
     /**
-     * @param string $statusId
+     * @param int $statusId
      */
-    public function setStatusId(string $statusId) : void
+    public function setStatusId(int $statusId) : void
     {
         $this->statusId = $statusId;
     }

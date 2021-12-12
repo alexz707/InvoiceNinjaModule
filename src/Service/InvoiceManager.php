@@ -184,7 +184,6 @@ final class InvoiceManager implements InvoiceManagerInterface
         return $this->objectManager->downloadFile($invitationKey, 'invoice');
     }
 
-
     /**
      * @param string $invoiceId
      *
@@ -194,10 +193,32 @@ final class InvoiceManager implements InvoiceManagerInterface
      */
     public function sendEmailInvoice(string $invoiceId) :void
     {
-        $this->objectManager->sendCommand('email_invoice', ['id'=> $invoiceId]);
+        $this->objectManager->sendCommand(ObjectServiceInterface::ACTION_EMAIL, ['id'=> $invoiceId]);
     }
 
+    /**
+     * @param string $invoiceId
+     *
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     */
+    public function markInvoiceSent(string $invoiceId) :void
+    {
+        $this->objectManager->sendCommand(ObjectServiceInterface::ACTION_MARK_SENT, ['id'=> $invoiceId]);
+    }
 
+    /**
+     * @param string $invoiceId
+     *
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     */
+    public function markInvoicePaid(string $invoiceId) :void
+    {
+        $this->objectManager->sendCommand(ObjectServiceInterface::ACTION_MARK_PAID, ['id'=> $invoiceId]);
+    }
 
     /**
      * @param BaseInterface $invoice

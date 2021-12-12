@@ -21,10 +21,6 @@ use Laminas\Hydrator\HydratorInterface;
  */
 final class ObjectService implements ObjectServiceInterface
 {
-    public const ACTION_RESTORE = 'restore';
-    public const ACTION_ARCHIVE        = 'archive';
-    public const ROUTE_DOWNLOAD = '/download';
-
     protected RequestServiceInterface $requestService;
     protected HydratorInterface $hydrator;
     protected BaseInterface $objectType;
@@ -131,7 +127,7 @@ final class ObjectService implements ObjectServiceInterface
      */
     public function restoreObject(BaseInterface $object, string $reqRoute) :BaseInterface
     {
-        return $this->update($object, $reqRoute, self::ACTION_RESTORE);
+        return $this->update($object, $reqRoute, ObjectServiceInterface::ACTION_RESTORE);
     }
 
     /**
@@ -146,7 +142,7 @@ final class ObjectService implements ObjectServiceInterface
      */
     public function archiveObject(BaseInterface $object, string $reqRoute) :BaseInterface
     {
-        return $this->update($object, $reqRoute, self::ACTION_ARCHIVE);
+        return $this->update($object, $reqRoute, ObjectServiceInterface::ACTION_ARCHIVE);
     }
 
     /**

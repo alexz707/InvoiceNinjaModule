@@ -12,14 +12,14 @@ use InvoiceNinjaModule\Model\InvoiceItem;
  */
 interface InvoiceInterface extends BaseInterface
 {
-    public const STATUS_DRAFT = '1';
-    public const STATUS_SENT = '2';
-    public const STATUS_VIEWED = '3';
-    public const STATUS_APPROVED = '4';
-    public const STATUS_PARTIAL = '5';
-    public const STATUS_PAID = '6';
-    public const STATUS_OVERDUE = '-1';
-    public const STATUS_UNPAID = '-2';
+    public const STATUS_DRAFT = 1;
+    public const STATUS_SENT = 2;
+    public const STATUS_VIEWED = 3;
+    public const STATUS_APPROVED = 4;
+    public const STATUS_PARTIAL = 5;
+    public const STATUS_PAID = 6;
+    public const STATUS_OVERDUE = -1;
+    public const STATUS_UNPAID = -2;
 
     public const TYPE_STANDARD = 1;
     public const TYPE_QUOTE = 2;
@@ -88,14 +88,14 @@ interface InvoiceInterface extends BaseInterface
     public function setVendorId(string $vendorId) : void;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getStatusId() : string;
+    public function getStatusId() : int;
 
     /**
-     * @param string $statusId
+     * @param int $statusId
      */
-    public function setStatusId(string $statusId) : void;
+    public function setStatusId(int $statusId) : void;
 
     /**
      * @return string
