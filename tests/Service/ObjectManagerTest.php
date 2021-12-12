@@ -453,7 +453,7 @@ class ObjectManagerTest extends TestCase
                 self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn(['test' => 'test2' ]);
-        self::assertIsArray($this->objectManager->downloadFile('1'));
+        self::assertIsArray($this->objectManager->downloadFile('1', 'invoice'));
     }
 
     public function testSendCommand() :void

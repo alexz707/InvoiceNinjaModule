@@ -108,14 +108,14 @@ interface InvoiceManagerInterface
     public function getAllInvoices(int $page = 1, int $pageSize = 0) :array;
 
     /**
-     * @param string $invoiceId
+     * @param string $invitationKey
      *
      * @return array
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws ApiAuthException
      */
-    public function downloadInvoice(string $invoiceId) :array;
+    public function downloadInvoice(string $invitationKey) :array;
 
     /**
      * @param string $invoiceId

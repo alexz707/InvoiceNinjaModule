@@ -196,7 +196,7 @@ class RequestServiceTest extends TestCase
         $header = $this->createMock(HeaderInterface::class);
         $header->expects(self::once())
             ->method('getFieldValue')
-            ->willReturn('attachment; filename="test.pdf"');
+            ->willReturn('attachment; filename=test.pdf');
 
         $headers = $this->createMock(Headers::class);
         $headers->expects(self::once())

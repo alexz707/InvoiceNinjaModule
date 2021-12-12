@@ -120,14 +120,15 @@ interface ObjectServiceInterface
     public function getAllObjects(BaseInterface $object, string $reqRoute, int $page = 1, int $pageSize = 0) :array;
 
     /**
-     * @param string $id
+     * @param string $invitationKey
+     * @param string $topic
      *
      * @return array
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws ApiAuthException
      */
-    public function downloadFile(string $id) :array;
+    public function downloadFile(string $invitationKey, string $topic) :array;
 
     /**
      * @param string $command

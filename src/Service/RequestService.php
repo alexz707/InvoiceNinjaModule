@@ -130,14 +130,14 @@ final class RequestService implements RequestServiceInterface
         //check if it is a file
         $contentDisposition = $headers->get('Content-disposition');
         if ($contentDisposition !== false) {
-            $needle = 'attachment; filename="';
+            $needle = 'attachment; filename=';
             $subString = strstr($contentDisposition->getFieldValue(), $needle);
 
             if ($subString === false) {
                 return [];
             }
 
-            $fileName = substr($subString, strlen($needle), -1);
+            $fileName = substr($subString, strlen($needle));
             return [$fileName => $response->getBody()];
         }
 

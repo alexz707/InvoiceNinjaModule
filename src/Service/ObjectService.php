@@ -244,18 +244,19 @@ final class ObjectService implements ObjectServiceInterface
     }
 
     /**
-     * @param string $id
+     * @param string $invitationKey
+     * @param string $topic
      *
      * @return array
+     * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
-     * @throws ApiAuthException
      */
-    public function downloadFile(string $id) :array
+    public function downloadFile(string $invitationKey, string $topic) :array
     {
         return $this->requestService->dispatchRequest(
             Request::METHOD_GET,
-            self::ROUTE_DOWNLOAD.'/'.$id,
+            '/'.$topic.'/'.$invitationKey.'/download',
             new RequestOptions()
         );
     }
