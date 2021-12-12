@@ -118,29 +118,29 @@ interface InvoiceManagerInterface
     public function downloadInvoice(string $invitationKey) :array;
 
     /**
-     * @param string $invoiceId
+     * @param array $invoiceIds
      *
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      */
-    public function sendEmailInvoice(string $invoiceId) :void;
+    public function sendInvoicesEmail(array $invoiceIds) :void;
 
     /**
-     * @param string $invoiceId
+     * @param array $invoiceIds
      *
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      */
-    public function markInvoiceSent(string $invoiceId) :void;
+    public function markInvoicesSent(array $invoiceIds) :void;
 
     /**
-     * @param string $invoiceId
+     * @param array $invoiceIds
      *
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      */
-    public function markInvoicePaid(string $invoiceId) :void;
+    public function markInvoicesPaid(array $invoiceIds) :void;
 }

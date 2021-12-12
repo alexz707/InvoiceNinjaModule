@@ -185,39 +185,51 @@ final class InvoiceManager implements InvoiceManagerInterface
     }
 
     /**
-     * @param string $invoiceId
+     * @param array $invoiceIds
      *
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      */
-    public function sendEmailInvoice(string $invoiceId) :void
+    public function sendInvoicesEmail(array $invoiceIds) :void
     {
-        $this->objectManager->sendCommand(ObjectServiceInterface::ACTION_EMAIL, ['id'=> $invoiceId]);
+        $this->objectManager->sendBulkCommand(
+            ObjectServiceInterface::ACTION_EMAIL,
+            $invoiceIds,
+            $this->reqRoute
+        );
     }
 
     /**
-     * @param string $invoiceId
+     * @param array $invoiceIds
      *
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      */
-    public function markInvoiceSent(string $invoiceId) :void
+    public function markInvoicesSent(array $invoiceIds) :void
     {
-        $this->objectManager->sendCommand(ObjectServiceInterface::ACTION_MARK_SENT, ['id'=> $invoiceId]);
+        $this->objectManager->sendBulkCommand(
+            ObjectServiceInterface::ACTION_MARK_SENT,
+            $invoiceIds,
+            $this->reqRoute
+        );
     }
 
     /**
-     * @param string $invoiceId
+     * @param array $invoiceIds
      *
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      */
-    public function markInvoicePaid(string $invoiceId) :void
+    public function markInvoicesPaid(array $invoiceIds) :void
     {
-        $this->objectManager->sendCommand(ObjectServiceInterface::ACTION_MARK_PAID, ['id'=> $invoiceId]);
+        $this->objectManager->sendBulkCommand(
+            ObjectServiceInterface::ACTION_MARK_PAID,
+            $invoiceIds,
+            $this->reqRoute
+        );
     }
 
     /**

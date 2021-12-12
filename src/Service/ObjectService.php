@@ -259,19 +259,43 @@ final class ObjectService implements ObjectServiceInterface
 
     /**
      * @param string $command
-     * @param array  $body
+     * @param string $id
+     * @param string $reqRoute
      *
      * @throws EmptyResponseException
      * @throws ApiAuthException
      * @throws HttpClientAuthException
      */
-    public function sendCommand(string $command, array $body) :void
+    public function sendCommand(string $command, string $id, string $reqRoute) :void
     {
         $reqOptions = new RequestOptions();
-        $reqOptions->addPostParameters($body);
+        $this->requestService->dispatchRequest(
+            Request::METHOD_GET,
+            $reqRoute . '/' . $id . '/' . $command,
+            $reqOptions
+        );
+    }
+
+    /**
+     * @param string $command
+     * @param array $ids
+     * @param string $reqRoute
+     *
+     * @throws EmptyResponseException
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     */
+    public function sendBulkCommand(string $command, array $ids, string $reqRoute) :void
+    {
+        $reqOptions = new RequestOptions();
+        $reqOptions->addPostParameters([
+            'ids' => $ids,
+            'action' => $command
+        ]);
+
         $this->requestService->dispatchRequest(
             Request::METHOD_POST,
-            '/'.$command,
+            $reqRoute . '/' . 'bulk',
             $reqOptions
         );
     }

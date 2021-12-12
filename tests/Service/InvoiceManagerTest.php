@@ -315,14 +315,14 @@ class InvoiceManagerTest extends TestCase
     public function testSendEmailInvoice() : void
     {
         $this->objectManagerMock->expects(self::once())
-            ->method('sendCommand')
+            ->method('sendBulkCommand')
             ->with(
-                self::stringContains('email_invoice'),
+                self::stringContains(ObjectServiceInterface::ACTION_EMAIL),
                 self::isType('array')
             );
 
         $this->invoiceManager = new InvoiceManager($this->objectManagerMock);
 
-        $this->invoiceManager->sendEmailInvoice('10');
+        $this->invoiceManager->sendInvoicesEmail(['10']);
     }
 }

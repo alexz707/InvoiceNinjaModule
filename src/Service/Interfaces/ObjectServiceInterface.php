@@ -15,12 +15,12 @@ use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
  */
 interface ObjectServiceInterface
 {
-    public const ACTION_EMAIL = 'emailInvoice';
-    public const ACTION_MARK_SENT = 'markSent';
+    public const ACTION_EMAIL = 'email_invoice';
+    public const ACTION_MARK_SENT = 'mark_sent';
     public const ACTION_ARCHIVE = 'archive';
     public const ACTION_DELETE = 'delete';
     public const ACTION_RESTORE = 'restore';
-    public const ACTION_MARK_PAID = 'markPaid';
+    public const ACTION_MARK_PAID = 'mark_paid';
 
     /**
      * @param BaseInterface $object
@@ -139,10 +139,22 @@ interface ObjectServiceInterface
 
     /**
      * @param string $command
-     * @param array  $body
+     * @param string $id
+     * @param string $reqRoute
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      */
-    public function sendCommand(string $command, array $body) :void;
+    public function sendCommand(string $command, string $id, string $reqRoute) :void;
+
+    /**
+     * @param string $command
+     * @param array $ids
+     * @param string $reqRoute
+     *
+     * @throws EmptyResponseException
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     */
+    public function sendBulkCommand(string $command, array $ids, string $reqRoute) :void;
 }

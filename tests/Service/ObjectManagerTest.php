@@ -461,11 +461,11 @@ class ObjectManagerTest extends TestCase
         $this->requestServiceMock->expects(self::once())
             ->method('dispatchRequest')
             ->with(
-                self::stringContains(Request::METHOD_POST),
+                self::stringContains(Request::METHOD_GET),
                 self::stringContains('/testcommand'),
                 self::isInstanceOf(RequestOptionsInterface::class)
             )
             ->willReturn(['test' => 'test2' ]);
-        $this->objectManager->sendCommand('testcommand', ['id'=>123]);
+        $this->objectManager->sendCommand('testcommand', '123', $this->testRoute);
     }
 }
