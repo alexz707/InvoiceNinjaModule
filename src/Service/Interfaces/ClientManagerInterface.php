@@ -83,7 +83,7 @@ interface ClientManagerInterface
     /**
      * @param string $email
      *
-     * @return array
+     * @return ClientInterface[]
      * @throws InvalidResultException
      * @throws InvalidParameterException
      * @throws HttpClientAuthException
@@ -93,7 +93,7 @@ interface ClientManagerInterface
     /**
      * @param string $idNumber
      *
-     * @return array
+     * @return ClientInterface[]
      * @throws InvalidResultException
      * @throws InvalidParameterException
      * @throws HttpClientAuthException
@@ -104,11 +104,21 @@ interface ClientManagerInterface
      * @param int $page
      * @param int $pageSize
      *
-     * @return array
+     * @return ClientInterface[]
      * @throws InvalidResultException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws ApiAuthException
      */
     public function getAllClients(int $page = 1, int $pageSize = 0) :array;
+
+    /**
+     *
+     * @return ClientInterface[]
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
+     */
+    public function getActiveClients() :array;
 }

@@ -23,6 +23,8 @@ use InvoiceNinjaModule\Service\TaxRateManager;
 use InvoiceNinjaModule\Service\TaxRateManagerFactory;
 use InvoiceNinjaModule\Strategy\ContactsStrategy;
 use InvoiceNinjaModule\Strategy\ContactsStrategyFactory;
+use InvoiceNinjaModule\Strategy\InvitationsStrategy;
+use InvoiceNinjaModule\Strategy\InvitationsStrategyFactory;
 use InvoiceNinjaModule\Strategy\InvoiceItemsStrategy;
 use InvoiceNinjaModule\Strategy\InvoiceItemStrategyFactory;
 
@@ -47,7 +49,8 @@ return [
             'ReflectionHydrator'        => ReflectionHydratorFactory::class,
             'InvoiceNinjaHydrator'      => InvoiceNinjaHydratorFactory::class,
             ContactsStrategy::class     => ContactsStrategyFactory::class,
-            InvoiceItemsStrategy::class => InvoiceItemStrategyFactory::class
+            InvoiceItemsStrategy::class => InvoiceItemStrategyFactory::class,
+            InvitationsStrategy::class  => InvitationsStrategyFactory::class
         ]
     ]
 ];

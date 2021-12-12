@@ -132,7 +132,7 @@ final class ClientManager implements ClientManagerInterface
     /**
      * @param string $email
      *
-     * @return array
+     * @return ClientInterface[]
      * @throws InvalidResultException
      * @throws InvalidParameterException
      * @throws HttpClientAuthException
@@ -146,7 +146,7 @@ final class ClientManager implements ClientManagerInterface
     /**
      * @param string $idNumber
      *
-     * @return array
+     * @return ClientInterface[]
      * @throws InvalidResultException
      * @throws InvalidParameterException
      * @throws HttpClientAuthException
@@ -161,7 +161,7 @@ final class ClientManager implements ClientManagerInterface
      * @param int $page
      * @param int $pageSize
      *
-     * @return array
+     * @return ClientInterface[]
      * @throws InvalidResultException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
@@ -174,6 +174,19 @@ final class ClientManager implements ClientManagerInterface
             $this->checkResult($client);
         }
         return $result;
+    }
+
+    /**
+     *
+     * @return ClientInterface[]
+     * @throws InvalidResultException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws ApiAuthException
+     */
+    public function getActiveClients() :array
+    {
+        return $this->objectManager->findObjectBy($this->objectType, ['is_deleted' => false], $this->reqRoute);
     }
 
     /**
