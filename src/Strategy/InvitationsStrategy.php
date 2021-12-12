@@ -3,22 +3,22 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Strategy;
 
-use InvoiceNinjaModule\Model\Interfaces\InvoiceItemInterface;
-use InvoiceNinjaModule\Model\InvoiceItem;
+use InvoiceNinjaModule\Model\Interfaces\InvitationInterface;
+use InvoiceNinjaModule\Model\Invitation;
 use Laminas\Hydrator\Exception\BadMethodCallException;
 use Laminas\Hydrator\HydratorInterface;
 use Laminas\Hydrator\Strategy\StrategyInterface;
 use function is_array;
 
 /**
- * Class InvoiceItemsStrategy
+ * Class InvitationsStrategy
  */
-final class InvoiceItemsStrategy implements StrategyInterface
+final class InvitationsStrategy implements StrategyInterface
 {
     private HydratorInterface $hydrator;
 
     /**
-     * InvoiceItemsStrategy constructor.
+     * InvitationsStrategy constructor.
      *
      * @param HydratorInterface $hydrator
      */
@@ -30,7 +30,7 @@ final class InvoiceItemsStrategy implements StrategyInterface
     /**
      * Converts the given value so that it can be extracted by the hydrator.
      *
-     * @param InvoiceItemInterface[]  $value  The original value.
+     * @param InvitationInterface[]  $value  The original value.
      *
      * @return array Returns the value that should be extracted.
      * @throws BadMethodCallException for a non-object $contactObj
@@ -38,9 +38,9 @@ final class InvoiceItemsStrategy implements StrategyInterface
     public function extract($value, ?object $object = null): array
     {
         $result = [];
-        foreach ($value as $invoiceItem) {
-            if ($invoiceItem instanceof InvoiceItemInterface) {
-                $result[] = $this->hydrator->extract($invoiceItem);
+        foreach ($value as $invitation) {
+            if ($invitation instanceof InvitationInterface) {
+                $result[] = $this->hydrator->extract($invitation);
             }
         }
         return $result;
@@ -50,17 +50,17 @@ final class InvoiceItemsStrategy implements StrategyInterface
      * Converts the given value so that it can be hydrated by the hydrator.
      * @param array $value
      *
-     * @return InvoiceItemInterface[]
+     * @return InvitationInterface[]
      * @throws BadMethodCallException for a non-object $contactObj
      */
     public function hydrate($value, ?array $data) :array
     {
         $result = [];
         if (is_array($value)) {
-            foreach ($value as $invoiceItemArr) {
-                $invoiceItem = new InvoiceItem();
-                $this->hydrator->hydrate($invoiceItemArr, $invoiceItem);
-                $result[] = $invoiceItem;
+            foreach ($value as $invitationArr) {
+                $invitation = new Invitation();
+                $this->hydrator->hydrate($invitationArr, $invitation);
+                $result[] = $invitation;
             }
         }
         return $result;

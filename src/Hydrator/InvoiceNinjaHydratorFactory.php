@@ -5,6 +5,7 @@ namespace InvoiceNinjaModule\Hydrator;
 
 use Interop\Container\ContainerInterface;
 use InvoiceNinjaModule\Strategy\ContactsStrategy;
+use InvoiceNinjaModule\Strategy\InvitationsStrategy;
 use InvoiceNinjaModule\Strategy\InvoiceItemsStrategy;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
@@ -20,6 +21,7 @@ final class InvoiceNinjaHydratorFactory implements FactoryInterface
         $hydrator->addStrategy('lineItems', $container->get(InvoiceItemsStrategy::class));
         $hydrator->addStrategy('line_items', $container->get(InvoiceItemsStrategy::class));
         $hydrator->addStrategy('contacts', $container->get(ContactsStrategy::class));
+        $hydrator->addStrategy('invitations', $container->get(InvitationsStrategy::class));
 
         return $hydrator;
     }

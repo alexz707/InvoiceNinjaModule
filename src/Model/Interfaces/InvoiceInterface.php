@@ -11,31 +11,30 @@ use InvoiceNinjaModule\Model\InvoiceItem;
  */
 interface InvoiceInterface extends BaseInterface
 {
-    const STATUS_DRAFT = '1';
-    const STATUS_SENT = '2';
-    const STATUS_VIEWED = '3';
-    const STATUS_APPROVED = '4';
-    const STATUS_PARTIAL = '5';
-    const STATUS_PAID = '6';
-    const STATUS_OVERDUE = '-1';
-    const STATUS_UNPAID = '-2';
+    public const STATUS_DRAFT = '1';
+    public const STATUS_SENT = '2';
+    public const STATUS_VIEWED = '3';
+    public const STATUS_APPROVED = '4';
+    public const STATUS_PARTIAL = '5';
+    public const STATUS_PAID = '6';
+    public const STATUS_OVERDUE = '-1';
+    public const STATUS_UNPAID = '-2';
 
-    const TYPE_STANDARD = 1;
-    const TYPE_QUOTE = 2;
+    public const TYPE_STANDARD = 1;
+    public const TYPE_QUOTE = 2;
 
-    const FREQUENCY_WEEKLY = 1;
-    const FREQUENCY_TWO_WEEKS = 2;
-    const FREQUENCY_FOUR_WEEKS = 3;
-    const FREQUENCY_MONTHLY = 4;
-    const FREQUENCY_TWO_MONTHS = 5;
-    const FREQUENCY_THREE_MONTHS = 6;
-    const FREQUENCY_SIX_MONTHS = 7;
-    const FREQUENCY_ANNUALLY = 8;
+    public const FREQUENCY_WEEKLY = 1;
+    public const FREQUENCY_TWO_WEEKS = 2;
+    public const FREQUENCY_FOUR_WEEKS = 3;
+    public const FREQUENCY_MONTHLY = 4;
+    public const FREQUENCY_TWO_MONTHS = 5;
+    public const FREQUENCY_THREE_MONTHS = 6;
+    public const FREQUENCY_FOUR_MONTHS = 7;
+    public const FREQUENCY_SIX_MONTHS = 8;
+    public const FREQUENCY_ANNUALLY = 9;
+    public const FREQUENCY_TWO_YEARS = 10;
 
-    const INVOICE_NR = 'invoice_number';
-
-
-
+    public const INVOICE_NR = 'invoice_number';
 
     /**
      * @return string
