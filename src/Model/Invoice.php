@@ -937,7 +937,7 @@ final class Invoice extends Base implements InvoiceInterface
     }
 
     /**
-     * @return array
+     * @return Invitation[]
      */
     public function getInvitations() : array
     {
@@ -945,7 +945,7 @@ final class Invoice extends Base implements InvoiceInterface
     }
 
     /**
-     * @param array $invitations
+     * @param Invitation[] $invitations
      */
     public function setInvitations(array $invitations) : void
     {
