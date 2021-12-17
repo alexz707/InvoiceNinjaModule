@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
@@ -12,28 +13,26 @@ use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Options\Interfaces\ModuleOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use InvoiceNinjaModule\Service\RequestService;
+use JsonException;
 use Laminas\Http\Client;
 use Laminas\Http\Header\HeaderInterface;
 use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Stdlib\RequestInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class RequestServiceTest extends TestCase
 {
-    /** @var  RequestServiceInterface */
-    private $manager;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    private $settingsMock;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    private $httpClientMock;
-    /** @var  string */
-    private $reqMethod;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    private $requestOptions;
+    private RequestServiceInterface $manager;
+    private MockObject $settingsMock;
+    private MockObject $httpClientMock;
+    private MockObject $requestOptions;
+    private string $reqMethod;
 
-    protected function setUp() :void
+
+    protected function setUp(): void
     {
         parent::setUp();
         $this->settingsMock = $this->createMock(ModuleOptionsInterface::class);
@@ -41,16 +40,22 @@ class RequestServiceTest extends TestCase
         $this->reqMethod = Request::METHOD_GET;
         $this->requestOptions = $this->createMock(RequestOptionsInterface::class);
 
-
         $this->manager = new RequestService($this->settingsMock, $this->httpClientMock);
     }
 
-    public function testCreate() :void
+    public function testCreate(): void
     {
         self::assertInstanceOf(RequestServiceInterface::class, $this->manager);
     }
 
-    public function testDispatchRequest() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDispatchRequest(): void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -92,7 +97,7 @@ class RequestServiceTest extends TestCase
             ->with(
                 self::logicalAnd(
                     self::isInstanceOf(RequestInterface::class),
-                    self::callback(function ($request) {
+                    self::callback(static function ($request) {
                         /** @var Request $request */
                         return $request->getAllowCustomMethods() === false;
                     })
@@ -108,7 +113,14 @@ class RequestServiceTest extends TestCase
         );
     }
 
-    public function testDispatchRequestAuth() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDispatchRequestAuth(): void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -171,7 +183,7 @@ class RequestServiceTest extends TestCase
             ->with(
                 self::logicalAnd(
                     self::isInstanceOf(RequestInterface::class),
-                    self::callback(function ($request) {
+                    self::callback(static function ($request) {
                         /** @var Request $request */
                         return $request->getAllowCustomMethods() === false;
                     })
@@ -187,7 +199,14 @@ class RequestServiceTest extends TestCase
         );
     }
 
-    public function testDispatchRequestFile() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDispatchRequestFile(): void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -234,7 +253,7 @@ class RequestServiceTest extends TestCase
             ->with(
                 self::logicalAnd(
                     self::isInstanceOf(RequestInterface::class),
-                    self::callback(function ($request) {
+                    self::callback(static function ($request) {
                         /** @var Request $request*/
                         return $request->getAllowCustomMethods() === false;
                     })
@@ -249,7 +268,14 @@ class RequestServiceTest extends TestCase
         self::assertEquals('testfilecontent', $result['test.pdf']);
     }
 
-    public function testDispatchRequestFileInvalidHeader() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDispatchRequestFileInvalidHeader(): void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -296,7 +322,7 @@ class RequestServiceTest extends TestCase
             ->with(
                 self::logicalAnd(
                     self::isInstanceOf(RequestInterface::class),
-                    self::callback(function ($request) {
+                    self::callback(static function ($request) {
                         /** @var Request $request*/
                         return $request->getAllowCustomMethods() === false;
                     })
@@ -310,7 +336,14 @@ class RequestServiceTest extends TestCase
         self::assertEmpty($result);
     }
 
-    public function testDispatchRequestWithOptions() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDispatchRequestWithOptions(): void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -356,7 +389,7 @@ class RequestServiceTest extends TestCase
             ->with(
                 self::logicalAnd(
                     self::isInstanceOf(RequestInterface::class),
-                    self::callback(function ($request) {
+                    self::callback(static function ($request) {
                         /** @var Request $request*/
                         return $request->getAllowCustomMethods() === false;
                     })
@@ -376,8 +409,9 @@ class RequestServiceTest extends TestCase
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testDispatchRequestEmptyExceptionEmptyData() :void
+    public function testDispatchRequestEmptyExceptionEmptyData(): void
     {
         $this->expectException(EmptyResponseException::class);
 
@@ -427,7 +461,14 @@ class RequestServiceTest extends TestCase
         );
     }
 
-    public function testDispatchRequestEmptyExceptionMissingData() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDispatchRequestEmptyExceptionMissingData(): void
     {
         $this->expectException(EmptyResponseException::class);
         $testTokenType = 'testtokentype';
@@ -481,8 +522,9 @@ class RequestServiceTest extends TestCase
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testDispatchRequestHttpClientException() :void
+    public function testDispatchRequestHttpClientException(): void
     {
         $this->expectException(HttpClientException::class);
 
@@ -519,12 +561,13 @@ class RequestServiceTest extends TestCase
     }
 
     /**
-     * @throws EmptyResponseException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testDispatchRequestHttpAuthClientException() :void
+    public function testDispatchRequestHttpAuthClientException(): void
     {
         $this->expectException(HttpClientException::class);
 
@@ -561,12 +604,13 @@ class RequestServiceTest extends TestCase
     }
 
     /**
-     * @throws EmptyResponseException
-     * @throws HttpClientException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testDispatchRequestApiAuthClientException() :void
+    public function testDispatchRequestApiAuthClientException(): void
     {
         $this->expectException(ApiAuthException::class);
 
@@ -607,8 +651,9 @@ class RequestServiceTest extends TestCase
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testDispatchRequestHttpClientExceptionInvalidArgument() :void
+    public function testDispatchRequestHttpClientExceptionInvalidArgument(): void
     {
         $this->expectException(HttpClientException::class);
         $this->reqMethod = 'TESTPUT';
@@ -624,8 +669,9 @@ class RequestServiceTest extends TestCase
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testDispatchRequestHttpClientExceptionInvalidRuntime() :void
+    public function testDispatchRequestHttpClientExceptionInvalidRuntime(): void
     {
         $this->expectException(HttpClientException::class);
         $testTokenType = 'testtokentype';
@@ -660,8 +706,9 @@ class RequestServiceTest extends TestCase
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testDispatchRequestEmpty() :void
+    public function testDispatchRequestEmpty(): void
     {
         $this->expectException(EmptyResponseException::class);
 
@@ -686,7 +733,7 @@ class RequestServiceTest extends TestCase
 
         $response->expects(self::once())
             ->method('getBody')
-            ->willReturn('');
+            ->willReturn('{}');
 
         $this->settingsMock->expects(self::once())
             ->method('getTimeout')
@@ -711,7 +758,14 @@ class RequestServiceTest extends TestCase
         );
     }
 
-    public function testDispatchRequestPost() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDispatchRequestPost(): void
     {
         $testTokenType = 'testtokentype';
         $testToken = 'testtoken';
@@ -759,7 +813,7 @@ class RequestServiceTest extends TestCase
             ->with(
                 self::logicalAnd(
                     self::isInstanceOf(RequestInterface::class),
-                    self::callback(function ($request) {
+                    self::callback(static function ($request) {
                         $return = true;
                         /** @var Request $request */
                         if ($request->getContent() === '') {

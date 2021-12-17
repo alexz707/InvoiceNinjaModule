@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Model;
@@ -9,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
-    public function testCreate() :void
+    public function testCreate(): void
     {
         $client = new Client();
         self::assertInstanceOf(ClientInterface::class, $client);
@@ -40,7 +41,7 @@ class ClientTest extends TestCase
     }
 
 
-    public function testSetters() :void
+    public function testSetters(): void
     {
         $client = new Client();
         self::assertInstanceOf(ClientInterface::class, $client);

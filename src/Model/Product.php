@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
@@ -30,7 +31,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getProductKey() : string
+    public function getProductKey(): string
     {
         return $this->productKey;
     }
@@ -38,7 +39,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $productKey
      */
-    public function setProductKey(string $productKey) : void
+    public function setProductKey(string $productKey): void
     {
         $this->productKey = $productKey;
     }
@@ -46,7 +47,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getNotes() : string
+    public function getNotes(): string
     {
         return $this->notes;
     }
@@ -54,7 +55,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $notes
      */
-    public function setNotes(string $notes) : void
+    public function setNotes(string $notes): void
     {
         $this->notes = $notes;
     }
@@ -62,7 +63,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return float|int
      */
-    public function getCost() : float|int
+    public function getCost(): float|int
     {
         return $this->cost;
     }
@@ -70,7 +71,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param float|int $cost
      */
-    public function setCost(float|int $cost) : void
+    public function setCost(float|int $cost): void
     {
         $this->cost = $cost;
     }
@@ -78,7 +79,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return float|int
      */
-    public function getPrice() : float|int
+    public function getPrice(): float|int
     {
         return $this->price;
     }
@@ -86,7 +87,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param float|int $price
      */
-    public function setPrice(float|int $price) : void
+    public function setPrice(float|int $price): void
     {
         $this->price = $price;
     }
@@ -94,7 +95,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return float|int
      */
-    public function getQuantity() : float|int
+    public function getQuantity(): float|int
     {
         return $this->quantity;
     }
@@ -102,7 +103,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param float|int $quantity
      */
-    public function setQuantity(float|int $quantity) : void
+    public function setQuantity(float|int $quantity): void
     {
         $this->quantity = $quantity;
     }
@@ -110,7 +111,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getTaxName1() : string
+    public function getTaxName1(): string
     {
         return $this->taxName1;
     }
@@ -118,7 +119,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $taxName1
      */
-    public function setTaxName1(string $taxName1) : void
+    public function setTaxName1(string $taxName1): void
     {
         $this->taxName1 = $taxName1;
     }
@@ -126,7 +127,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return float|int
      */
-    public function getTaxRate1() : float|int
+    public function getTaxRate1(): float|int
     {
         return $this->taxRate1;
     }
@@ -134,7 +135,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param float|int $taxRate1
      */
-    public function setTaxRate1(float|int $taxRate1) : void
+    public function setTaxRate1(float|int $taxRate1): void
     {
         $this->taxRate1 = $taxRate1;
     }
@@ -142,7 +143,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getTaxName2() : string
+    public function getTaxName2(): string
     {
         return $this->taxName2;
     }
@@ -150,7 +151,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $taxName2
      */
-    public function setTaxName2(string $taxName2) : void
+    public function setTaxName2(string $taxName2): void
     {
         $this->taxName2 = $taxName2;
     }
@@ -158,7 +159,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return float|int
      */
-    public function getTaxRate2() : float|int
+    public function getTaxRate2(): float|int
     {
         return $this->taxRate2;
     }
@@ -166,7 +167,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param float|int $taxRate2
      */
-    public function setTaxRate2(float|int $taxRate2) : void
+    public function setTaxRate2(float|int $taxRate2): void
     {
         $this->taxRate2 = $taxRate2;
     }
@@ -174,7 +175,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getTaxName3() : string
+    public function getTaxName3(): string
     {
         return $this->taxName3;
     }
@@ -182,7 +183,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $taxName3
      */
-    public function setTaxName3(string $taxName3) : void
+    public function setTaxName3(string $taxName3): void
     {
         $this->taxName3 = $taxName3;
     }
@@ -190,7 +191,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return float|int
      */
-    public function getTaxRate3() : float|int
+    public function getTaxRate3(): float|int
     {
         return $this->taxRate3;
     }
@@ -198,7 +199,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param float|int $taxRate3
      */
-    public function setTaxRate3(float|int $taxRate3) : void
+    public function setTaxRate3(float|int $taxRate3): void
     {
         $this->taxRate3 = $taxRate3;
     }
@@ -206,7 +207,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getCustomValue1() : string
+    public function getCustomValue1(): string
     {
         return $this->customValue1;
     }
@@ -214,7 +215,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $customValue1
      */
-    public function setCustomValue1(string $customValue1) : void
+    public function setCustomValue1(string $customValue1): void
     {
         $this->customValue1 = $customValue1;
     }
@@ -222,7 +223,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getCustomValue2() : string
+    public function getCustomValue2(): string
     {
         return $this->customValue2;
     }
@@ -230,7 +231,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $customValue2
      */
-    public function setCustomValue2(string $customValue2) : void
+    public function setCustomValue2(string $customValue2): void
     {
         $this->customValue2 = $customValue2;
     }
@@ -238,7 +239,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getCustomValue3() : string
+    public function getCustomValue3(): string
     {
         return $this->customValue3;
     }
@@ -246,7 +247,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $customValue3
      */
-    public function setCustomValue3(string $customValue3) : void
+    public function setCustomValue3(string $customValue3): void
     {
         $this->customValue3 = $customValue3;
     }
@@ -254,7 +255,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @return string
      */
-    public function getCustomValue4() : string
+    public function getCustomValue4(): string
     {
         return $this->customValue4;
     }
@@ -262,7 +263,7 @@ final class Product extends Base implements ProductInterface
     /**
      * @param string $customValue4
      */
-    public function setCustomValue4(string $customValue4) : void
+    public function setCustomValue4(string $customValue4): void
     {
         $this->customValue4 = $customValue4;
     }

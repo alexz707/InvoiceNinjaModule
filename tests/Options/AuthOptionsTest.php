@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Options;
@@ -12,7 +13,10 @@ use Laminas\Http\Client;
 
 class AuthOptionsTest extends TestCase
 {
-    public function testCreateEmptySettings() :void
+    /**
+     * @throws InvalidParameterException
+     */
+    public function testCreateEmptySettings(): void
     {
         $auth = new AuthOptions([]);
         self::assertInstanceOf(AuthOptionsInterface::class, $auth);
@@ -23,7 +27,7 @@ class AuthOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateMoreThanOneConfig() :void
+    public function testCreateMoreThanOneConfig(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -38,7 +42,7 @@ class AuthOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateNoAuthConfig() :void
+    public function testCreateNoAuthConfig(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -52,7 +56,7 @@ class AuthOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateNoUser() :void
+    public function testCreateNoUser(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -68,7 +72,7 @@ class AuthOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateEmptyUser() :void
+    public function testCreateEmptyUser(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -85,7 +89,7 @@ class AuthOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateNoPassword() :void
+    public function testCreateNoPassword(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -101,7 +105,7 @@ class AuthOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateEmptyPassword() :void
+    public function testCreateEmptyPassword(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -115,7 +119,10 @@ class AuthOptionsTest extends TestCase
         new AuthOptions($authSettings);
     }
 
-    public function testCreateBasic() :void
+    /**
+     * @throws InvalidParameterException
+     */
+    public function testCreateBasic(): void
     {
         $authSettings = [
             Client::AUTH_BASIC => [
@@ -133,7 +140,10 @@ class AuthOptionsTest extends TestCase
         self::assertEquals('password', $auth->getPassword());
     }
 
-    public function testCreateDigest() :void
+    /**
+     * @throws InvalidParameterException
+     */
+    public function testCreateDigest(): void
     {
         $authSettings = [
             Client::AUTH_DIGEST => [

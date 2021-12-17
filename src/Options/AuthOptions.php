@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Options;
@@ -7,6 +8,8 @@ use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Module;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
 use Laminas\Http\Client;
+
+use function array_key_exists;
 
 final class AuthOptions implements AuthOptionsInterface
 {
@@ -34,7 +37,7 @@ final class AuthOptions implements AuthOptionsInterface
     /**
      * @return bool
      */
-    public function isAuthorization() : bool
+    public function isAuthorization(): bool
     {
         return $this->isAuthorization;
     }
@@ -42,7 +45,7 @@ final class AuthOptions implements AuthOptionsInterface
     /**
      * @return string
      */
-    public function getAuthType() : string
+    public function getAuthType(): string
     {
         return $this->authType;
     }
@@ -50,7 +53,7 @@ final class AuthOptions implements AuthOptionsInterface
     /**
      * @return string
      */
-    public function getUsername() : string
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -58,7 +61,7 @@ final class AuthOptions implements AuthOptionsInterface
     /**
      * @return string
      */
-    public function getPassword() : string
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -68,7 +71,7 @@ final class AuthOptions implements AuthOptionsInterface
      *
      * @throws InvalidParameterException
      */
-    private function checkCredentials(array $config) :void
+    private function checkCredentials(array $config): void
     {
         $this->checkUsername($config[$this->authType]);
         $this->checkPassword($config[$this->authType]);
@@ -79,9 +82,9 @@ final class AuthOptions implements AuthOptionsInterface
      *
      * @throws InvalidParameterException
      */
-    private function checkUsername(array $config) :void
+    private function checkUsername(array $config): void
     {
-        if (!\array_key_exists(Module::AUTH_USER, $config) || empty($config[Module::AUTH_USER])) {
+        if (!array_key_exists(Module::AUTH_USER, $config) || empty($config[Module::AUTH_USER])) {
             throw new InvalidParameterException('Username must not be empty!');
         }
         $this->username = $config[Module::AUTH_USER];
@@ -92,9 +95,9 @@ final class AuthOptions implements AuthOptionsInterface
      *
      * @throws InvalidParameterException
      */
-    private function checkPassword(array $config) :void
+    private function checkPassword(array $config): void
     {
-        if (!\array_key_exists(Module::AUTH_PASS, $config) || empty($config[Module::AUTH_PASS])) {
+        if (!array_key_exists(Module::AUTH_PASS, $config) || empty($config[Module::AUTH_PASS])) {
             throw new InvalidParameterException('Password must not be empty!');
         }
         $this->password = $config[Module::AUTH_PASS];
@@ -103,10 +106,10 @@ final class AuthOptions implements AuthOptionsInterface
     /**
      * @param array $config
      */
-    private function setAuthType(array $config) :void
+    private function setAuthType(array $config): void
     {
         $this->authType = Client::AUTH_BASIC;
-        if (\array_key_exists(Client::AUTH_DIGEST, $config)) {
+        if (array_key_exists(Client::AUTH_DIGEST, $config)) {
             $this->authType = Client::AUTH_DIGEST;
         }
     }
@@ -116,12 +119,12 @@ final class AuthOptions implements AuthOptionsInterface
      *
      * @throws InvalidParameterException
      */
-    private function checkAuthorization(array $config) :void
+    private function checkAuthorization(array $config): void
     {
         if (count($config) > 1) {
             throw new InvalidParameterException('Only one authorization config allowed!');
         }
-        if (!\array_key_exists(Client::AUTH_BASIC, $config) && !\array_key_exists(Client::AUTH_DIGEST, $config)) {
+        if (!array_key_exists(Client::AUTH_BASIC, $config) && !array_key_exists(Client::AUTH_DIGEST, $config)) {
             throw new InvalidParameterException('Only BASIC or DIGEST authorization allowed!');
         }
         $this->isAuthorization = true;

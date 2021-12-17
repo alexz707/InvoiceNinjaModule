@@ -1,10 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest;
 
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
+
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use function dirname;
 
 /**
@@ -12,9 +16,13 @@ use function dirname;
  */
 class Bootstrap
 {
-    protected static $serviceManager;
+    protected static ServiceManager $serviceManager;
 
-    public static function init() :void
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public static function init(): void
     {
         error_reporting(E_ALL);
         chdir(__DIR__);
@@ -53,12 +61,12 @@ class Bootstrap
     /**
      * @return ServiceManager
      */
-    public static function getServiceManager() :ServiceManager
+    public static function getServiceManager(): ServiceManager
     {
         return static::$serviceManager;
     }
 
-    protected static function initAutoloader() :void
+    protected static function initAutoloader(): void
     {
         $vendorPath = static::findParentPath('vendor');
 

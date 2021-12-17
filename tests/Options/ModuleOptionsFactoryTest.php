@@ -1,27 +1,35 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Options;
 
 use Interop\Container\ContainerInterface;
+use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Module;
 use InvoiceNinjaModule\Options\AuthOptions;
-use InvoiceNinjaModule\Options\AuthOptionsFactory;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
 use InvoiceNinjaModule\Options\ModuleOptions;
 use InvoiceNinjaModule\Options\ModuleOptionsFactory;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class ModuleOptionsFactoryTest extends TestCase
 {
-    public function testCreate() :void
+    /**
+     * @throws InvalidParameterException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function testCreate(): void
     {
         $config = [
             Module::INVOICE_NINJA_CONFIG => [
                 Module::API_TIMEOUT => 100,
                 Module::TOKEN_TYPE  => 'X-Ninja-Token',
                 Module::TOKEN       => 'YOURTOKEN',
-                Module::HOST_URL    => 'http://ninja.dev/api/v1',
+                Module::HOST_URL    => 'https://ninja.dev/api/v1',
             ]
         ];
 

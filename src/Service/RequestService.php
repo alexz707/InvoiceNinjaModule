@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service;
@@ -10,6 +11,7 @@ use InvoiceNinjaModule\Exception\HttpClientException;
 use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Options\Interfaces\ModuleOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
+use JsonException;
 use Laminas\Http\Client;
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Exception\InvalidArgumentException;
@@ -17,6 +19,7 @@ use Laminas\Http\Exception\RuntimeException;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Stdlib\Parameters;
+
 use function array_key_exists;
 use function is_array;
 use function json_decode;
@@ -61,8 +64,9 @@ final class RequestService implements RequestServiceInterface
      * @throws EmptyResponseException
      * @throws HttpClientException
      * @throws HttpClientAuthException
+     * @throws JsonException
      */
-    public function dispatchRequest(string $reqMethod, string $reqRoute, RequestOptionsInterface $requestOptions) :array
+    public function dispatchRequest(string $reqMethod, string $reqRoute, RequestOptionsInterface $requestOptions): array
     {
         $request = new Request();
         $request->setAllowCustomMethods(false);
@@ -76,12 +80,12 @@ final class RequestService implements RequestServiceInterface
 
         $postArray = $requestOptions->getPostArray();
         if (!empty($postArray)) {
-            $request->setContent(json_encode($postArray));
+            $request->setContent(json_encode($postArray, JSON_THROW_ON_ERROR));
         }
 
         try {
             $request->getHeaders()->addHeaders($this->getRequestHeaderArray());
-            $request->setUri($this->moduleOptions->getHostUrl().$reqRoute);
+            $request->setUri($this->moduleOptions->getHostUrl() . $reqRoute);
         } catch (InvalidArgumentException $e) {
             throw new HttpClientException($e->getMessage());
         }
@@ -104,17 +108,17 @@ final class RequestService implements RequestServiceInterface
      * @throws HttpClientException
      * @throws HttpClientAuthException
      */
-    private function checkResponseCode(Response $response) :void
+    private function checkResponseCode(Response $response): void
     {
         switch ($response->getStatusCode()) {
             case Response::STATUS_CODE_200:
                 break;
             case Response::STATUS_CODE_403:
-                throw new ApiAuthException($response->getStatusCode() .' '.$response->getReasonPhrase());
+                throw new ApiAuthException($response->getStatusCode() . ' ' . $response->getReasonPhrase());
             case Response::STATUS_CODE_401:
-                throw new HttpClientAuthException($response->getStatusCode() .' '.$response->getReasonPhrase());
+                throw new HttpClientAuthException($response->getStatusCode() . ' ' . $response->getReasonPhrase());
             default:
-                throw new HttpClientException($response->getStatusCode() .' '.$response->getReasonPhrase());
+                throw new HttpClientException($response->getStatusCode() . ' ' . $response->getReasonPhrase());
         }
     }
 
@@ -123,10 +127,15 @@ final class RequestService implements RequestServiceInterface
      *
      * @return array
      * @throws EmptyResponseException
+     * @throws JsonException
      */
-    private function convertResponse(Response $response) :array
+    private function convertResponse(Response $response): array
     {
         $headers = $response->getHeaders();
+        if ($headers === null) {
+            throw new EmptyResponseException('Headers are null');
+        }
+
         //check if it is a file
         $contentDisposition = $headers->get('Content-disposition');
         if ($contentDisposition !== false) {
@@ -141,7 +150,12 @@ final class RequestService implements RequestServiceInterface
             return [$fileName => $response->getBody()];
         }
 
-        $result = json_decode($response->getBody(), true);
+        $result = json_decode(
+            $response->getBody(),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
         if (is_array($result)) {
             return $this->checkResponseKey($result);
         }
@@ -154,7 +168,7 @@ final class RequestService implements RequestServiceInterface
      * @return array
      * @throws EmptyResponseException
      */
-    private function checkResponseKey(array $result) :array
+    private function checkResponseKey(array $result): array
     {
         if (!array_key_exists(self::RETURN_KEY, $result) || empty($result[self::RETURN_KEY])) {
             throw new EmptyResponseException();
@@ -165,7 +179,7 @@ final class RequestService implements RequestServiceInterface
     /**
      * @return array
      */
-    private function getRequestHeaderArray() :array
+    private function getRequestHeaderArray(): array
     {
         return [
             'Accept'                             => 'application/json',
@@ -178,7 +192,7 @@ final class RequestService implements RequestServiceInterface
      * @return void
      * @throws InvalidArgumentException
      */
-    private function initHttpClient() :void
+    private function initHttpClient(): void
     {
         $options = [
             'timeout' => $this->moduleOptions->getTimeout()

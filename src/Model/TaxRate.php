@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
@@ -17,7 +18,7 @@ final class TaxRate extends Base implements TaxRateInterface
     /**
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -25,7 +26,7 @@ final class TaxRate extends Base implements TaxRateInterface
     /**
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -33,7 +34,7 @@ final class TaxRate extends Base implements TaxRateInterface
     /**
      * @return float|int
      */
-    public function getRate() : float|int
+    public function getRate(): float|int
     {
         return $this->rate;
     }
@@ -41,7 +42,7 @@ final class TaxRate extends Base implements TaxRateInterface
     /**
      * @param float|int $rate
      */
-    public function setRate(float|int $rate) : void
+    public function setRate(float|int $rate): void
     {
         $this->rate = $rate;
     }

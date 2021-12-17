@@ -22,6 +22,12 @@ Latest release can handle the following api services:
 
 Can use `basic` or `digest` server authorization.
 
+### Known issues
+
+* Invoice Ninja API V5 is (mostly) returning strings instead of the real data type 
+but wants the real data types in the requests. If you find out about a field which behaves like this please open an issue!
+* Not all endpoints are implemented -> if you need one please send a PR or open an issue.
+* Humbug is deprecated and should be changed to Infection
 
 ## Installation
 
@@ -83,5 +89,3 @@ Register as Laminas module inside your ```config/application.config.php``` file:
         $clientManager = $sm->get(ClientManager::class);
         $client = $clientManager->getClientById('1');
 ```
-
-

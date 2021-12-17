@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model\Interfaces;
@@ -11,7 +12,7 @@ interface TaxRateInterface extends BaseInterface
     /**
      * @return string
      */
-    public function getName() : string;
+    public function getName(): string;
 
     /**
      * @param string $name
@@ -21,10 +22,10 @@ interface TaxRateInterface extends BaseInterface
     /**
      * @return float|int
      */
-    public function getRate() : float|int;
+    public function getRate(): float|int;
 
     /**
      * @param float|int $rate
      */
-    public function setRate(float|int $rate) : void;
+    public function setRate(float|int $rate): void;
 }

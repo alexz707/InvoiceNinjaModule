@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Options;
@@ -14,7 +15,7 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateEmptySettings() :void
+    public function testCreateEmptySettings(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -24,7 +25,7 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateEmptyToken() :void
+    public function testCreateEmptyToken(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -32,7 +33,7 @@ class ModuleOptionsTest extends TestCase
             Module::TOKEN => '',
             Module::TOKEN_TYPE => 'testtokentype',
             Module::API_TIMEOUT => 100,
-            Module::HOST_URL => 'http://test.dev',
+            Module::HOST_URL => 'https://test.dev',
         ];
 
         new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
@@ -41,14 +42,14 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateMissingToken() :void
+    public function testCreateMissingToken(): void
     {
         $this->expectException(InvalidParameterException::class);
 
         $settings = [
             Module::TOKEN_TYPE => 'testtokentype',
             Module::API_TIMEOUT => 100,
-            Module::HOST_URL => 'http://test.dev',
+            Module::HOST_URL => 'https://test.dev',
         ];
 
         new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
@@ -57,7 +58,7 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateEmptyTokenType() :void
+    public function testCreateEmptyTokenType(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -65,7 +66,7 @@ class ModuleOptionsTest extends TestCase
             Module::TOKEN => 'testtoken',
             Module::TOKEN_TYPE => '',
             Module::API_TIMEOUT => 100,
-            Module::HOST_URL => 'http://test.dev',
+            Module::HOST_URL => 'https://test.dev',
         ];
 
         new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
@@ -74,14 +75,14 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateMissingTokenType() :void
+    public function testCreateMissingTokenType(): void
     {
         $this->expectException(InvalidParameterException::class);
 
         $settings = [
             Module::TOKEN => 'testtoken',
             Module::API_TIMEOUT => 100,
-            Module::HOST_URL => 'http://test.dev',
+            Module::HOST_URL => 'https://test.dev',
         ];
 
         new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
@@ -90,7 +91,7 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateEmptyTimeout() :void
+    public function testCreateEmptyTimeout(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -98,7 +99,7 @@ class ModuleOptionsTest extends TestCase
             Module::TOKEN => 'testtoken',
             Module::TOKEN_TYPE => 'testtokentype',
             Module::API_TIMEOUT => null,
-            Module::HOST_URL => 'http://test.dev',
+            Module::HOST_URL => 'https://test.dev',
         ];
 
         new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
@@ -107,7 +108,7 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateNegativeTimeout() :void
+    public function testCreateNegativeTimeout(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -115,7 +116,7 @@ class ModuleOptionsTest extends TestCase
             Module::TOKEN => 'testtoken',
             Module::TOKEN_TYPE => 'testtokentype',
             Module::API_TIMEOUT => -1,
-            Module::HOST_URL => 'http://test.dev',
+            Module::HOST_URL => 'https://test.dev',
         ];
 
         new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
@@ -124,14 +125,14 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateMissingTimeout() :void
+    public function testCreateMissingTimeout(): void
     {
         $this->expectException(InvalidParameterException::class);
 
         $settings = [
             Module::TOKEN => 'testtoken',
             Module::TOKEN_TYPE => 'testtokentype',
-            Module::HOST_URL => 'http://test.dev',
+            Module::HOST_URL => 'https://test.dev',
         ];
 
         new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
@@ -140,7 +141,7 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateEmptyHostUrl() :void
+    public function testCreateEmptyHostUrl(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -157,7 +158,7 @@ class ModuleOptionsTest extends TestCase
     /**
      * @throws InvalidParameterException
      */
-    public function testCreateMissingHostUrl() :void
+    public function testCreateMissingHostUrl(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -170,14 +171,17 @@ class ModuleOptionsTest extends TestCase
         new ModuleOptions($settings, $this->createMock(AuthOptionsInterface::class));
     }
 
-    public function testCreate() :void
+    /**
+     * @throws InvalidParameterException
+     */
+    public function testCreate(): void
     {
         $authOptions = $this->createMock(AuthOptionsInterface::class);
         $settingsArr = [
             Module::TOKEN => 'testtoken',
             Module::TOKEN_TYPE => 'testtokentype',
             Module::API_TIMEOUT => 0,
-            Module::HOST_URL => 'http://test.dev',
+            Module::HOST_URL => 'https://test.dev',
         ];
         $moduleOptions = new ModuleOptions($settingsArr, $authOptions);
         self::assertInstanceOf(ModuleOptions::class, $moduleOptions);

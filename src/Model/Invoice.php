@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
@@ -13,7 +14,6 @@ use InvoiceNinjaModule\Model\Interfaces\InvoiceInterface;
  */
 final class Invoice extends Base implements InvoiceInterface
 {
-
     private string $projectId = '';
     private float $amount = 0;
     private float $balance = 0;
@@ -75,7 +75,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getProjectId() : string
+    public function getProjectId(): string
     {
         return $this->projectId;
     }
@@ -83,7 +83,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $projectId
      */
-    public function setProjectId(string $projectId) : void
+    public function setProjectId(string $projectId): void
     {
         $this->projectId = $projectId;
     }
@@ -91,7 +91,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getAmount() : float|int
+    public function getAmount(): float|int
     {
         return $this->amount;
     }
@@ -99,7 +99,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $amount
      */
-    public function setAmount(float|int $amount) : void
+    public function setAmount(float|int $amount): void
     {
         $this->amount = $amount;
     }
@@ -107,7 +107,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getBalance() : float|int
+    public function getBalance(): float|int
     {
         return $this->balance;
     }
@@ -115,7 +115,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $balance
      */
-    public function setBalance(float|int $balance) : void
+    public function setBalance(float|int $balance): void
     {
         $this->balance = $balance;
     }
@@ -123,7 +123,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getClientId() : string
+    public function getClientId(): string
     {
         return $this->clientId;
     }
@@ -131,7 +131,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $clientId
      */
-    public function setClientId(string $clientId) : void
+    public function setClientId(string $clientId): void
     {
         $this->clientId = $clientId;
     }
@@ -139,7 +139,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getVendorId() : string
+    public function getVendorId(): string
     {
         return $this->vendorId;
     }
@@ -147,7 +147,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $vendorId
      */
-    public function setVendorId(string $vendorId) : void
+    public function setVendorId(string $vendorId): void
     {
         $this->vendorId = $vendorId;
     }
@@ -155,7 +155,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return int
      */
-    public function getStatusId() : int
+    public function getStatusId(): int
     {
         return $this->statusId;
     }
@@ -163,7 +163,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param int $statusId
      */
-    public function setStatusId(int $statusId) : void
+    public function setStatusId(int $statusId): void
     {
         $this->statusId = $statusId;
     }
@@ -171,7 +171,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getDesignId() : string
+    public function getDesignId(): string
     {
         return $this->designId;
     }
@@ -179,7 +179,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $designId
      */
-    public function setDesignId(string $designId) : void
+    public function setDesignId(string $designId): void
     {
         $this->designId = $designId;
     }
@@ -187,7 +187,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getRecurringId() : string
+    public function getRecurringId(): string
     {
         return $this->recurringId;
     }
@@ -195,7 +195,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $recurringId
      */
-    public function setRecurringId(string $recurringId) : void
+    public function setRecurringId(string $recurringId): void
     {
         $this->recurringId = $recurringId;
     }
@@ -203,7 +203,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getNumber() : string
+    public function getNumber(): string
     {
         return $this->number;
     }
@@ -211,7 +211,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $number
      */
-    public function setNumber(string $number) : void
+    public function setNumber(string $number): void
     {
         $this->number = $number;
     }
@@ -219,7 +219,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getDiscount() : float|int
+    public function getDiscount(): float|int
     {
         return $this->discount;
     }
@@ -227,7 +227,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $discount
      */
-    public function setDiscount(float|int $discount) : void
+    public function setDiscount(float|int $discount): void
     {
         $this->discount = $discount;
     }
@@ -235,7 +235,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getPoNumber() : string
+    public function getPoNumber(): string
     {
         return $this->poNumber;
     }
@@ -243,7 +243,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $poNumber
      */
-    public function setPoNumber(string $poNumber) : void
+    public function setPoNumber(string $poNumber): void
     {
         $this->poNumber = $poNumber;
     }
@@ -251,7 +251,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return DateTimeInterface
      */
-    public function getDate() : DateTimeInterface
+    public function getDate(): DateTimeInterface
     {
         return DateTime::createFromFormat('Y-m-d', $this->date);
     }
@@ -259,7 +259,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param DateTimeInterface $date
      */
-    public function setDate(DateTimeInterface $date) : void
+    public function setDate(DateTimeInterface $date): void
     {
         $this->date = $date->format('Y-m-d');
     }
@@ -267,7 +267,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getLastSentDate() : string
+    public function getLastSentDate(): string
     {
         return $this->lastSentDate;
     }
@@ -275,7 +275,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $lastSentDate
      */
-    public function setLastSentDate(string $lastSentDate) : void
+    public function setLastSentDate(string $lastSentDate): void
     {
         $this->lastSentDate = $lastSentDate;
     }
@@ -283,7 +283,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getNextSendDate() : string
+    public function getNextSendDate(): string
     {
         return $this->nextSendDate;
     }
@@ -291,7 +291,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $nextSendDate
      */
-    public function setNextSendDate(string $nextSendDate) : void
+    public function setNextSendDate(string $nextSendDate): void
     {
         $this->nextSendDate = $nextSendDate;
     }
@@ -299,7 +299,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return DateTimeInterface
      */
-    public function getDueDate() : DateTimeInterface
+    public function getDueDate(): DateTimeInterface
     {
         return DateTime::createFromFormat('Y-m-d', $this->dueDate);
     }
@@ -307,7 +307,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param DateTimeInterface $dueDate
      */
-    public function setDueDate(DateTimeInterface $dueDate) : void
+    public function setDueDate(DateTimeInterface $dueDate): void
     {
         $this->dueDate = $dueDate->format('Y-m-d');
     }
@@ -315,7 +315,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getTerms() : string
+    public function getTerms(): string
     {
         return $this->terms;
     }
@@ -323,7 +323,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $terms
      */
-    public function setTerms(string $terms) : void
+    public function setTerms(string $terms): void
     {
         $this->terms = $terms;
     }
@@ -331,7 +331,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getPublicNotes() : string
+    public function getPublicNotes(): string
     {
         return $this->publicNotes;
     }
@@ -339,7 +339,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $publicNotes
      */
-    public function setPublicNotes(string $publicNotes) : void
+    public function setPublicNotes(string $publicNotes): void
     {
         $this->publicNotes = $publicNotes;
     }
@@ -347,7 +347,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getPrivateNotes() : string
+    public function getPrivateNotes(): string
     {
         return $this->privateNotes;
     }
@@ -355,7 +355,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $privateNotes
      */
-    public function setPrivateNotes(string $privateNotes) : void
+    public function setPrivateNotes(string $privateNotes): void
     {
         $this->privateNotes = $privateNotes;
     }
@@ -363,7 +363,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isUsesInclusiveTaxes() : bool
+    public function isUsesInclusiveTaxes(): bool
     {
         return $this->usesInclusiveTaxes;
     }
@@ -371,7 +371,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $usesInclusiveTaxes
      */
-    public function setUsesInclusiveTaxes(bool $usesInclusiveTaxes) : void
+    public function setUsesInclusiveTaxes(bool $usesInclusiveTaxes): void
     {
         $this->usesInclusiveTaxes = $usesInclusiveTaxes;
     }
@@ -379,7 +379,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getTaxName1() : string
+    public function getTaxName1(): string
     {
         return $this->taxName1;
     }
@@ -387,7 +387,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $taxName1
      */
-    public function setTaxName1(string $taxName1) : void
+    public function setTaxName1(string $taxName1): void
     {
         $this->taxName1 = $taxName1;
     }
@@ -395,7 +395,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getTaxRate1() : float|int
+    public function getTaxRate1(): float|int
     {
         return $this->taxRate1;
     }
@@ -403,7 +403,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $taxRate1
      */
-    public function setTaxRate1(float|int $taxRate1) : void
+    public function setTaxRate1(float|int $taxRate1): void
     {
         $this->taxRate1 = $taxRate1;
     }
@@ -411,7 +411,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getTaxName2() : string
+    public function getTaxName2(): string
     {
         return $this->taxName2;
     }
@@ -419,7 +419,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $taxName2
      */
-    public function setTaxName2(string $taxName2) : void
+    public function setTaxName2(string $taxName2): void
     {
         $this->taxName2 = $taxName2;
     }
@@ -427,7 +427,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getTaxRate2() : float|int
+    public function getTaxRate2(): float|int
     {
         return $this->taxRate2;
     }
@@ -435,7 +435,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $taxRate2
      */
-    public function setTaxRate2(float|int $taxRate2) : void
+    public function setTaxRate2(float|int $taxRate2): void
     {
         $this->taxRate2 = $taxRate2;
     }
@@ -443,7 +443,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getTaxName3() : string
+    public function getTaxName3(): string
     {
         return $this->taxName3;
     }
@@ -451,7 +451,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $taxName3
      */
-    public function setTaxName3(string $taxName3) : void
+    public function setTaxName3(string $taxName3): void
     {
         $this->taxName3 = $taxName3;
     }
@@ -459,7 +459,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getTaxRate3() : float|int
+    public function getTaxRate3(): float|int
     {
         return $this->taxRate3;
     }
@@ -467,7 +467,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $taxRate3
      */
-    public function setTaxRate3(float|int $taxRate3) : void
+    public function setTaxRate3(float|int $taxRate3): void
     {
         $this->taxRate3 = $taxRate3;
     }
@@ -475,7 +475,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getTotalTaxes() : float|int
+    public function getTotalTaxes(): float|int
     {
         return $this->totalTaxes;
     }
@@ -483,7 +483,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $totalTaxes
      */
-    public function setTotalTaxes(float|int $totalTaxes) : void
+    public function setTotalTaxes(float|int $totalTaxes): void
     {
         $this->totalTaxes = $totalTaxes;
     }
@@ -491,7 +491,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isAmountDiscount() : bool
+    public function isAmountDiscount(): bool
     {
         return $this->isAmountDiscount;
     }
@@ -499,7 +499,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $isAmountDiscount
      */
-    public function setIsAmountDiscount(bool $isAmountDiscount) : void
+    public function setIsAmountDiscount(bool $isAmountDiscount): void
     {
         $this->isAmountDiscount = $isAmountDiscount;
     }
@@ -507,7 +507,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getFooter() : string
+    public function getFooter(): string
     {
         return $this->footer;
     }
@@ -515,7 +515,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $footer
      */
-    public function setFooter(string $footer) : void
+    public function setFooter(string $footer): void
     {
         $this->footer = $footer;
     }
@@ -523,7 +523,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return int
      */
-    public function getPartial() : int
+    public function getPartial(): int
     {
         return $this->partial;
     }
@@ -531,7 +531,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param int $partial
      */
-    public function setPartial(int $partial) : void
+    public function setPartial(int $partial): void
     {
         $this->partial = $partial;
     }
@@ -539,7 +539,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getPartialDueDate() : string
+    public function getPartialDueDate(): string
     {
         return $this->partialDueDate;
     }
@@ -547,7 +547,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $partialDueDate
      */
-    public function setPartialDueDate(string $partialDueDate) : void
+    public function setPartialDueDate(string $partialDueDate): void
     {
         $this->partialDueDate = $partialDueDate;
     }
@@ -555,7 +555,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getCustomValue1() : string
+    public function getCustomValue1(): string
     {
         return $this->customValue1;
     }
@@ -563,7 +563,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $customValue1
      */
-    public function setCustomValue1(string $customValue1) : void
+    public function setCustomValue1(string $customValue1): void
     {
         $this->customValue1 = $customValue1;
     }
@@ -571,7 +571,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getCustomValue2() : string
+    public function getCustomValue2(): string
     {
         return $this->customValue2;
     }
@@ -579,7 +579,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $customValue2
      */
-    public function setCustomValue2(string $customValue2) : void
+    public function setCustomValue2(string $customValue2): void
     {
         $this->customValue2 = $customValue2;
     }
@@ -587,7 +587,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getCustomValue3() : string
+    public function getCustomValue3(): string
     {
         return $this->customValue3;
     }
@@ -595,7 +595,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $customValue3
      */
-    public function setCustomValue3(string $customValue3) : void
+    public function setCustomValue3(string $customValue3): void
     {
         $this->customValue3 = $customValue3;
     }
@@ -603,7 +603,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getCustomValue4() : string
+    public function getCustomValue4(): string
     {
         return $this->customValue4;
     }
@@ -611,7 +611,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $customValue4
      */
-    public function setCustomValue4(string $customValue4) : void
+    public function setCustomValue4(string $customValue4): void
     {
         $this->customValue4 = $customValue4;
     }
@@ -619,7 +619,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isHasTasks() : bool
+    public function isHasTasks(): bool
     {
         return $this->hasTasks;
     }
@@ -627,7 +627,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $hasTasks
      */
-    public function setHasTasks(bool $hasTasks) : void
+    public function setHasTasks(bool $hasTasks): void
     {
         $this->hasTasks = $hasTasks;
     }
@@ -635,7 +635,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isHasExpenses() : bool
+    public function isHasExpenses(): bool
     {
         return $this->hasExpenses;
     }
@@ -643,7 +643,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $hasExpenses
      */
-    public function setHasExpenses(bool $hasExpenses) : void
+    public function setHasExpenses(bool $hasExpenses): void
     {
         $this->hasExpenses = $hasExpenses;
     }
@@ -651,7 +651,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getCustomSurcharge1() : float|int
+    public function getCustomSurcharge1(): float|int
     {
         return $this->customSurcharge1;
     }
@@ -659,7 +659,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $customSurcharge1
      */
-    public function setCustomSurcharge1(float|int $customSurcharge1) : void
+    public function setCustomSurcharge1(float|int $customSurcharge1): void
     {
         $this->customSurcharge1 = $customSurcharge1;
     }
@@ -667,7 +667,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getCustomSurcharge2() : float|int
+    public function getCustomSurcharge2(): float|int
     {
         return $this->customSurcharge2;
     }
@@ -675,7 +675,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $customSurcharge2
      */
-    public function setCustomSurcharge2(float|int $customSurcharge2) : void
+    public function setCustomSurcharge2(float|int $customSurcharge2): void
     {
         $this->customSurcharge2 = $customSurcharge2;
     }
@@ -683,7 +683,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getCustomSurcharge3() : float|int
+    public function getCustomSurcharge3(): float|int
     {
         return $this->customSurcharge3;
     }
@@ -691,7 +691,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $customSurcharge3
      */
-    public function setCustomSurcharge3(float|int $customSurcharge3) : void
+    public function setCustomSurcharge3(float|int $customSurcharge3): void
     {
         $this->customSurcharge3 = $customSurcharge3;
     }
@@ -699,7 +699,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getCustomSurcharge4() : float|int
+    public function getCustomSurcharge4(): float|int
     {
         return $this->customSurcharge4;
     }
@@ -707,7 +707,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $customSurcharge4
      */
-    public function setCustomSurcharge4(float|int $customSurcharge4) : void
+    public function setCustomSurcharge4(float|int $customSurcharge4): void
     {
         $this->customSurcharge4 = $customSurcharge4;
     }
@@ -715,7 +715,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getExchangeRate() : float|int
+    public function getExchangeRate(): float|int
     {
         return $this->exchangeRate;
     }
@@ -723,7 +723,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $exchangeRate
      */
-    public function setExchangeRate(float|int $exchangeRate) : void
+    public function setExchangeRate(float|int $exchangeRate): void
     {
         $this->exchangeRate = $exchangeRate;
     }
@@ -731,7 +731,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isCustomSurchargeTax1() : bool
+    public function isCustomSurchargeTax1(): bool
     {
         return $this->customSurchargeTax1;
     }
@@ -739,7 +739,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $customSurchargeTax1
      */
-    public function setCustomSurchargeTax1(bool $customSurchargeTax1) : void
+    public function setCustomSurchargeTax1(bool $customSurchargeTax1): void
     {
         $this->customSurchargeTax1 = $customSurchargeTax1;
     }
@@ -747,7 +747,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isCustomSurchargeTax2() : bool
+    public function isCustomSurchargeTax2(): bool
     {
         return $this->customSurchargeTax2;
     }
@@ -755,7 +755,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $customSurchargeTax2
      */
-    public function setCustomSurchargeTax2(bool $customSurchargeTax2) : void
+    public function setCustomSurchargeTax2(bool $customSurchargeTax2): void
     {
         $this->customSurchargeTax2 = $customSurchargeTax2;
     }
@@ -763,7 +763,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isCustomSurchargeTax3() : bool
+    public function isCustomSurchargeTax3(): bool
     {
         return $this->customSurchargeTax3;
     }
@@ -771,7 +771,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $customSurchargeTax3
      */
-    public function setCustomSurchargeTax3(bool $customSurchargeTax3) : void
+    public function setCustomSurchargeTax3(bool $customSurchargeTax3): void
     {
         $this->customSurchargeTax3 = $customSurchargeTax3;
     }
@@ -779,7 +779,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isCustomSurchargeTax4() : bool
+    public function isCustomSurchargeTax4(): bool
     {
         return $this->customSurchargeTax4;
     }
@@ -787,7 +787,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $customSurchargeTax4
      */
-    public function setCustomSurchargeTax4(bool $customSurchargeTax4) : void
+    public function setCustomSurchargeTax4(bool $customSurchargeTax4): void
     {
         $this->customSurchargeTax4 = $customSurchargeTax4;
     }
@@ -795,7 +795,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return InvoiceItem[]
      */
-    public function getLineItems() : array
+    public function getLineItems(): array
     {
         return $this->lineItems;
     }
@@ -803,7 +803,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param InvoiceItem[] $lineItems
      */
-    public function setLineItems(array $lineItems) : void
+    public function setLineItems(array $lineItems): void
     {
         $this->lineItems = $lineItems;
     }
@@ -811,7 +811,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getEntityType() : string
+    public function getEntityType(): string
     {
         return $this->entityType;
     }
@@ -819,7 +819,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $entityType
      */
-    public function setEntityType(string $entityType) : void
+    public function setEntityType(string $entityType): void
     {
         $this->entityType = $entityType;
     }
@@ -827,7 +827,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getReminder1Sent() : string
+    public function getReminder1Sent(): string
     {
         return $this->reminder1Sent;
     }
@@ -835,7 +835,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $reminder1Sent
      */
-    public function setReminder1Sent(string $reminder1Sent) : void
+    public function setReminder1Sent(string $reminder1Sent): void
     {
         $this->reminder1Sent = $reminder1Sent;
     }
@@ -843,7 +843,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getReminder2Sent() : string
+    public function getReminder2Sent(): string
     {
         return $this->reminder2Sent;
     }
@@ -851,7 +851,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $reminder2Sent
      */
-    public function setReminder2Sent(string $reminder2Sent) : void
+    public function setReminder2Sent(string $reminder2Sent): void
     {
         $this->reminder2Sent = $reminder2Sent;
     }
@@ -859,7 +859,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getReminder3Sent() : string
+    public function getReminder3Sent(): string
     {
         return $this->reminder3Sent;
     }
@@ -867,7 +867,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $reminder3Sent
      */
-    public function setReminder3Sent(string $reminder3Sent) : void
+    public function setReminder3Sent(string $reminder3Sent): void
     {
         $this->reminder3Sent = $reminder3Sent;
     }
@@ -875,7 +875,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getReminderLastSent() : string
+    public function getReminderLastSent(): string
     {
         return $this->reminderLastSent;
     }
@@ -883,7 +883,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $reminderLastSent
      */
-    public function setReminderLastSent(string $reminderLastSent) : void
+    public function setReminderLastSent(string $reminderLastSent): void
     {
         $this->reminderLastSent = $reminderLastSent;
     }
@@ -891,7 +891,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return float|int
      */
-    public function getPaidToDate() : float|int
+    public function getPaidToDate(): float|int
     {
         return $this->paidToDate;
     }
@@ -899,7 +899,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param float|int $paidToDate
      */
-    public function setPaidToDate(float|int $paidToDate) : void
+    public function setPaidToDate(float|int $paidToDate): void
     {
         $this->paidToDate = $paidToDate;
     }
@@ -907,7 +907,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return string
      */
-    public function getSubscriptionId() : string
+    public function getSubscriptionId(): string
     {
         return $this->subscriptionId;
     }
@@ -915,7 +915,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param string $subscriptionId
      */
-    public function setSubscriptionId(string $subscriptionId) : void
+    public function setSubscriptionId(string $subscriptionId): void
     {
         $this->subscriptionId = $subscriptionId;
     }
@@ -923,7 +923,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return bool
      */
-    public function isAutoBillEnabled() : bool
+    public function isAutoBillEnabled(): bool
     {
         return $this->autoBillEnabled;
     }
@@ -931,7 +931,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param bool $autoBillEnabled
      */
-    public function setAutoBillEnabled(bool $autoBillEnabled) : void
+    public function setAutoBillEnabled(bool $autoBillEnabled): void
     {
         $this->autoBillEnabled = $autoBillEnabled;
     }
@@ -939,7 +939,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return Invitation[]
      */
-    public function getInvitations() : array
+    public function getInvitations(): array
     {
         return $this->invitations;
     }
@@ -947,7 +947,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param Invitation[] $invitations
      */
-    public function setInvitations(array $invitations) : void
+    public function setInvitations(array $invitations): void
     {
         $this->invitations = $invitations;
     }
@@ -955,7 +955,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @return array
      */
-    public function getDocuments() : array
+    public function getDocuments(): array
     {
         return $this->documents;
     }
@@ -963,7 +963,7 @@ final class Invoice extends Base implements InvoiceInterface
     /**
      * @param array $documents
      */
-    public function setDocuments(array $documents) : void
+    public function setDocuments(array $documents): void
     {
         $this->documents = $documents;
     }

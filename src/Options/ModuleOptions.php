@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Options;
@@ -7,6 +8,9 @@ use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
 use InvoiceNinjaModule\Options\Interfaces\ModuleOptionsInterface;
 use InvoiceNinjaModule\Module;
+
+use function array_key_exists;
+use function is_int;
 
 /**
  * Class ModuleOptions
@@ -42,7 +46,7 @@ final class ModuleOptions implements ModuleOptionsInterface
     /**
      * @return string
      */
-    public function getToken() :string
+    public function getToken(): string
     {
         return $this->token;
     }
@@ -50,7 +54,7 @@ final class ModuleOptions implements ModuleOptionsInterface
     /**
      * @return string
      */
-    public function getTokenType() :string
+    public function getTokenType(): string
     {
         return $this->tokenType;
     }
@@ -58,7 +62,7 @@ final class ModuleOptions implements ModuleOptionsInterface
     /**
      * @return int
      */
-    public function getTimeout() :int
+    public function getTimeout(): int
     {
         return $this->timeout;
     }
@@ -66,7 +70,7 @@ final class ModuleOptions implements ModuleOptionsInterface
     /**
      * @return string
      */
-    public function getHostUrl() :string
+    public function getHostUrl(): string
     {
         return $this->hostUrl;
     }
@@ -74,7 +78,7 @@ final class ModuleOptions implements ModuleOptionsInterface
     /**
      * @return AuthOptionsInterface
      */
-    public function getAuthOptions() : AuthOptionsInterface
+    public function getAuthOptions(): AuthOptionsInterface
     {
         return $this->authOptions;
     }
@@ -85,9 +89,9 @@ final class ModuleOptions implements ModuleOptionsInterface
      * @return void
      * @throws InvalidParameterException
      */
-    private function setToken(array $config) :void
+    private function setToken(array $config): void
     {
-        if (!\array_key_exists(Module::TOKEN, $config) || empty($config[Module::TOKEN])) {
+        if (!array_key_exists(Module::TOKEN, $config) || empty($config[Module::TOKEN])) {
             throw new InvalidParameterException('No or empty token provided!');
         }
         $this->token = $config[Module::TOKEN];
@@ -99,9 +103,9 @@ final class ModuleOptions implements ModuleOptionsInterface
      * @return void
      * @throws InvalidParameterException
      */
-    private function setTokenType(array $config) :void
+    private function setTokenType(array $config): void
     {
-        if (!\array_key_exists(Module::TOKEN_TYPE, $config) || empty($config[Module::TOKEN_TYPE])) {
+        if (!array_key_exists(Module::TOKEN_TYPE, $config) || empty($config[Module::TOKEN_TYPE])) {
             throw new InvalidParameterException('No or empty token type provided!');
         }
         $this->tokenType = $config[Module::TOKEN_TYPE];
@@ -113,11 +117,13 @@ final class ModuleOptions implements ModuleOptionsInterface
      * @return void
      * @throws InvalidParameterException
      */
-    private function setTimeout(array $config) :void
+    private function setTimeout(array $config): void
     {
-        if (!\array_key_exists(Module::API_TIMEOUT, $config)
-            || !\is_int($config[Module::API_TIMEOUT])
-            || $config[Module::API_TIMEOUT] < 0) {
+        if (
+            !array_key_exists(Module::API_TIMEOUT, $config)
+            || !is_int($config[Module::API_TIMEOUT])
+            || $config[Module::API_TIMEOUT] < 0
+        ) {
             throw new InvalidParameterException('No or negative timeout provided!');
         }
         $this->timeout = $config[Module::API_TIMEOUT];
@@ -129,9 +135,9 @@ final class ModuleOptions implements ModuleOptionsInterface
      * @return void
      * @throws InvalidParameterException
      */
-    private function setHostUrl(array $config) :void
+    private function setHostUrl(array $config): void
     {
-        if (!\array_key_exists(Module::HOST_URL, $config) || empty($config[Module::HOST_URL])) {
+        if (!array_key_exists(Module::HOST_URL, $config) || empty($config[Module::HOST_URL])) {
             throw new InvalidParameterException('No or empty host url provided!');
         }
         $this->hostUrl = $config[Module::HOST_URL];

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Strategy;
@@ -8,6 +9,7 @@ use InvoiceNinjaModule\Model\Invitation;
 use Laminas\Hydrator\Exception\BadMethodCallException;
 use Laminas\Hydrator\HydratorInterface;
 use Laminas\Hydrator\Strategy\StrategyInterface;
+
 use function is_array;
 
 /**
@@ -53,7 +55,7 @@ final class InvitationsStrategy implements StrategyInterface
      * @return InvitationInterface[]
      * @throws BadMethodCallException for a non-object $contactObj
      */
-    public function hydrate($value, ?array $data) :array
+    public function hydrate($value, ?array $data): array
     {
         $result = [];
         if (is_array($value)) {

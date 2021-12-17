@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
@@ -14,13 +15,12 @@ class Base implements BaseInterface
     protected int $updatedAt = 0;
     protected int $archivedAt = 0;
     protected int $createdAt = 0;
-    /** @var  bool */
-    protected $isDeleted = false;
+    protected bool $isDeleted = false;
 
     /**
      * @return string
      */
-    public function getId() :string
+    public function getId(): string
     {
         return $this->id;
     }
@@ -28,7 +28,7 @@ class Base implements BaseInterface
     /**
      * @return int
      */
-    public function getUpdatedAt() :int
+    public function getUpdatedAt(): int
     {
         return $this->updatedAt;
     }
@@ -36,7 +36,7 @@ class Base implements BaseInterface
     /**
      * @return int
      */
-    public function getArchivedAt() :int
+    public function getArchivedAt(): int
     {
         return $this->archivedAt;
     }
@@ -44,7 +44,7 @@ class Base implements BaseInterface
     /**
      * @return int
      */
-    public function getCreatedAt() :int
+    public function getCreatedAt(): int
     {
         return $this->archivedAt;
     }
@@ -52,7 +52,7 @@ class Base implements BaseInterface
     /**
      * @return bool
      */
-    public function isDeleted() : bool
+    public function isDeleted(): bool
     {
         return $this->isDeleted;
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
@@ -6,6 +7,7 @@ namespace InvoiceNinjaModuleTest\Service;
 use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
 use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
@@ -13,39 +15,43 @@ use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Options\Interfaces\RequestOptionsInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
 use InvoiceNinjaModule\Service\ObjectService;
+use JsonException;
 use Laminas\Http\Request;
 use Laminas\Hydrator\HydratorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class ObjectManagerTest extends TestCase
 {
-    /** @var  ObjectService */
-    private $objectManager;
-    /** @var  MockObject */
-    private $requestServiceMock;
-    /** @var  MockObject */
-    private $hydratorMock;
-    /** @var  string */
-    private $testRoute;
+    private ObjectService $objectManager;
+    private MockObject $requestServiceMock;
+    private MockObject $hydratorMock;
+    private string $testRoute = '/tests';
 
-    protected function setUp() :void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->requestServiceMock = $this->createMock(RequestServiceInterface::class);
         $this->hydratorMock = $this->createMock(HydratorInterface::class);
-        $this->testRoute = '/tests';
-
         $this->objectManager = new ObjectService($this->requestServiceMock, $this->hydratorMock);
     }
 
-    public function testCreate() :void
+    public function testCreate(): void
     {
         self::assertInstanceOf(ObjectService::class, $this->objectManager);
     }
 
-    public function testCreateObject() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testCreateObject(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -74,7 +80,15 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->createObject($baseMock, $this->testRoute));
     }
 
-    public function testDeleteObject() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testDeleteObject(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
@@ -101,8 +115,15 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->deleteObject($baseMock, $this->testRoute));
     }
 
-
-    public function testGetObjectById() :void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
+     */
+    public function testGetObjectById(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -130,12 +151,14 @@ class ObjectManagerTest extends TestCase
     }
 
     /**
-     * @throws NotFoundException
      * @throws ApiAuthException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
      * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
      */
-    public function testGetObjectByIdException() :void
+    public function testGetObjectByIdException(): void
     {
         $this->expectException(NotFoundException::class);
 
@@ -157,12 +180,14 @@ class ObjectManagerTest extends TestCase
     }
 
     /**
-     * @throws InvalidParameterException
      * @throws ApiAuthException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
      * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function testFindObjectByException() :void
+    public function testFindObjectByException(): void
     {
         $this->expectException(InvalidParameterException::class);
 
@@ -174,7 +199,15 @@ class ObjectManagerTest extends TestCase
         );
     }
 
-    public function testFindObjectByEmpty() :void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testFindObjectByEmpty(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = ['test' => 'tester123'];
@@ -198,7 +231,15 @@ class ObjectManagerTest extends TestCase
         self::assertIsArray($result);
     }
 
-    public function testFindObjectByEmptyException() :void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testFindObjectByEmptyException(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = ['test' => 'tester123'];
@@ -222,7 +263,15 @@ class ObjectManagerTest extends TestCase
         self::assertIsArray($result);
     }
 
-    public function testFindObjectBy() :void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testFindObjectBy(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = ['test' => 'tester123'];
@@ -251,8 +300,15 @@ class ObjectManagerTest extends TestCase
         self::assertIsArray($result);
     }
 
-
-    public function testFindObjectByApiException() :void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testFindObjectByApiException(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $searchTerm = ['test' => 'tester123'];
@@ -276,7 +332,15 @@ class ObjectManagerTest extends TestCase
         self::assertIsArray($result);
     }
 
-    public function testUpdate() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testUpdate(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
@@ -308,7 +372,15 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->updateObject($baseMock, $this->testRoute));
     }
 
-    public function testArchive() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testArchive(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
@@ -340,7 +412,15 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->archiveObject($baseMock, $this->testRoute));
     }
 
-    public function testRestore() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testRestore(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
         $baseMock->expects(self::once())
@@ -372,7 +452,15 @@ class ObjectManagerTest extends TestCase
         self::assertInstanceOf(BaseInterface::class, $this->objectManager->restoreObject($baseMock, $this->testRoute));
     }
 
-    public function testGetAllObjectsEmpty() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllObjectsEmpty(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -388,7 +476,15 @@ class ObjectManagerTest extends TestCase
         self::assertIsArray($this->objectManager->getAllObjects($baseMock, $this->testRoute));
     }
 
-    public function testGetAllClients() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllClients(): void
     {
         $baseMock = $this->createMock(BaseInterface::class);
 
@@ -413,12 +509,14 @@ class ObjectManagerTest extends TestCase
     }
 
     /**
-     * @throws EmptyResponseException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
      * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function testGetAllClientsException() :void
+    public function testGetAllClientsException(): void
     {
         $this->expectException(InvalidResultException::class);
         $baseMock = $this->createMock(BaseInterface::class);
@@ -438,12 +536,19 @@ class ObjectManagerTest extends TestCase
                 self::isType('array'),
                 self::isInstanceOf(BaseInterface::class)
             )
-            ->willReturn($this->createMock(\stdClass::class));
+            ->willReturn($this->createMock(stdClass::class));
 
         self::assertIsArray($this->objectManager->getAllObjects($baseMock, $this->testRoute));
     }
 
-    public function testDownloadFile() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDownloadFile(): void
     {
         $this->requestServiceMock->expects(self::once())
             ->method('dispatchRequest')
@@ -456,7 +561,14 @@ class ObjectManagerTest extends TestCase
         self::assertIsArray($this->objectManager->downloadFile('1', 'invoice'));
     }
 
-    public function testSendCommand() :void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testSendCommand(): void
     {
         $this->requestServiceMock->expects(self::once())
             ->method('dispatchRequest')

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
@@ -6,6 +7,7 @@ namespace InvoiceNinjaModuleTest\Service;
 use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
@@ -13,16 +15,16 @@ use InvoiceNinjaModule\Model\Interfaces\ProductInterface;
 use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
 use InvoiceNinjaModule\Service\Interfaces\ProductManagerInterface;
 use InvoiceNinjaModule\Service\ProductManager;
+use JsonException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ProductManagerTest extends TestCase
 {
-    /** @var  ProductManagerInterface */
-    private $productManager;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    private $objectManagerMock;
+    private ProductManagerInterface $productManager;
+    private MockObject $objectManagerMock;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -30,12 +32,20 @@ class ProductManagerTest extends TestCase
         $this->productManager    = new ProductManager($this->objectManagerMock);
     }
 
-    public function testCreate() : void
+    public function testCreate(): void
     {
         self::assertInstanceOf(ProductManagerInterface::class, $this->productManager);
     }
 
-    public function testCreateProduct() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testCreateProduct(): void
     {
         $productMock = $this->createMock(ProductInterface::class);
 
@@ -52,7 +62,15 @@ class ProductManagerTest extends TestCase
         self::assertInstanceOf(ProductInterface::class, $this->productManager->createProduct($productMock));
     }
 
-    public function testDelete() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testDelete(): void
     {
         $productMock = $this->createMock(ProductInterface::class);
 
@@ -69,8 +87,15 @@ class ProductManagerTest extends TestCase
         self::assertInstanceOf(ProductInterface::class, $this->productManager->delete($productMock));
     }
 
-
-    public function testGetProductById() : void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
+     */
+    public function testGetProductById(): void
     {
         $productMock = $this->createMock(ProductInterface::class);
 
@@ -89,13 +114,14 @@ class ProductManagerTest extends TestCase
     }
 
     /**
-     * @throws NotFoundException
      * @throws ApiAuthException
-     * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws InvalidResultException
+     * @throws NotFoundException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testGetProductByIdException() : void
+    public function testGetProductByIdException(): void
     {
         $this->expectException(NotFoundException::class);
         $this->objectManagerMock->expects(self::once())
@@ -110,7 +136,15 @@ class ProductManagerTest extends TestCase
         self::assertInstanceOf(ProductInterface::class, $this->productManager->getProductById('777'));
     }
 
-    public function testUpdate() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testUpdate(): void
     {
         $productMock = $this->createMock(ProductInterface::class);
 
@@ -127,7 +161,15 @@ class ProductManagerTest extends TestCase
         self::assertInstanceOf(ProductInterface::class, $this->productManager->update($productMock));
     }
 
-    public function testRestore() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testRestore(): void
     {
         $productMock = $this->createMock(ProductInterface::class);
 
@@ -144,7 +186,15 @@ class ProductManagerTest extends TestCase
         self::assertInstanceOf(ProductInterface::class, $this->productManager->restore($productMock));
     }
 
-    public function testArchive() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testArchive(): void
     {
         $productMock = $this->createMock(ProductInterface::class);
 
@@ -161,7 +211,15 @@ class ProductManagerTest extends TestCase
         self::assertInstanceOf(ProductInterface::class, $this->productManager->archive($productMock));
     }
 
-    public function testGetAllProductsEmpty() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllProductsEmpty(): void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('getAllObjects')
@@ -178,7 +236,15 @@ class ProductManagerTest extends TestCase
         self::assertIsArray($this->productManager->getAllProducts());
     }
 
-    public function testGetAllProducts() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllProducts(): void
     {
         $productMock = $this->createMock(ProductInterface::class);
 
@@ -201,9 +267,11 @@ class ProductManagerTest extends TestCase
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
      * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function testGetAllProductsOtherResult() : void
+    public function testGetAllProductsOtherResult(): void
     {
         $this->expectException(InvalidResultException::class);
         $productMock = $this->createMock(BaseInterface::class);

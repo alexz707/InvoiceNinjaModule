@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Hydrator;
@@ -7,19 +8,32 @@ use Interop\Container\ContainerInterface;
 use InvoiceNinjaModule\Strategy\ContactsStrategy;
 use InvoiceNinjaModule\Strategy\InvitationsStrategy;
 use InvoiceNinjaModule\Strategy\InvoiceItemsStrategy;
-use Laminas\Hydrator\AbstractHydrator;
-use Laminas\Hydrator\HydrationInterface;
+use Laminas\Hydrator\ReflectionHydrator;
 use Laminas\Hydrator\Strategy\ScalarTypeStrategy;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class InvoiceNinjaHydratorFactory
  */
 final class InvoiceNinjaHydratorFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
-        /** @var AbstractHydrator $hydrator */
+    /**
+     * @param ContainerInterface $container
+     * @param string             $requestedName
+     * @param array|null         $options
+     *
+     * @return ReflectionHydrator
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        array $options = null
+    ): ReflectionHydrator {
+        /** @var ReflectionHydrator $hydrator */
         $hydrator = $container->get('ReflectionHydrator');
 
         $hydrator->addStrategy('lineItems', $container->get(InvoiceItemsStrategy::class));

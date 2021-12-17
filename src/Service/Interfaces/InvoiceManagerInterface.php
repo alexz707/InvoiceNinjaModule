@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service\Interfaces;
@@ -6,10 +7,12 @@ namespace InvoiceNinjaModule\Service\Interfaces;
 use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
 use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\InvoiceInterface;
+use JsonException;
 
 /**
  * Interface InvoiceManagerInterface
@@ -20,102 +23,119 @@ interface InvoiceManagerInterface
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws InvalidResultException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function createInvoice(InvoiceInterface $invoice) :InvoiceInterface;
+    public function createInvoice(InvoiceInterface $invoice): InvoiceInterface;
 
     /**
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function delete(InvoiceInterface $invoice) :InvoiceInterface;
+    public function delete(InvoiceInterface $invoice): InvoiceInterface;
 
     /**
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function update(InvoiceInterface $invoice) :InvoiceInterface;
+    public function update(InvoiceInterface $invoice): InvoiceInterface;
 
     /**
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function restore(InvoiceInterface $invoice) :InvoiceInterface;
+    public function restore(InvoiceInterface $invoice): InvoiceInterface;
 
     /**
      * @param InvoiceInterface $invoice
      *
      * @return InvoiceInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function archive(InvoiceInterface $invoice) :InvoiceInterface;
+    public function archive(InvoiceInterface $invoice): InvoiceInterface;
 
     /**
      * @param string $id
      *
      * @return InvoiceInterface
-     * @throws NotFoundException
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
      */
-    public function getInvoiceById(string $id) :InvoiceInterface;
+    public function getInvoiceById(string $id): InvoiceInterface;
 
     /**
      * @param string $invoiceNumber
      *
      * @return InvoiceInterface
-     * @throws NotFoundException
-     * @throws InvalidResultException
-     * @throws InvalidParameterException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
      */
-    public function getInvoiceByNumber(string $invoiceNumber) :InvoiceInterface;
+    public function getInvoiceByNumber(string $invoiceNumber): InvoiceInterface;
 
     /**
      * @param int $page
      * @param int $pageSize
      *
-     * @return array
-     * @throws InvalidResultException
+     * @return InvoiceInterface[]
+     * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
-     * @throws ApiAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function getAllInvoices(int $page = 1, int $pageSize = 0) :array;
+    public function getAllInvoices(int $page = 1, int $pageSize = 0): array;
 
     /**
      * @param string $invitationKey
      *
      * @return array
+     * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
-     * @throws ApiAuthException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function downloadInvoice(string $invitationKey) :array;
+    public function downloadInvoice(string $invitationKey): array;
 
     /**
      * @param array $invoiceIds
@@ -123,8 +143,10 @@ interface InvoiceManagerInterface
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function sendInvoicesEmail(array $invoiceIds) :void;
+    public function sendInvoicesEmail(array $invoiceIds): void;
 
     /**
      * @param array $invoiceIds
@@ -132,8 +154,10 @@ interface InvoiceManagerInterface
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function markInvoicesSent(array $invoiceIds) :void;
+    public function markInvoicesSent(array $invoiceIds): void;
 
     /**
      * @param array $invoiceIds
@@ -141,6 +165,8 @@ interface InvoiceManagerInterface
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function markInvoicesPaid(array $invoiceIds) :void;
+    public function markInvoicesPaid(array $invoiceIds): void;
 }

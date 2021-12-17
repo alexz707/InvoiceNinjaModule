@@ -22,7 +22,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @return string
      */
-    public function getClientContactId() : string
+    public function getClientContactId(): string
     {
         return $this->clientContactId;
     }
@@ -30,7 +30,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @param string $clientContactId
      */
-    public function setClientContactId(string $clientContactId) : void
+    public function setClientContactId(string $clientContactId): void
     {
         $this->clientContactId = $clientContactId;
     }
@@ -38,7 +38,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @return string
      */
-    public function getKey() : string
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -46,7 +46,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @param string $key
      */
-    public function setKey(string $key) : void
+    public function setKey(string $key): void
     {
         $this->key = $key;
     }
@@ -54,7 +54,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @return string
      */
-    public function getLink() : string
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -62,7 +62,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @param string $link
      */
-    public function setLink(string $link) : void
+    public function setLink(string $link): void
     {
         $this->link = $link;
     }
@@ -70,7 +70,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @return DateTimeInterface
      */
-    public function getSentDate() : DateTimeInterface
+    public function getSentDate(): DateTimeInterface
     {
         return DateTime::createFromFormat('Y-m-d H:i:s', $this->sentDate);
     }
@@ -78,7 +78,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @param DateTimeInterface $sentDate
      */
-    public function setSentDate(DateTimeInterface $sentDate) : void
+    public function setSentDate(DateTimeInterface $sentDate): void
     {
         $this->sentDate = $sentDate->format('Y-m-d H:i:s');
     }
@@ -86,7 +86,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @return DateTimeInterface
      */
-    public function getViewedDate() : DateTimeInterface
+    public function getViewedDate(): DateTimeInterface
     {
         return DateTime::createFromFormat('Y-m-d H:i:s', $this->viewedDate);
     }
@@ -94,7 +94,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @param DateTimeInterface $viewedDate
      */
-    public function setViewedDate(DateTimeInterface $viewedDate) : void
+    public function setViewedDate(DateTimeInterface $viewedDate): void
     {
         $this->viewedDate = $viewedDate->format('Y-m-d H:i:s');
     }
@@ -102,7 +102,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @return DateTimeInterface
      */
-    public function getOpenedDate() : DateTimeInterface
+    public function getOpenedDate(): DateTimeInterface
     {
         return DateTime::createFromFormat('Y-m-d H:i:s', $this->openedDate);
     }
@@ -110,7 +110,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @param DateTimeInterface $openedDate
      */
-    public function setOpenedDate(DateTimeInterface $openedDate) : void
+    public function setOpenedDate(DateTimeInterface $openedDate): void
     {
         $this->openedDate = $openedDate->format('Y-m-d H:i:s');
     }
@@ -118,7 +118,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @return string
      */
-    public function getEmailStatus() : string
+    public function getEmailStatus(): string
     {
         return $this->emailStatus;
     }
@@ -126,7 +126,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @param string $emailStatus
      */
-    public function setEmailStatus(string $emailStatus) : void
+    public function setEmailStatus(string $emailStatus): void
     {
         $this->emailStatus = $emailStatus;
     }
@@ -134,7 +134,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @return string
      */
-    public function getEmailError() : string
+    public function getEmailError(): string
     {
         return $this->emailError;
     }
@@ -142,7 +142,7 @@ class Invitation extends Base implements InvitationInterface
     /**
      * @param string $emailError
      */
-    public function setEmailError(string $emailError) : void
+    public function setEmailError(string $emailError): void
     {
         $this->emailError = $emailError;
     }

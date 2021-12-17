@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
@@ -6,6 +7,7 @@ namespace InvoiceNinjaModuleTest\Service;
 use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
@@ -13,16 +15,16 @@ use InvoiceNinjaModule\Model\Interfaces\TaxRateInterface;
 use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
 use InvoiceNinjaModule\Service\Interfaces\TaxRateManagerInterface;
 use InvoiceNinjaModule\Service\TaxRateManager;
+use JsonException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TaxRateManagerTest extends TestCase
 {
-    /** @var  TaxRateManagerInterface */
-    private $taxRateManager;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    private $objectManagerMock;
+    private TaxRateManagerInterface $taxRateManager;
+    private MockObject $objectManagerMock;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -30,12 +32,20 @@ class TaxRateManagerTest extends TestCase
         $this->taxRateManager    = new TaxRateManager($this->objectManagerMock);
     }
 
-    public function testCreate() : void
+    public function testCreate(): void
     {
         self::assertInstanceOf(TaxRateManagerInterface::class, $this->taxRateManager);
     }
 
-    public function testCreateProduct() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testCreateProduct(): void
     {
         $taxRateMock = $this->createMock(TaxRateInterface::class);
 
@@ -52,7 +62,15 @@ class TaxRateManagerTest extends TestCase
         self::assertInstanceOf(TaxRateInterface::class, $this->taxRateManager->createTaxRate($taxRateMock));
     }
 
-    public function testDelete() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testDelete(): void
     {
         $taxRateMock = $this->createMock(TaxRateInterface::class);
 
@@ -69,8 +87,15 @@ class TaxRateManagerTest extends TestCase
         self::assertInstanceOf(TaxRateInterface::class, $this->taxRateManager->delete($taxRateMock));
     }
 
-
-    public function testGetProductById() : void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
+     */
+    public function testGetProductById(): void
     {
         $taxRateMock = $this->createMock(TaxRateInterface::class);
 
@@ -89,13 +114,14 @@ class TaxRateManagerTest extends TestCase
     }
 
     /**
-     * @throws NotFoundException
      * @throws ApiAuthException
-     * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws InvalidResultException
+     * @throws NotFoundException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testGetProductByIdException() : void
+    public function testGetProductByIdException(): void
     {
         $this->expectException(NotFoundException::class);
 
@@ -111,7 +137,15 @@ class TaxRateManagerTest extends TestCase
         self::assertInstanceOf(TaxRateInterface::class, $this->taxRateManager->getTaxRateById('777'));
     }
 
-    public function testUpdate() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testUpdate(): void
     {
         $taxRateMock = $this->createMock(TaxRateInterface::class);
 
@@ -128,7 +162,15 @@ class TaxRateManagerTest extends TestCase
         self::assertInstanceOf(TaxRateInterface::class, $this->taxRateManager->update($taxRateMock));
     }
 
-    public function testRestore() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testRestore(): void
     {
         $taxRateMock = $this->createMock(TaxRateInterface::class);
 
@@ -145,7 +187,15 @@ class TaxRateManagerTest extends TestCase
         self::assertInstanceOf(TaxRateInterface::class, $this->taxRateManager->restore($taxRateMock));
     }
 
-    public function testArchive() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testArchive(): void
     {
         $taxRateMock = $this->createMock(TaxRateInterface::class);
 
@@ -162,7 +212,15 @@ class TaxRateManagerTest extends TestCase
         self::assertInstanceOf(TaxRateInterface::class, $this->taxRateManager->archive($taxRateMock));
     }
 
-    public function testGetAllProductsEmpty() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllProductsEmpty(): void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('getAllObjects')
@@ -179,7 +237,15 @@ class TaxRateManagerTest extends TestCase
         self::assertIsArray($this->taxRateManager->getAllTaxRates());
     }
 
-    public function testGetAllProducts() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllProducts(): void
     {
         $taxRateMock = $this->createMock(TaxRateInterface::class);
 
@@ -202,9 +268,11 @@ class TaxRateManagerTest extends TestCase
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
      * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function testGetAllProductsOtherResult() : void
+    public function testGetAllProductsOtherResult(): void
     {
         $this->expectException(InvalidResultException::class);
 

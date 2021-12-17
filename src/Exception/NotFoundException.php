@@ -1,15 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Exception;
 
+use Exception;
+use JetBrains\PhpStorm\Pure;
+
 /**
  * Class NotFoundException
  */
-class NotFoundException extends \Exception
+class NotFoundException extends Exception
 {
-    public function __construct($message = '', $code = 0, \Exception $previous = null)
+    #[Pure] public function __construct($message = '', $code = 0, Exception $previous = null)
     {
-        parent::__construct('Object with id: '.$message.' not found!', $code, $previous);
+        parent::__construct('Object with id: ' . $message . ' not found!', $code, $previous);
     }
 }

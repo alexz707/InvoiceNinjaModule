@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
@@ -39,9 +40,9 @@ final class Client extends Base implements ClientInterface
     private string $shippingAddress1 = '';
     private string $shippingAddress2 = '';
     private string $shippingCity = '';
-    private string $shippingState= '';
-    private string $shippingPostalCode= '';
-    private string $shippingCountryId= '';
+    private string $shippingState = '';
+    private string $shippingPostalCode = '';
+    private string $shippingCountryId = '';
     private float $balance = 0;
     private float $paidToDate = 0;
     private float $creditBalance = 0;
@@ -54,7 +55,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return float
      */
-    public function getBalance() :float
+    public function getBalance(): float
     {
         return $this->balance;
     }
@@ -62,7 +63,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param float $balance
      */
-    public function setBalance(float $balance) :void
+    public function setBalance(float $balance): void
     {
         $this->balance = $balance;
     }
@@ -70,7 +71,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return float
      */
-    public function getPaidToDate() :float
+    public function getPaidToDate(): float
     {
         return $this->paidToDate;
     }
@@ -78,7 +79,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param float $paidToDate
      */
-    public function setPaidToDate(float $paidToDate) :void
+    public function setPaidToDate(float $paidToDate): void
     {
         $this->paidToDate = $paidToDate;
     }
@@ -86,7 +87,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getUserId() :string
+    public function getUserId(): string
     {
         return $this->userId;
     }
@@ -94,7 +95,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $userId
      */
-    public function setUserId(string $userId) :void
+    public function setUserId(string $userId): void
     {
         $this->userId = $userId;
     }
@@ -102,7 +103,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getAddress1() :string
+    public function getAddress1(): string
     {
         return $this->address1;
     }
@@ -110,7 +111,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $address1
      */
-    public function setAddress1(string $address1) :void
+    public function setAddress1(string $address1): void
     {
         $this->address1 = $address1;
     }
@@ -118,7 +119,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getAddress2() :string
+    public function getAddress2(): string
     {
         return $this->address2;
     }
@@ -126,7 +127,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $address2
      */
-    public function setAddress2(string $address2) :void
+    public function setAddress2(string $address2): void
     {
         $this->address2 = $address2;
     }
@@ -134,7 +135,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getCity() :string
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -142,7 +143,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $city
      */
-    public function setCity(string $city) :void
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
@@ -150,7 +151,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getState() :string
+    public function getState(): string
     {
         return $this->state;
     }
@@ -158,7 +159,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $state
      */
-    public function setState(string $state) :void
+    public function setState(string $state): void
     {
         $this->state = $state;
     }
@@ -166,7 +167,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getPostalCode() :string
+    public function getPostalCode(): string
     {
         return $this->postalCode;
     }
@@ -174,7 +175,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $postalCode
      */
-    public function setPostalCode(string $postalCode) :void
+    public function setPostalCode(string $postalCode): void
     {
         $this->postalCode = $postalCode;
     }
@@ -182,7 +183,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getCountryId() :string
+    public function getCountryId(): string
     {
         return $this->countryId;
     }
@@ -190,7 +191,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $countryId
      */
-    public function setCountryId(string $countryId) :void
+    public function setCountryId(string $countryId): void
     {
         $this->countryId = $countryId;
     }
@@ -198,7 +199,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getPrivateNotes() :string
+    public function getPrivateNotes(): string
     {
         return $this->privateNotes;
     }
@@ -206,7 +207,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $privateNotes
      */
-    public function setPrivateNotes(string $privateNotes) :void
+    public function setPrivateNotes(string $privateNotes): void
     {
         $this->privateNotes = $privateNotes;
     }
@@ -214,7 +215,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return int
      */
-    public function getLastLogin() :int
+    public function getLastLogin(): int
     {
         return $this->lastLogin;
     }
@@ -222,7 +223,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getWebsite() :string
+    public function getWebsite(): string
     {
         return $this->website;
     }
@@ -230,7 +231,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $website
      */
-    public function setWebsite(string $website) :void
+    public function setWebsite(string $website): void
     {
         $this->website = $website;
     }
@@ -238,7 +239,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getIndustryId() :string
+    public function getIndustryId(): string
     {
         return $this->industryId;
     }
@@ -246,7 +247,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $industryId
      */
-    public function setIndustryId(string $industryId) :void
+    public function setIndustryId(string $industryId): void
     {
         $this->industryId = $industryId;
     }
@@ -254,7 +255,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getSizeId() :string
+    public function getSizeId(): string
     {
         return $this->sizeId;
     }
@@ -262,7 +263,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $sizeId
      */
-    public function setSizeId(string $sizeId) :void
+    public function setSizeId(string $sizeId): void
     {
         $this->sizeId = $sizeId;
     }
@@ -270,7 +271,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getCustomValue1() :string
+    public function getCustomValue1(): string
     {
         return $this->customValue1;
     }
@@ -278,7 +279,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $customValue
      */
-    public function setCustomValue1(string $customValue) :void
+    public function setCustomValue1(string $customValue): void
     {
         $this->customValue1 = $customValue;
     }
@@ -286,7 +287,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getCustomValue2() :string
+    public function getCustomValue2(): string
     {
         return $this->customValue2;
     }
@@ -294,7 +295,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $customValue
      */
-    public function setCustomValue2(string $customValue) :void
+    public function setCustomValue2(string $customValue): void
     {
         $this->customValue2 = $customValue;
     }
@@ -302,7 +303,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getVatNumber() :string
+    public function getVatNumber(): string
     {
         return $this->vatNumber;
     }
@@ -310,7 +311,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $vatNumber
      */
-    public function setVatNumber(string $vatNumber) :void
+    public function setVatNumber(string $vatNumber): void
     {
         $this->vatNumber = $vatNumber;
     }
@@ -318,7 +319,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getIdNumber() :string
+    public function getIdNumber(): string
     {
         return $this->idNumber;
     }
@@ -326,7 +327,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $idNumber
      */
-    public function setIdNumber(string $idNumber) :void
+    public function setIdNumber(string $idNumber): void
     {
         $this->idNumber = $idNumber;
     }
@@ -334,7 +335,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return ContactInterface[]
      */
-    public function getContacts() :array
+    public function getContacts(): array
     {
         return $this->contacts;
     }
@@ -342,7 +343,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param ContactInterface[] $contacts
      */
-    public function setContacts(array $contacts) :void
+    public function setContacts(array $contacts): void
     {
         $this->contacts = $contacts;
     }
@@ -350,7 +351,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getName() :string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -358,7 +359,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $name
      */
-    public function setName(string $name) :void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -366,7 +367,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getAssignedUserId() : string
+    public function getAssignedUserId(): string
     {
         return $this->assignedUserId;
     }
@@ -374,7 +375,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $assignedUserId
      */
-    public function setAssignedUserId(string $assignedUserId) : void
+    public function setAssignedUserId(string $assignedUserId): void
     {
         $this->assignedUserId = $assignedUserId;
     }
@@ -382,7 +383,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getGroupSettingsId() : string
+    public function getGroupSettingsId(): string
     {
         return $this->groupSettingsId;
     }
@@ -390,7 +391,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $groupSettingsId
      */
-    public function setGroupSettingsId(string $groupSettingsId) : void
+    public function setGroupSettingsId(string $groupSettingsId): void
     {
         $this->groupSettingsId = $groupSettingsId;
     }
@@ -398,7 +399,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getDisplayName() : string
+    public function getDisplayName(): string
     {
         return $this->displayName;
     }
@@ -406,7 +407,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $displayName
      */
-    public function setDisplayName(string $displayName) : void
+    public function setDisplayName(string $displayName): void
     {
         $this->displayName = $displayName;
     }
@@ -414,7 +415,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getNumber() : string
+    public function getNumber(): string
     {
         return $this->number;
     }
@@ -422,7 +423,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $number
      */
-    public function setNumber(string $number) : void
+    public function setNumber(string $number): void
     {
         $this->number = $number;
     }
@@ -430,7 +431,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getCompanyId() : string
+    public function getCompanyId(): string
     {
         return $this->companyId;
     }
@@ -438,7 +439,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $companyId
      */
-    public function setCompanyId(string $companyId) : void
+    public function setCompanyId(string $companyId): void
     {
         $this->companyId = $companyId;
     }
@@ -446,7 +447,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getClientHash() : string
+    public function getClientHash(): string
     {
         return $this->clientHash;
     }
@@ -454,7 +455,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $clientHash
      */
-    public function setClientHash(string $clientHash) : void
+    public function setClientHash(string $clientHash): void
     {
         $this->clientHash = $clientHash;
     }
@@ -462,7 +463,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getPhone() : string
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -470,7 +471,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $phone
      */
-    public function setPhone(string $phone) : void
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
@@ -478,39 +479,39 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getCustomValue3() : string
+    public function getCustomValue3(): string
     {
         return $this->customValue3;
     }
 
     /**
-     * @param string $customValue3
+     * @param string $customValue
      */
-    public function setCustomValue3(string $customValue3) : void
+    public function setCustomValue3(string $customValue): void
     {
-        $this->customValue3 = $customValue3;
+        $this->customValue3 = $customValue;
     }
 
     /**
      * @return string
      */
-    public function getCustomValue4() : string
+    public function getCustomValue4(): string
     {
         return $this->customValue4;
     }
 
     /**
-     * @param string $customValue4
+     * @param string $customValue
      */
-    public function setCustomValue4(string $customValue4) : void
+    public function setCustomValue4(string $customValue): void
     {
-        $this->customValue4 = $customValue4;
+        $this->customValue4 = $customValue;
     }
 
     /**
      * @return string
      */
-    public function getShippingAddress1() : string
+    public function getShippingAddress1(): string
     {
         return $this->shippingAddress1;
     }
@@ -518,7 +519,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $shippingAddress1
      */
-    public function setShippingAddress1(string $shippingAddress1) : void
+    public function setShippingAddress1(string $shippingAddress1): void
     {
         $this->shippingAddress1 = $shippingAddress1;
     }
@@ -526,7 +527,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getShippingAddress2() : string
+    public function getShippingAddress2(): string
     {
         return $this->shippingAddress2;
     }
@@ -534,7 +535,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $shippingAddress2
      */
-    public function setShippingAddress2(string $shippingAddress2) : void
+    public function setShippingAddress2(string $shippingAddress2): void
     {
         $this->shippingAddress2 = $shippingAddress2;
     }
@@ -542,7 +543,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getShippingCity() : string
+    public function getShippingCity(): string
     {
         return $this->shippingCity;
     }
@@ -550,7 +551,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $shippingCity
      */
-    public function setShippingCity(string $shippingCity) : void
+    public function setShippingCity(string $shippingCity): void
     {
         $this->shippingCity = $shippingCity;
     }
@@ -558,7 +559,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getShippingState() : string
+    public function getShippingState(): string
     {
         return $this->shippingState;
     }
@@ -566,7 +567,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $shippingState
      */
-    public function setShippingState(string $shippingState) : void
+    public function setShippingState(string $shippingState): void
     {
         $this->shippingState = $shippingState;
     }
@@ -574,7 +575,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getShippingPostalCode() : string
+    public function getShippingPostalCode(): string
     {
         return $this->shippingPostalCode;
     }
@@ -582,7 +583,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $shippingPostalCode
      */
-    public function setShippingPostalCode(string $shippingPostalCode) : void
+    public function setShippingPostalCode(string $shippingPostalCode): void
     {
         $this->shippingPostalCode = $shippingPostalCode;
     }
@@ -590,7 +591,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return string
      */
-    public function getShippingCountryId() : string
+    public function getShippingCountryId(): string
     {
         return $this->shippingCountryId;
     }
@@ -598,7 +599,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param string $shippingCountryId
      */
-    public function setShippingCountryId(string $shippingCountryId) : void
+    public function setShippingCountryId(string $shippingCountryId): void
     {
         $this->shippingCountryId = $shippingCountryId;
     }
@@ -606,7 +607,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return float|int
      */
-    public function getCreditBalance() : float|int
+    public function getCreditBalance(): float|int
     {
         return $this->creditBalance;
     }
@@ -614,7 +615,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param float|int $creditBalance
      */
-    public function setCreditBalance(float|int $creditBalance) : void
+    public function setCreditBalance(float|int $creditBalance): void
     {
         $this->creditBalance = $creditBalance;
     }
@@ -622,7 +623,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return array
      */
-    public function getDocuments() : array
+    public function getDocuments(): array
     {
         return $this->documents;
     }
@@ -630,7 +631,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param array $documents
      */
-    public function setDocuments(array $documents) : void
+    public function setDocuments(array $documents): void
     {
         $this->documents = $documents;
     }
@@ -638,7 +639,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @return array
      */
-    public function getGatewayTokens() : array
+    public function getGatewayTokens(): array
     {
         return $this->gatewayTokens;
     }
@@ -646,7 +647,7 @@ final class Client extends Base implements ClientInterface
     /**
      * @param array $gatewayTokens
      */
-    public function setGatewayTokens(array $gatewayTokens) : void
+    public function setGatewayTokens(array $gatewayTokens): void
     {
         $this->gatewayTokens = $gatewayTokens;
     }

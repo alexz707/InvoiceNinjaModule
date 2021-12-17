@@ -1,16 +1,25 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Options;
 
 use Interop\Container\ContainerInterface;
+use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Options\AuthOptionsFactory;
 use InvoiceNinjaModule\Options\Interfaces\AuthOptionsInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class AuthOptionsFactoryTest extends TestCase
 {
-    public function testCreate() :void
+    /**
+     * @throws InvalidParameterException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function testCreate(): void
     {
         $config = [
             'invoiceninja' => []

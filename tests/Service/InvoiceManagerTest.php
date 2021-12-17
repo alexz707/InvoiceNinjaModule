@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
@@ -6,6 +7,8 @@ namespace InvoiceNinjaModuleTest\Service;
 use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
+use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
@@ -13,16 +16,16 @@ use InvoiceNinjaModule\Model\Interfaces\InvoiceInterface;
 use InvoiceNinjaModule\Service\Interfaces\InvoiceManagerInterface;
 use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
 use InvoiceNinjaModule\Service\InvoiceManager;
+use JsonException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class InvoiceManagerTest extends TestCase
 {
-    /** @var  InvoiceManagerInterface */
-    private $invoiceManager;
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    private $objectManagerMock;
+    private InvoiceManagerInterface $invoiceManager;
+    private MockObject $objectManagerMock;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -30,12 +33,20 @@ class InvoiceManagerTest extends TestCase
         $this->invoiceManager    = new InvoiceManager($this->objectManagerMock);
     }
 
-    public function testCreate() : void
+    public function testCreate(): void
     {
         self::assertInstanceOf(InvoiceManagerInterface::class, $this->invoiceManager);
     }
 
-    public function testCreateInvoice() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testCreateInvoice(): void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -52,7 +63,15 @@ class InvoiceManagerTest extends TestCase
         self::assertInstanceOf(InvoiceInterface::class, $this->invoiceManager->createInvoice($invoiceMock));
     }
 
-    public function testDelete() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testDelete(): void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -69,8 +88,15 @@ class InvoiceManagerTest extends TestCase
         self::assertInstanceOf(InvoiceInterface::class, $this->invoiceManager->delete($invoiceMock));
     }
 
-
-    public function testGetInvoiceById() : void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
+     */
+    public function testGetInvoiceById(): void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -89,13 +115,14 @@ class InvoiceManagerTest extends TestCase
     }
 
     /**
-     * @throws NotFoundException
      * @throws ApiAuthException
-     * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws InvalidResultException
+     * @throws NotFoundException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testGetInvoiceByIdException() : void
+    public function testGetInvoiceByIdException(): void
     {
         $this->expectException(NotFoundException::class);
 
@@ -111,7 +138,16 @@ class InvoiceManagerTest extends TestCase
         self::assertInstanceOf(InvoiceInterface::class, $this->invoiceManager->getInvoiceById('777'));
     }
 
-    public function testGetInvoiceByNumber() : void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
+     */
+    public function testGetInvoiceByNumber(): void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -132,13 +168,15 @@ class InvoiceManagerTest extends TestCase
     }
 
     /**
-     * @throws NotFoundException
      * @throws ApiAuthException
      * @throws HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
      * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
      */
-    public function testGetInvoiceByNumberNotFound() : void
+    public function testGetInvoiceByNumberNotFound(): void
     {
         $this->expectException(NotFoundException::class);
 
@@ -159,13 +197,15 @@ class InvoiceManagerTest extends TestCase
     }
 
     /**
-     * @throws InvalidResultException
-     * @throws NotFoundException
      * @throws ApiAuthException
      * @throws HttpClientAuthException
-     * @throws \InvoiceNinjaModule\Exception\InvalidParameterException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
      */
-    public function testGetInvoiceByNumberInvalid() : void
+    public function testGetInvoiceByNumberInvalid(): void
     {
         $this->expectException(InvalidResultException::class);
 
@@ -185,7 +225,15 @@ class InvoiceManagerTest extends TestCase
         self::assertNotEmpty($result);
     }
 
-    public function testUpdate() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testUpdate(): void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -202,7 +250,15 @@ class InvoiceManagerTest extends TestCase
         self::assertInstanceOf(InvoiceInterface::class, $this->invoiceManager->update($invoiceMock));
     }
 
-    public function testRestore() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testRestore(): void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -219,7 +275,15 @@ class InvoiceManagerTest extends TestCase
         self::assertInstanceOf(InvoiceInterface::class, $this->invoiceManager->restore($invoiceMock));
     }
 
-    public function testArchive() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testArchive(): void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -236,7 +300,15 @@ class InvoiceManagerTest extends TestCase
         self::assertInstanceOf(InvoiceInterface::class, $this->invoiceManager->archive($invoiceMock));
     }
 
-    public function testGetAllInvoicesEmpty() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllInvoicesEmpty(): void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('getAllObjects')
@@ -253,7 +325,15 @@ class InvoiceManagerTest extends TestCase
         self::assertIsArray($this->invoiceManager->getAllInvoices());
     }
 
-    public function testGetAllInvoices() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllInvoices(): void
     {
         $invoiceMock = $this->createMock(InvoiceInterface::class);
 
@@ -273,12 +353,14 @@ class InvoiceManagerTest extends TestCase
     }
 
     /**
-     * @throws InvalidResultException
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function testGetAllInvoicesOtherResult() : void
+    public function testGetAllInvoicesOtherResult(): void
     {
         $this->expectException(InvalidResultException::class);
 
@@ -299,8 +381,14 @@ class InvoiceManagerTest extends TestCase
         self::assertIsArray($this->invoiceManager->getAllInvoices());
     }
 
-
-    public function testDownloadInvoice() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testDownloadInvoice(): void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('downloadFile')
@@ -312,7 +400,14 @@ class InvoiceManagerTest extends TestCase
         self::assertIsArray($this->invoiceManager->downloadInvoice('10'));
     }
 
-    public function testSendEmailInvoice() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
+     */
+    public function testSendEmailInvoice(): void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('sendBulkCommand')

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Model;
@@ -28,7 +29,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getFirstName() :string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -36,7 +37,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $firstName
      */
-    public function setFirstName(string $firstName) :void
+    public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -44,7 +45,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getLastName() :string
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -52,7 +53,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $lastName
      */
-    public function setLastName(string $lastName) :void
+    public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
     }
@@ -60,7 +61,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getEmail() :string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -68,7 +69,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $email
      */
-    public function setEmail(string $email) :void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -76,7 +77,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return bool
      */
-    public function isPrimary() :bool
+    public function isPrimary(): bool
     {
         return $this->isPrimary;
     }
@@ -84,7 +85,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param bool $isPrimary
      */
-    public function setPrimary(bool $isPrimary) :void
+    public function setPrimary(bool $isPrimary): void
     {
         $this->isPrimary = $isPrimary;
     }
@@ -92,7 +93,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getPhone() :string
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -100,7 +101,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $phone
      */
-    public function setPhone(string $phone) :void
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
@@ -108,7 +109,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return int
      */
-    public function getLastLogin() :int
+    public function getLastLogin(): int
     {
         return $this->lastLogin;
     }
@@ -116,7 +117,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return bool
      */
-    public function isLocked() : bool
+    public function isLocked(): bool
     {
         return $this->isLocked;
     }
@@ -124,7 +125,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param bool $isLocked
      */
-    public function setIsLocked(bool $isLocked) : void
+    public function setIsLocked(bool $isLocked): void
     {
         $this->isLocked = $isLocked;
     }
@@ -132,7 +133,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getCustomValue1() : string
+    public function getCustomValue1(): string
     {
         return $this->customValue1;
     }
@@ -140,7 +141,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $customValue1
      */
-    public function setCustomValue1(string $customValue1) : void
+    public function setCustomValue1(string $customValue1): void
     {
         $this->customValue1 = $customValue1;
     }
@@ -148,7 +149,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getCustomValue2() : string
+    public function getCustomValue2(): string
     {
         return $this->customValue2;
     }
@@ -156,7 +157,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $customValue2
      */
-    public function setCustomValue2(string $customValue2) : void
+    public function setCustomValue2(string $customValue2): void
     {
         $this->customValue2 = $customValue2;
     }
@@ -164,7 +165,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getCustomValue3() : string
+    public function getCustomValue3(): string
     {
         return $this->customValue3;
     }
@@ -172,7 +173,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $customValue3
      */
-    public function setCustomValue3(string $customValue3) : void
+    public function setCustomValue3(string $customValue3): void
     {
         $this->customValue3 = $customValue3;
     }
@@ -180,7 +181,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getCustomValue4() : string
+    public function getCustomValue4(): string
     {
         return $this->customValue4;
     }
@@ -188,7 +189,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $customValue4
      */
-    public function setCustomValue4(string $customValue4) : void
+    public function setCustomValue4(string $customValue4): void
     {
         $this->customValue4 = $customValue4;
     }
@@ -196,7 +197,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return string
      */
-    public function getContactKey() : string
+    public function getContactKey(): string
     {
         return $this->contactKey;
     }
@@ -204,7 +205,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param string $contactKey
      */
-    public function setContactKey(string $contactKey) : void
+    public function setContactKey(string $contactKey): void
     {
         $this->contactKey = $contactKey;
     }
@@ -212,7 +213,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @return bool
      */
-    public function isSendEmail() : bool
+    public function isSendEmail(): bool
     {
         return $this->sendEmail;
     }
@@ -220,7 +221,7 @@ final class Contact extends Base implements ContactInterface
     /**
      * @param bool $sendEmail
      */
-    public function setSendEmail(bool $sendEmail) : void
+    public function setSendEmail(bool $sendEmail): void
     {
         $this->sendEmail = $sendEmail;
     }

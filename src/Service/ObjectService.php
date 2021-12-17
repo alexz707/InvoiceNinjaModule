@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Service;
@@ -6,6 +7,7 @@ namespace InvoiceNinjaModule\Service;
 use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
 use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
@@ -13,6 +15,7 @@ use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
 use InvoiceNinjaModule\Options\RequestOptions;
 use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
 use InvoiceNinjaModule\Service\Interfaces\RequestServiceInterface;
+use JsonException;
 use Laminas\Http\Request;
 use Laminas\Hydrator\HydratorInterface;
 
@@ -46,8 +49,10 @@ final class ObjectService implements ObjectServiceInterface
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws InvalidResultException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function createObject(BaseInterface $object, string $reqRoute) :BaseInterface
+    public function createObject(BaseInterface $object, string $reqRoute): BaseInterface
     {
         $reqOptions = new RequestOptions();
         $reqOptions->addPostParameters($this->hydrator->extract($object));
@@ -61,22 +66,24 @@ final class ObjectService implements ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws InvalidResultException
-     * @throws NotFoundException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
      */
-    public function getObjectById(BaseInterface $object, string $id, string $reqRoute) :BaseInterface
+    public function getObjectById(BaseInterface $object, string $id, string $reqRoute): BaseInterface
     {
         $requestOptions = new RequestOptions();
 
         try {
             $responseArr = $this->requestService->dispatchRequest(
                 Request::METHOD_GET,
-                $reqRoute.'/'.$id,
+                $reqRoute . '/' . $id,
                 $requestOptions
             );
-        } catch (EmptyResponseException $e) {
+        } catch (EmptyResponseException) {
             throw new NotFoundException($id);
         }
         return $this->hydrateObject($responseArr, $object);
@@ -88,12 +95,14 @@ final class ObjectService implements ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface[]
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
      * @throws InvalidParameterException
      * @throws InvalidResultException
-     * @throws HttpClientAuthException
-     * @throws ApiAuthException
+     * @throws JsonException
      */
-    public function findObjectBy(BaseInterface $object, array $searchTerm, string $reqRoute) :array
+    public function findObjectBy(BaseInterface $object, array $searchTerm, string $reqRoute): array
     {
         $resultArr = [];
         $reqOptions = new RequestOptions();
@@ -109,7 +118,7 @@ final class ObjectService implements ObjectServiceInterface
             foreach ($responseArr as $objectArr) {
                 $resultArr[] = $this->hydrateObject($objectArr, clone $object);
             }
-        } catch (EmptyResponseException $e) {
+        } catch (EmptyResponseException) {
             return $resultArr;
         }
         return $resultArr;
@@ -120,12 +129,14 @@ final class ObjectService implements ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function restoreObject(BaseInterface $object, string $reqRoute) :BaseInterface
+    public function restoreObject(BaseInterface $object, string $reqRoute): BaseInterface
     {
         return $this->update($object, $reqRoute, ObjectServiceInterface::ACTION_RESTORE);
     }
@@ -135,12 +146,14 @@ final class ObjectService implements ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function archiveObject(BaseInterface $object, string $reqRoute) :BaseInterface
+    public function archiveObject(BaseInterface $object, string $reqRoute): BaseInterface
     {
         return $this->update($object, $reqRoute, ObjectServiceInterface::ACTION_ARCHIVE);
     }
@@ -150,12 +163,14 @@ final class ObjectService implements ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function updateObject(BaseInterface $object, string $reqRoute) :BaseInterface
+    public function updateObject(BaseInterface $object, string $reqRoute): BaseInterface
     {
         return $this->update($object, $reqRoute);
     }
@@ -166,12 +181,14 @@ final class ObjectService implements ObjectServiceInterface
      * @param string|null   $action
      *
      * @return BaseInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    private function update(BaseInterface $object, string $reqRoute, ?string $action = null) :BaseInterface
+    private function update(BaseInterface $object, string $reqRoute, ?string $action = null): BaseInterface
     {
         $reqOptions = new RequestOptions();
 
@@ -183,7 +200,7 @@ final class ObjectService implements ObjectServiceInterface
 
         $responseArr = $this->requestService->dispatchRequest(
             Request::METHOD_PUT,
-            $reqRoute.'/'.$object->getId(),
+            $reqRoute . '/' . $object->getId(),
             $reqOptions
         );
         return $this->hydrateObject($responseArr, $object);
@@ -194,16 +211,18 @@ final class ObjectService implements ObjectServiceInterface
      * @param string        $reqRoute
      *
      * @return BaseInterface
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function deleteObject(BaseInterface $object, string $reqRoute) :BaseInterface
+    public function deleteObject(BaseInterface $object, string $reqRoute): BaseInterface
     {
         $responseArr = $this->requestService->dispatchRequest(
             Request::METHOD_DELETE,
-            $reqRoute.'/'.$object->getId(),
+            $reqRoute . '/' . $object->getId(),
             new RequestOptions()
         );
         return $this->hydrateObject($responseArr, $object);
@@ -219,12 +238,14 @@ final class ObjectService implements ObjectServiceInterface
      * @param int           $pageSize
      *
      * @return BaseInterface[]
-     * @throws EmptyResponseException
-     * @throws InvalidResultException
-     * @throws HttpClientAuthException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function getAllObjects(BaseInterface $object, string $reqRoute, int $page = 1, int $pageSize = 0) :array
+    public function getAllObjects(BaseInterface $object, string $reqRoute, int $page = 1, int $pageSize = 0): array
     {
         $reqOptions = new RequestOptions();
         $reqOptions->setPage($page);
@@ -247,12 +268,14 @@ final class ObjectService implements ObjectServiceInterface
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function downloadFile(string $invitationKey, string $topic) :array
+    public function downloadFile(string $invitationKey, string $topic): array
     {
         return $this->requestService->dispatchRequest(
             Request::METHOD_GET,
-            '/'.$topic.'/'.$invitationKey.'/download',
+            '/' . $topic . '/' . $invitationKey . '/download',
             new RequestOptions()
         );
     }
@@ -262,11 +285,13 @@ final class ObjectService implements ObjectServiceInterface
      * @param string $id
      * @param string $reqRoute
      *
-     * @throws EmptyResponseException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function sendCommand(string $command, string $id, string $reqRoute) :void
+    public function sendCommand(string $command, string $id, string $reqRoute): void
     {
         $reqOptions = new RequestOptions();
         $this->requestService->dispatchRequest(
@@ -278,14 +303,16 @@ final class ObjectService implements ObjectServiceInterface
 
     /**
      * @param string $command
-     * @param array $ids
+     * @param array  $ids
      * @param string $reqRoute
      *
-     * @throws EmptyResponseException
      * @throws ApiAuthException
+     * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function sendBulkCommand(string $command, array $ids, string $reqRoute) :void
+    public function sendBulkCommand(string $command, array $ids, string $reqRoute): void
     {
         $reqOptions = new RequestOptions();
         $reqOptions->addPostParameters([
@@ -307,7 +334,7 @@ final class ObjectService implements ObjectServiceInterface
      * @return BaseInterface
      * @throws InvalidResultException
      */
-    private function hydrateObject(array $data, BaseInterface $object) :BaseInterface
+    private function hydrateObject(array $data, BaseInterface $object): BaseInterface
     {
         $result = $this->hydrator->hydrate($data, $object);
         if ($result instanceof BaseInterface) {

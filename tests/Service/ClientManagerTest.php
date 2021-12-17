@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Service;
@@ -6,6 +7,8 @@ namespace InvoiceNinjaModuleTest\Service;
 use InvoiceNinjaModule\Exception\ApiAuthException;
 use InvoiceNinjaModule\Exception\EmptyResponseException;
 use InvoiceNinjaModule\Exception\HttpClientAuthException;
+use InvoiceNinjaModule\Exception\HttpClientException;
+use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Exception\InvalidResultException;
 use InvoiceNinjaModule\Exception\NotFoundException;
 use InvoiceNinjaModule\Model\Interfaces\BaseInterface;
@@ -13,16 +16,16 @@ use InvoiceNinjaModule\Model\Interfaces\ClientInterface;
 use InvoiceNinjaModule\Service\ClientManager;
 use InvoiceNinjaModule\Service\Interfaces\ClientManagerInterface;
 use InvoiceNinjaModule\Service\Interfaces\ObjectServiceInterface;
+use JsonException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ClientManagerTest extends TestCase
 {
-    /** @var  ClientManager */
-    private $clientManager;
-    /** @var  \PHPUnit\Framework\MockObject\MockObject */
-    private $objectManagerMock;
+    private ClientManagerInterface $clientManager;
+    private MockObject $objectManagerMock;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -30,12 +33,20 @@ class ClientManagerTest extends TestCase
         $this->clientManager = new ClientManager($this->objectManagerMock);
     }
 
-    public function testCreate() : void
+    public function testCreate(): void
     {
         self::assertInstanceOf(ClientManagerInterface::class, $this->clientManager);
     }
 
-    public function testCreateClient() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testCreateClient(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -52,7 +63,15 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->createClient($clientMock));
     }
 
-    public function testDelete() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testDelete(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -69,8 +88,15 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->delete($clientMock));
     }
 
-
-    public function testGetClientById() : void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws NotFoundException
+     */
+    public function testGetClientById(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -89,13 +115,14 @@ class ClientManagerTest extends TestCase
     }
 
     /**
-     * @throws NotFoundException
      * @throws ApiAuthException
-     * @throws EmptyResponseException
      * @throws HttpClientAuthException
      * @throws InvalidResultException
+     * @throws NotFoundException
+     * @throws HttpClientException
+     * @throws JsonException
      */
-    public function testGetClientByIdException() : void
+    public function testGetClientByIdException(): void
     {
         $this->expectException(NotFoundException::class);
 
@@ -111,7 +138,15 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->getClientById('777'));
     }
 
-    public function testFindClientsByEmail() : void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     * @throws InvalidParameterException
+     */
+    public function testFindClientsByEmail(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -131,7 +166,15 @@ class ClientManagerTest extends TestCase
         self::assertNotEmpty($result);
     }
 
-    public function testFindClientsByIdNumber() : void
+    /**
+     * @throws ApiAuthException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidParameterException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testFindClientsByIdNumber(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -152,8 +195,15 @@ class ClientManagerTest extends TestCase
         self::assertNotEmpty($result);
     }
 
-
-    public function testUpdate() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testUpdate(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -170,7 +220,15 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->update($clientMock));
     }
 
-    public function testRestore() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testRestore(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -187,7 +245,15 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->restore($clientMock));
     }
 
-    public function testArchive() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testArchive(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -204,7 +270,15 @@ class ClientManagerTest extends TestCase
         self::assertInstanceOf(ClientInterface::class, $this->clientManager->archive($clientMock));
     }
 
-    public function testGetAllClientsEmpty() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllClientsEmpty(): void
     {
         $this->objectManagerMock->expects(self::once())
             ->method('getAllObjects')
@@ -221,7 +295,15 @@ class ClientManagerTest extends TestCase
         self::assertIsArray($this->clientManager->getAllClients());
     }
 
-    public function testGetAllClients() : void
+    /**
+     * @throws ApiAuthException
+     * @throws EmptyResponseException
+     * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
+     */
+    public function testGetAllClients(): void
     {
         $clientMock = $this->createMock(ClientInterface::class);
 
@@ -241,12 +323,14 @@ class ClientManagerTest extends TestCase
     }
 
     /**
-     * @throws InvalidResultException
      * @throws ApiAuthException
      * @throws EmptyResponseException
      * @throws HttpClientAuthException
+     * @throws HttpClientException
+     * @throws InvalidResultException
+     * @throws JsonException
      */
-    public function testGetAllClientsOtherResult() : void
+    public function testGetAllClientsOtherResult(): void
     {
         $this->expectException(InvalidResultException::class);
 

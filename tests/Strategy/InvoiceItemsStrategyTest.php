@@ -1,33 +1,33 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Strategy;
 
 use InvoiceNinjaModule\Model\Interfaces\InvoiceItemInterface;
 use InvoiceNinjaModule\Strategy\InvoiceItemsStrategy;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Laminas\Hydrator\HydratorInterface;
 
 class InvoiceItemsStrategyTest extends TestCase
 {
-    private $hydratorMock;
-    /** @var  InvoiceItemsStrategy */
-    private $strategy;
+    private MockObject $hydratorMock;
+    private InvoiceItemsStrategy $strategy;
 
-
-    protected function setUp() :void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->hydratorMock = $this->createMock(HydratorInterface::class);
         $this->strategy = new InvoiceItemsStrategy($this->hydratorMock);
     }
 
-    public function testCreate() :void
+    public function testCreate(): void
     {
         self::assertInstanceOf(InvoiceItemsStrategy::class, $this->strategy);
     }
 
-    public function testExtractEmpty() :void
+    public function testExtractEmpty(): void
     {
         $testValue = [];
 
@@ -36,7 +36,7 @@ class InvoiceItemsStrategyTest extends TestCase
         self::assertIsArray($result);
     }
 
-    public function testExtract() :void
+    public function testExtract(): void
     {
         $testValue = [
             $this->createMock(InvoiceItemInterface::class)
@@ -47,7 +47,7 @@ class InvoiceItemsStrategyTest extends TestCase
         self::assertIsArray($result);
     }
 
-    public function testHydrateEmpty() :void
+    public function testHydrateEmpty(): void
     {
         $testValue = [
         ];
@@ -57,7 +57,7 @@ class InvoiceItemsStrategyTest extends TestCase
         self::assertIsArray($result);
     }
 
-    public function testHydrate() :void
+    public function testHydrate(): void
     {
         $testValue = [
             [ 'id' => 1]
