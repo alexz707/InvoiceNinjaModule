@@ -1,17 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest;
 
-use InvoiceNinjaModule\Model\Contact;
-use InvoiceNinjaModule\Model\Invoice;
-use InvoiceNinjaModule\Model\InvoiceItem;
 use InvoiceNinjaModule\Service\ClientManager;
 use InvoiceNinjaModule\Service\Interfaces\ClientManagerInterface;
 use InvoiceNinjaModule\Service\Interfaces\InvoiceManagerInterface;
 use InvoiceNinjaModule\Service\InvoiceManager;
-use InvoiceNinjaModule\Service\ProductManager;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class ModuleTest
@@ -19,9 +18,10 @@ use PHPUnit\Framework\TestCase;
 class ModuleTest extends TestCase
 {
     /**
-     * @group failed
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function testCreate() :void
+    public function testCreate(): void
     {
         $sm = Bootstrap::getServiceManager();
         self::assertInstanceOf(ClientManagerInterface::class, $sm->get(ClientManager::class));
