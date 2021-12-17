@@ -6,9 +6,9 @@ namespace InvoiceNinjaModuleTest;
 
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
-
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+
 use function dirname;
 
 /**
