@@ -19,7 +19,7 @@ use JsonException;
  */
 interface ObjectServiceInterface
 {
-    public const ACTION_EMAIL = 'email_invoice';
+    public const ACTION_EMAIL = 'email';
     public const ACTION_MARK_SENT = 'mark_sent';
     public const ACTION_ARCHIVE = 'archive';
     public const ACTION_DELETE = 'delete';
