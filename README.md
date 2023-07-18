@@ -23,7 +23,7 @@ Can use `basic` or `digest` server authorization.
 
 ### Known issues
 
-* Invoice Ninja API V5 is (mostly) returning strings instead of the real data type 
+* Invoice Ninja API V5 is (mostly) returning strings instead of the real data type
 but wants the real data types in the requests. If you find out about a field which behaves like this please open an issue!
 * Not all endpoints are implemented -> if you need one please send a PR or open an issue.
 * Humbug is deprecated and should be changed to Infection
@@ -37,6 +37,7 @@ php composer.phar require alexz707/invoiceninja-module
 ```
 
 ### Configure module
+
 * Copy `/vendor/alexz707/invoiceninja-module/config/invoiceninja.global.php.dist` into your global autoload folder, remove the dist extension so that Laminas picks it up
 * If you use your own instance of invoice ninja change the `host url`
 * Replace the `token` with your generated invoice ninja token
@@ -72,7 +73,8 @@ php composer.phar require alexz707/invoiceninja-module
     ]
 ```
 
-### Enable module 
+### Enable module
+
 Register as Laminas module inside your ```config/application.config.php``` file:
 
 ```php
