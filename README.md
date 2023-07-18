@@ -1,5 +1,5 @@
-InvoiceNinjaModule
-=================
+# InvoiceNinjaModule
+
 Laminas Module to consume the InvoiceNinja V5 API (https://www.invoiceninja.com).
 
 [![GitHub release](https://img.shields.io/github/release/alexz707/InvoiceNinjaModule.svg)](https://github.com/alexz707/InvoiceNinjaModule/releases)
@@ -10,8 +10,7 @@ Laminas Module to consume the InvoiceNinja V5 API (https://www.invoiceninja.com)
 [![Total Downloads](https://poser.pugx.org/alexz707/invoiceninja-module/downloads)](https://packagist.org/packages/alexz707/invoiceninja-module)
 [![Latest Stable Version](https://poser.pugx.org/alexz707/invoiceninja-module/v/stable.png)](https://packagist.org/packages/alexz707/invoiceninja-module)
 
-Description
-==================
+## Description
 
 Latest release can handle the following api services:
 
@@ -36,6 +35,7 @@ The suggested installation method is via [composer](https://getcomposer.org/):
 ```sh
 php composer.phar require alexz707/invoiceninja-module
 ```
+
 ### Configure module
 * Copy `/vendor/alexz707/invoiceninja-module/config/invoiceninja.global.php.dist` into your global autoload folder, remove the dist extension so that Laminas picks it up
 * If you use your own instance of invoice ninja change the `host url`
@@ -82,6 +82,7 @@ Register as Laminas module inside your ```config/application.config.php``` file:
         'YourApplicationModule',
     ],
 ```
+
 ### Use the service managers
 
 ```php
