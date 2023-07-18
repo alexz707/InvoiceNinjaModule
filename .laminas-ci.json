@@ -10,9 +10,9 @@
       "name": "Coverage",
       "job": {
         "command": "vendor/bin/phpunit --coverage-clover /github/workspace/coverage.xml",
-        "php": "8.0"
+        "php": "8.1"
       }
     }
   ],
-  "stablePHP": "8.0"
+  "stablePHP": "8.1"
 }
