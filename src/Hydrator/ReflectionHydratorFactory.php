@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Hydrator;
 
-use Interop\Container\ContainerInterface;
 use Laminas\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
 use Laminas\Hydrator\ReflectionHydrator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class ReflectionHydratorFactory

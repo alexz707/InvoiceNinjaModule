@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModuleTest\Options;
 
-use Interop\Container\ContainerInterface;
 use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Module;
 use InvoiceNinjaModule\Options\AuthOptions;
@@ -13,6 +12,7 @@ use InvoiceNinjaModule\Options\ModuleOptions;
 use InvoiceNinjaModule\Options\ModuleOptionsFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 class ModuleOptionsFactoryTest extends TestCase

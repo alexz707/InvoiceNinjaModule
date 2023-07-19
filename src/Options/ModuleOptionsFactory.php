@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace InvoiceNinjaModule\Options;
 
-use Interop\Container\ContainerInterface;
 use InvoiceNinjaModule\Exception\InvalidParameterException;
 use InvoiceNinjaModule\Module;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
