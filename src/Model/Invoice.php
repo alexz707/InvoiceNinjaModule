@@ -54,7 +54,7 @@ final class Invoice extends Base implements InvoiceInterface
     private float $customSurcharge2 = 0;
     private float $customSurcharge3 = 0;
     private float $customSurcharge4 = 0;
-    private float $exchangeRate = 0;
+    private float $exchangeRate = 1;
     private bool $customSurchargeTax1 = false;
     private bool $customSurchargeTax2 = false;
     private bool $customSurchargeTax3 = false;
